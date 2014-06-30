@@ -11,12 +11,18 @@ class V1::UserInvitationsController < ApplicationController
     if invite.save
       UserInvitationNotificationWorker
         .perform_async(invite.id)
+
+      Invitation::InsertFromInvite
+        .new(invite)
+        .execute
+
       render nothing: true
     else
       @errors = invite.errors.messages
       render 'v1/shared/errors', status: 422
     end
   end
+
   authority_actions create: 'update'
 
   private

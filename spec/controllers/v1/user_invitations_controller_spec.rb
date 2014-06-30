@@ -27,13 +27,16 @@ describe V1::UserInvitationsController do
 
     context 'with facilitator' do
       before { sign_in @facilitator2 }
-
-      it 'can create an invitation' do
+      def valid_post
         post :create,
           assessment_id: assessment.id,
           first_name:    "john",
           last_name:     "doe",
           email:         "john_doe@gmail.com"
+      end
+
+      it 'can create an invitation' do
+        valid_post
 
         assert_response :success
         expect(UserInvitation.find_by_email('john_doe@gmail.com')).not_to be_nil
@@ -48,6 +51,7 @@ describe V1::UserInvitationsController do
         assert_response 422
         expect(json["errors"]).not_to be_empty
       end
+
     end
 
     context 'worker' do

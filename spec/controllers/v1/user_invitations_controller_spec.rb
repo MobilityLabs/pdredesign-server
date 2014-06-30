@@ -50,5 +50,19 @@ describe V1::UserInvitationsController do
       end
     end
 
+    context 'worker' do
+      before { sign_in @facilitator2 }
+
+      it 'creates a worker for sending invite email' do
+        post :create,
+          assessment_id: assessment.id,
+          first_name:    "john",
+          last_name:     "doe",
+          email:         "john_doe@gmail.com"
+        expect(UserInvitationNotificationWorker.jobs.count).to eq(1)
+
+      end
+    end 
+
   end 
 end

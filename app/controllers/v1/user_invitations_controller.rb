@@ -9,6 +9,8 @@ class V1::UserInvitationsController < ApplicationController
     invite = UserInvitation.new(create_params)
 
     if invite.save
+      UserInvitationNotificationWorker
+        .perform_async(invite.id)
       render nothing: true
     else
       @errors = invite.errors.messages

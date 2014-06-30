@@ -4,6 +4,8 @@ class UserInvitation < ActiveRecord::Base
 
   before_create :create_token
 
+  belongs_to :assessment
+
   private
   def create_token
     self.token = hash

@@ -45,4 +45,11 @@ describe Invitation::InsertFromInvite do
     user = User.find_by(email: @user.email)
     expect(user.district_ids).to include(@district2.id)
   end
+
+  it 'creates a participant for an invite' do
+    subject.new(create_valid_invite).execute
+    user = User.find_by(email: 'john_doe@gmail.com')
+
+    expect(Participant.find_by(user_id: user.id)).not_to be_nil
+  end
 end

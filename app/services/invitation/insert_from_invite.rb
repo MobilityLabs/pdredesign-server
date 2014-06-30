@@ -7,9 +7,16 @@ module Invitation
 
     def execute
       create_or_update_user
+      create_participant
     end
 
     private
+    def create_participant
+      Participant.find_or_create_by(
+        assessment_id: invite.assessment.id,
+        user_id:       user_found.id)
+    end
+
     def create_or_update_user
       update_user(user_found) and return if user_found
       create_user

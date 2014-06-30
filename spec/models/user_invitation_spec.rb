@@ -28,4 +28,17 @@ describe UserInvitation do
     expect(record.valid?).to eq(true)
   end
 
+  it 'creates a onetime token' do
+    record = subject.create!(
+      assessment_id: 1,
+      email: 'some@user.com')
+
+    expect(record.token).not_to be_nil
+    expect(record.token.length).to eq(10)
+
+    old_token = record.token
+    record.update(email: 'some@other.com')
+    expect(record.token).to eq(old_token)
+  end
+
 end

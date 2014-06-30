@@ -52,6 +52,29 @@ describe V1::UserInvitationsController do
         expect(json["errors"]).not_to be_empty
       end
 
+      it 'doesnt allow an already invited user to get invited to the same assessment' do
+        UserInvitation.create!(last_name: 'doe',
+          first_name: 'john',
+          email: 'john_doe@gmail.com',
+          assessment_id: assessment.id)
+        
+        valid_post
+
+        assert_response 422
+        expect(json["errors"]["email"]).to include("User has already been invited")
+      end
+
+      it 'allows a user to be invited to two assessments' do
+        UserInvitation.create!(last_name: 'doe',
+          first_name: 'john',
+          email: 'john_doe@gmail.com',
+          assessment_id: 1)
+        
+        valid_post
+
+        assert_response :success
+      end
+
     end
 
     context 'worker' do

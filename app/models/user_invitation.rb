@@ -1,6 +1,8 @@
 class UserInvitation < ActiveRecord::Base
   validates :email, presence: true
   validates :assessment_id, presence: true
+  validates :email, uniqueness: { scope: :assessment_id, message: 'User has already been invited' }
+
 
   before_create :create_token
 

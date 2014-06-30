@@ -33,6 +33,7 @@ describe Invitation::InsertFromInvite do
 
   it 'does not create a new user if one already exists' do
     subject.new(existing_user_invite).execute
+    subject.new(existing_user_invite).execute
   end
 
   it 'appends the district_id to an already existing user' do

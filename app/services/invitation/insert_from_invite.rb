@@ -11,25 +11,25 @@ module Invitation
 
     private
     def create_or_update_user
-      found_user = User.find_by(email: invite.email)
-      return update_user(found_user) if(found_user)
-
+      update_user(user_found) and return if user_found
       create_user
     end
 
     def update_user(user)
-      user.tap do
-        user.districts << invite.assessment.district
-        user.save
-      end
+      user.districts << invite.assessment.district
+      user.save
     end
 
     def create_user
-      User.create!  first_name:   invite.first_name,
-                    last_name:    invite.last_name,
-                    email:        invite.email,
-                    password:     generate_password,
-                    district_ids: invite.assessment.district_id
+      User.create! first_name:   invite.first_name,
+                   last_name:    invite.last_name,
+                   email:        invite.email,
+                   password:     generate_password,
+                   district_ids: invite.assessment.district_id
+    end
+
+    def user_found
+      @user_found ||= User.find_by(email: invite.email)
     end
 
     def generate_password

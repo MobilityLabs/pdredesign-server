@@ -7,8 +7,11 @@ describe NotificationsMailer do
 
     before do
       @invite = UserInvitation
-        .create!(email: 'test@user.com',
-                 assessment: assessment)
+        .create!(first_name: 'some',
+                 last_name:  'user',
+                 email:      'test@user.com',
+                 assessment: assessment,
+                 user_id:    @user.id)
     end
 
     let(:mail) { NotificationsMailer.invite(@invite.id) }

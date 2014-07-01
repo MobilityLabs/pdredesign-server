@@ -78,13 +78,6 @@ describe User do
 
   end
 
-  context '#avatar' do
-    it 'returns the default avatar' do
-      user = new_user(first_name: 'John', last_name: 'Doe', avatar: nil)
-      expect(user.avatar).to match(/fallback/)
-    end 
-  end
-
   context '#name' do
     it 'returns the users fullname' do
       user = new_user(first_name: 'John', last_name: 'Doe')

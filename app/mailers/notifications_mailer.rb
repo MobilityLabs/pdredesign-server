@@ -23,7 +23,7 @@ class NotificationsMailer < ActionMailer::Base
 
   private
   def invite_url(token)
-    "#{ActionController::Base.relative_url_root}/#/invitation/#{token}"
+    "#{ENV['BASE_URL']}/#/invitation/#{token}"
   end
 
   def default_avatar

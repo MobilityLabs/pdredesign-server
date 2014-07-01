@@ -6,17 +6,17 @@ describe Invitation::InsertFromInvite do
   let(:assessment) { @assessment_with_participants }
 
   def create_valid_invite
-    UserInvitation.create(assessment_id: assessment.id,
+    UserInvitation.create!(assessment_id: assessment.id,
       first_name:    "john",
       last_name:     "doe",
       email:         "john_doe@gmail.com")
   end
 
   def existing_user_invite
-    UserInvitation.create assessment_id: assessment.id,
+    UserInvitation.create!(assessment_id: assessment.id,
       first_name:    "john",
       last_name:     "doe",
-      email:         @user.email
+      email:         @user.email)
   end
 
   it 'creates a user account' do
@@ -31,11 +31,6 @@ describe Invitation::InsertFromInvite do
     expect(user.district_ids).to eq([@district2.id])
   end 
 
-  it 'does not create a new user if one already exists' do
-    subject.new(existing_user_invite).execute
-    subject.new(existing_user_invite).execute
-  end
-
   it 'appends the district_id to an already existing user' do
     @user.update(district_ids: [])
     expect(@user.district_ids).not_to include([@district2.id])
@@ -44,6 +39,20 @@ describe Invitation::InsertFromInvite do
 
     user = User.find_by(email: @user.email)
     expect(user.district_ids).to include(@district2.id)
+  end
+
+  it 'updates the user_id after a user has been created' do
+    subject.new(existing_user_invite).execute
+
+    user = User.find_by(email: @user.email)
+    expect(UserInvitation.find_by(user_id: user.id)).not_to be_nil
+  end 
+
+  it 'can safely create two invites' do
+    subject.new(create_valid_invite).execute
+    user = User.find_by(email: 'john_doe@gmail.com')
+
+    Participant.find_by(user_id: user.id).delete
   end
 
   it 'creates a participant for an invite' do

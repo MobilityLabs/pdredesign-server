@@ -86,6 +86,7 @@ describe V1::UserInvitationsController do
           first_name:    "john",
           last_name:     "doe",
           email:         "john_doe@gmail.com"
+
         expect(UserInvitationNotificationWorker.jobs.count).to eq(1)
 
       end

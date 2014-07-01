@@ -48,10 +48,10 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validate :has_districts?
+
+  validate  :has_districts?
 
   before_save :queue_avatar_updater, if: :twitter_changed?
-
   def queue_avatar_updater
     TwitterAvatarWorker.perform_async(id)
   end
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    return "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
   end
  
 end

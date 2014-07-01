@@ -75,6 +75,14 @@ describe User do
       expect(user.save).to eq(true)
       expect(TwitterAvatarWorker.jobs.count).to eq(0)
     end
+
+  end
+
+  context '#avatar' do
+    it 'returns the default avatar' do
+      user = new_user(first_name: 'John', last_name: 'Doe', avatar: nil)
+      expect(user.avatar).to match(/fallback/)
+    end 
   end
 
   context '#name' do

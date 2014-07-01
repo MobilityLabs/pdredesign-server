@@ -17,7 +17,8 @@ class Participant < ActiveRecord::Base
 
 	belongs_to :user
 	belongs_to :assessment
-  has_one :response, as: :responder, dependent: :destroy
+
+  has_one    :response, as: :responder, dependent: :destroy
 
   def remove_invitation
     UserInvitation

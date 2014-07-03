@@ -13,9 +13,17 @@
 #
 
 class Participant < ActiveRecord::Base
+  before_destroy :remove_invitation
+
 	belongs_to :user
 	belongs_to :assessment
-	has_one :response, as: :responder, dependent: :destroy
-	validates_uniqueness_of :user_id, scope: :assessment_id
+
+  has_one    :response, as: :responder, dependent: :destroy
+
+  def remove_invitation
+    UserInvitation
+      .where(email: user.email, assessment: assessment)
+      .destroy_all
+  end
 
 end

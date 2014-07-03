@@ -15,6 +15,7 @@ PdrServer::Application.routes.draw do
       get 'report', to: 'report#show'
       resources :priorities, only: [:create, :index]
       resources :participants, except: [:update, :show]
+      resources :user_invitations, only: [:create]
       resources :consensus, except: [:delete, :index]
       resources :responses, except: [:delete] do
         resources :scores, only: [:update, :create, :index]
@@ -26,6 +27,7 @@ PdrServer::Application.routes.draw do
     put  'user', to: 'user#update'
     post 'user', to: 'user#create'
 
-    get 'districts/search', to: 'districts#search'
+    get  'districts/search',  to: 'districts#search'
+    post 'invitation/:token', to: 'invitations#redeem'
   end
 end

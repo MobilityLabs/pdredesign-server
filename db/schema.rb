@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529190001) do
+ActiveRecord::Schema.define(version: 20140630224533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,15 +138,6 @@ ActiveRecord::Schema.define(version: 20140529190001) do
     t.text     "mandrill_html"
   end
 
-  create_table "network_partners", force: true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "email"
-    t.string  "network"
-    t.integer "district_ids", array: true
-    t.string  "specialize",   array: true
-  end
-
   create_table "participants", force: true do |t|
     t.integer  "user_id"
     t.integer  "assessment_id"
@@ -167,14 +158,10 @@ ActiveRecord::Schema.define(version: 20140529190001) do
   end
 
   create_table "prospective_users", force: true do |t|
-    t.string   "email",        default: "", null: false
-    t.string   "district"
-    t.string   "team_role"
-    t.string   "name"
     t.string   "ip_address"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ga_dimension"
   end
 
   create_table "questions", force: true do |t|
@@ -184,7 +171,6 @@ ActiveRecord::Schema.define(version: 20140529190001) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "help_text"
   end
 
   create_table "questions_rubrics", force: true do |t|
@@ -264,6 +250,16 @@ ActiveRecord::Schema.define(version: 20140529190001) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
+  create_table "user_invitations", force: true do |t|
+    t.string  "first_name"
+    t.string  "last_name"
+    t.string  "email"
+    t.string  "team_role"
+    t.string  "token"
+    t.integer "assessment_id"
+    t.integer "user_id"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: ""
@@ -291,7 +287,6 @@ ActiveRecord::Schema.define(version: 20140529190001) do
     t.string   "last_name"
     t.string   "twitter"
     t.string   "avatar"
-    t.string   "ga_dimension"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

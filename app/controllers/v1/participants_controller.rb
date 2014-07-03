@@ -11,7 +11,7 @@ class V1::ParticipantsController < ApplicationController
   def destroy
     participant = Participant.find_by(participant_params)
     if participant
-      participant.delete
+      participant.destroy
       render nothing: true
     else
       render status: 404, nothing: true

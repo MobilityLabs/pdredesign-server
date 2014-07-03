@@ -116,6 +116,8 @@ describe Assessment do
   end
   
   context '#all_scores' do
+    let(:assessment) { @assessment_with_participants }
+
     before { create_magic_assessments }
     before do
       create_struct
@@ -125,23 +127,36 @@ describe Assessment do
     end
 
     it 'returns all the scores for an assessment' do
-      expect(@assessment_with_participants.all_scores.count).to eq(3)
+      expect(assessment.all_scores.count).to eq(3)
     end
 
     it 'does not count Assessment scores' do
-      Response.create(responder_id:   @assessment_with_participants.id,
+      Response.create(responder_id:   assessment.id,
                       responder_type: 'Assessment',
                       submitted_at: Time.now,
                       id: 42)
 
-      expect(@assessment_with_participants.all_scores.count).to eq(3)
+      expect(assessment.all_scores.count).to eq(3)
     end
 
     context '#scores' do
       it 'returns scores for a particular question id' do
         question = Question.find_by(headline: "headline 1")
-        expect(@assessment_with_participants.scores(question.id).count).to eq(1)
+        expect(assessment.scores(question.id).count).to eq(1)
       end
+    end
+  end
+
+  context '#score_count' do
+    before { create_magic_assessments }
+    before { create_struct }
+    before { create_responses }
+
+    let(:assessment) { @assessment_with_participants }
+
+    it 'returns the number of scores for a question + response' do
+      question = Question.find_by(headline: "question1")
+      expect(assessment.score_count(question, 1)).to eq(1)
     end
   end
 
@@ -185,13 +200,13 @@ describe Assessment do
 
       context '#consensus' do
         it 'returns the consensus' do
-          consensus = @assessment_with_participants.consensus
+          consensus = assessment.consensus
           expect(consensus.id).to eq(@consensus.id)
         end
 
         it 'returns nil whne consensus is not present' do
           @consensus.destroy
-          consensus = @assessment_with_participants.consensus
+          consensus = assessment.consensus
           expect(consensus).to eq(nil)
         end
       end
@@ -205,12 +220,12 @@ describe Assessment do
       end
 
       def response_count(method)
-        @assessment_with_participants.send(method).count
+        assessment.send(method).count
       end
 
       context '#responses' do
         it 'returns the users response' do
-          responses = @assessment_with_participants.responses(@user)
+          responses = assessment.responses(@user)
           expect(responses.count).to eq(1)
           expect(responses.first.id).to eq(@response.id)
         end
@@ -240,14 +255,31 @@ describe Assessment do
         end
       end
 
+      context '#response_submitted' do
+        before do
+          @response = Response.create(responder_type: 'Assessment',
+                                      responder:      @facilitator2)
+          assessment.update(response: @response)
+        end
+
+        it 'returns true when a response is submitted' do
+          @response.update(submitted_at: Time.now)
+          expect(assessment.response_submitted?).to eq(true)
+        end
+
+        it 'returns false when a response isnt submitted' do
+          expect(assessment.response_submitted?).to eq(false)
+        end
+      end
+
       context '#percent_completed' do
         it 'gets 0% complete' do
-          expect(@assessment_with_participants.percent_completed).to eq(0.0)
+          expect(assessment.percent_completed).to eq(0.0)
         end
 
         it 'gets 50% complete' do
           @response.update(submitted_at: Time.now)
-          expect(@assessment_with_participants.percent_completed).to eq(50.0)
+          expect(assessment.percent_completed).to eq(50.0)
         end
 
         it 'gets 100% complete' do
@@ -256,7 +288,7 @@ describe Assessment do
                           submitted_at: Time.now)
 
           @response.update(submitted_at: Time.now)
-          expect(@assessment_with_participants.percent_completed).to eq(100.0)
+          expect(assessment.percent_completed).to eq(100.0)
         end
       end
     end

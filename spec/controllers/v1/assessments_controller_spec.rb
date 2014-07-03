@@ -226,7 +226,14 @@ describe V1::AssessmentsController do
         due_date: Time.now
 
       expect(json["id"]).not_to be_nil
+    end
 
+    it 'returns json errors when an assessment cant be created' do
+      post :create, 
+        rubric_id: @rubric.id,
+        due_date: Time.now
+
+      expect(json["errors"]["name"]).to include("can't be blank")
     end
   end
 end

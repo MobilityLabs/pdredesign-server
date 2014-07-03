@@ -12,6 +12,18 @@ class ApplicationController < ActionController::Base
   end
     
   protected
+  def unauthorized
+    status 401
+  end
+
+  def not_found
+    status 404
+  end
+
+  def status(status_code)
+    render nothing: true, status: status_code
+  end
+
   def verified_request?
     super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
   end

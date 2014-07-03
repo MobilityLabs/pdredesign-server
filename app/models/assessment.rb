@@ -85,9 +85,10 @@ class Assessment < ActiveRecord::Base
 	end
 
 	def score_count(question_id, value)
+    response_ids = participant_responses.pluck(:id)
 		Score.where(value: value,
       question_id: question_id,
-      response_id: self.participant_responses.pluck(:id)).count
+      response_id: response_ids).count
 	end
 
 	def modal_score(question_id)

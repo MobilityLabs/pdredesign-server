@@ -147,6 +147,19 @@ describe Assessment do
     end
   end
 
+  context '#score_count' do
+    before { create_magic_assessments }
+    before { create_struct }
+    before { create_responses }
+
+    let(:assessment) { @assessment_with_participants }
+
+    it 'returns the number of scores for a question + response' do
+      question = Question.find_by(headline: "question1")
+      expect(assessment.score_count(question, 1)).to eq(1)
+    end
+  end
+
   context 'with data' do
     before { create_magic_assessments }
     let(:assessment) { @assessment_with_participants }

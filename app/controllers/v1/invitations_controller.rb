@@ -1,23 +1,24 @@
 class V1::InvitationsController < ApplicationController
   def redeem
-    invitation = find_invitation(params[:token])
-    not_found and return unless invitation
+    not_found    and return unless invitation
+    unauthorized and return unless found_user
 
-    resource = User.find_for_database_authentication(email: invitation.email)
-    if resource
-      sign_in(:user, resource)
-      render nothing: true
-    else
-      render nothing: true, status: 401
-    end 
+    sign_in(:user, found_user)
+
+    status 200
   end
 
   private
-  def not_found
-    render nothing: true, status: 404
+  def found_user
+    @found_user ||= User.find_for_database_authentication(email: invitation.email)
+  end
+
+  def invitation
+    @invitation ||= find_invitation(params[:token])
   end
 
   def find_invitation(token)
     UserInvitation.find_by(token: token)
   end
+
 end

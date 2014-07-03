@@ -15,27 +15,42 @@ describe V1::InvitationsController do
     assert_response 404
   end
 
-  it 'authorizes a user if they already have an account' do
-    invitation = UserInvitation
-      .create!(email: @user.email, assessment: assessment)
+  context 'with invitation' do
+    before do 
+      @invitation = UserInvitation
+        .create!(email: @user.email,
+                 assessment: assessment,
+                 token: 'expected_token')
+    end
 
-    invitation.update(token: 'expected_token')
+    it 'authorizes a user if they already have an account' do
+      get :redeem, token: 'expected_token'
+      expect(warden.authenticated?(:user)).to eq(true)
+    end
 
-    get :redeem, token: 'expected_token'
-    expect(warden.authenticated?(:user)).to eq(true)
+    it 'gives a 401 when a user does exist' do
+      @user.delete
+
+      get :redeem, token: 'expected_token'
+      expect(warden.authenticated?(:user)).to eq(false)
+
+      assert_response :unauthorized
+    end
+
+    it 'allows an update for the users information' do
+      get :redeem,
+        token:      'expected_token',
+        first_name: 'new',
+        last_name:  'user',
+        email:      'some_other@email.com'
+
+      assert_response :success
+
+      expect(@user.first_name).to eq('new')
+      expect(@user.last_name).to eq('user')
+      expect(@user.email).to eq('some_other@email.com')
+    end
+
   end
 
-  it 'gives a 401 when a user does not already exist' do
-    invitation = UserInvitation
-      .create!(email: @user.email, assessment: assessment)
-
-    @user.delete
-
-    invitation.update(token: 'expected_token')
-
-    get :redeem, token: 'expected_token'
-    expect(warden.authenticated?(:user)).to eq(false)
-
-    assert_response :unauthorized
-  end
 end

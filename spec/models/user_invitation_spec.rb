@@ -41,4 +41,12 @@ describe UserInvitation do
     expect(record.token).to eq(old_token)
   end
 
+  it 'does not create a token if one is given during create' do
+    record = subject.create!(
+      assessment_id: 1,
+      token: 'expected_token',
+      email: 'some@user.com')
+    expect(record.token).to eq('expected_token')
+  end
+
 end

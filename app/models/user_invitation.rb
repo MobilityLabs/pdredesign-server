@@ -10,6 +10,7 @@ class UserInvitation < ActiveRecord::Base
 
   private
   def create_token
+    return if token
     self.token = hash
   end
 

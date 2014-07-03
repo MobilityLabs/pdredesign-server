@@ -46,11 +46,23 @@ describe V1::InvitationsController do
 
       assert_response :success
 
+      @user.reload
+
       expect(@user.first_name).to eq('new')
       expect(@user.last_name).to eq('user')
       expect(@user.email).to eq('some_other@email.com')
     end
 
+    it 'allows an update to set the users password' do
+      get :redeem,
+        token:      'expected_token',
+        password:   'some_password'
+
+      assert_response :success
+
+      user = User.find_for_database_authentication(email: @user.email)
+      expect(user.valid_password?('some_password')).to eq(true)
+    end
   end
 
 end

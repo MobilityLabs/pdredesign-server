@@ -17,6 +17,17 @@ describe Twitter::UpdateAvatar do
       @instance = subject.new(@user)
     end
 
+    it 'has the right configuration' do
+      Rails.application.config.twitter_config = :expected
+      expect(@instance.send(:client_config)).to eq(:expected)
+    end
+
+    it 'create the client with the right configs' do
+      Rails.application.config.twitter_config = :expected
+      expect(Twitter::REST::Client).to receive(:new).with(:expected)
+      @instance.send(:client)
+    end
+
     it 'does not access twitter when user is nil' do
       @user.update(avatar: 'expected', twitter: '')
       expect(@instance).not_to receive(:user_avatar)

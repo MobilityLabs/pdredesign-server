@@ -10,4 +10,5 @@
 
 class ToolSubcategory < ActiveRecord::Base
   belongs_to :tool_category
+  has_many   :tools
 end

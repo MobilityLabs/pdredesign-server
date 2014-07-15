@@ -10,4 +10,6 @@
 
 class ToolCategory < ActiveRecord::Base
   belongs_to :tool_phase
+  has_many   :tool_subcategories
+  has_many   :tools
 end

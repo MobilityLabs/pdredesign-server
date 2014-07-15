@@ -9,4 +9,5 @@
 #
 
 class ToolPhase < ActiveRecord::Base
+  has_many :tool_categories
 end

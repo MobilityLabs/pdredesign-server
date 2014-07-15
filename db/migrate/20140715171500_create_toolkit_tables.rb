@@ -19,7 +19,7 @@ class CreateToolkitTables < ActiveRecord::Migration
       t.string     :title
       t.text       :description
       t.string     :url
-      t.boolean    :default
+      t.boolean    :is_default
       t.integer    :display_order
       t.belongs_to :tool_category
       t.belongs_to :tool_subcategory

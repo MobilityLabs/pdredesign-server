@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 20140715171500) do
     t.string  "title"
     t.text    "description"
     t.string  "url"
-    t.boolean "default"
+    t.boolean "is_default"
     t.integer "display_order"
     t.integer "tool_category_id"
     t.integer "tool_subcategory_id"

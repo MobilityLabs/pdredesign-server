@@ -18,5 +18,6 @@ class Tool < ActiveRecord::Base
   belongs_to :tool_subcategory
   belongs_to :user
 
+  validates :title, presence: true
   scope :the_defaults, -> { where(is_default: true) }
 end

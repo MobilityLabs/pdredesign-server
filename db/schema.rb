@@ -15,9 +15,15 @@ ActiveRecord::Schema.define(version: 20140715171500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
-  enable_extension "uuid-ossp"
-  enable_extension "pg_trgm"
+
+  create_table "access_requests", force: true do |t|
+    t.integer  "assessment_id"
+    t.integer  "user_id"
+    t.string   "roles",         default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
 
   create_table "answers", force: true do |t|
     t.integer  "value"

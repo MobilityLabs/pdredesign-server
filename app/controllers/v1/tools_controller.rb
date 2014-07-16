@@ -17,6 +17,6 @@ class V1::ToolsController < ApplicationController
 
   private
   def tool_create_params
-    params.permit(:title, :description, :url, :tool_category_id)
+    params.permit(:title, :description, :url, :tool_category_id, :district_id)
   end
 end

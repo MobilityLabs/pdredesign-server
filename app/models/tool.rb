@@ -17,7 +17,10 @@ class Tool < ActiveRecord::Base
   belongs_to :tool_category
   belongs_to :tool_subcategory
   belongs_to :user
+  belongs_to :district
 
   validates :title, presence: true
+  validates :district_id, presence: true
+
   scope :the_defaults, -> { where(is_default: true) }
 end

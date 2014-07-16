@@ -6,7 +6,7 @@
 #  title               :string(255)
 #  description         :text
 #  url                 :string(255)
-#  is_default             :boolean
+#  is_default          :boolean
 #  display_order       :integer
 #  tool_category_id    :integer
 #  tool_subcategory_id :integer

@@ -8,7 +8,7 @@ PdrServer::Application.routes.draw do
     defaults: { format: :json} 
 
   namespace :v1, defaults: { format: :json } do
-    resources  :toolkits, only: :index
+    resources  :tools, only: [:index, :create]
     resources  :rubrics, only: :index
     resources  :prospective_users, only: :create
     resources  :assessments, only: [:index, :show, :update, :create] do

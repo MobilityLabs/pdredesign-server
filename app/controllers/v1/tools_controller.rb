@@ -15,8 +15,20 @@ class V1::ToolsController < ApplicationController
     end
   end
 
+  def tools_for(subcategory)
+    default_tools(subcategory) + 
+    subcategory
+      .tools
+      .joins(:districts)
+      .where(districts: {id: current_user.district_ids})
+  end
+
   private
+  def default_tools(subcategory)
+    subcategory.tools.where(is_default: true)
+  end
+
   def tool_create_params
-    params.permit(:title, :description, :url, :tool_category_id, :district_id)
+    params.permit(:title, :description, :url, :tool_subcategory_id)
   end
 end

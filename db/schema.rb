@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716152506) do
+ActiveRecord::Schema.define(version: 20140716170009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -298,10 +298,8 @@ ActiveRecord::Schema.define(version: 20140716152506) do
     t.string  "url"
     t.boolean "is_default"
     t.integer "display_order"
-    t.integer "tool_category_id"
     t.integer "tool_subcategory_id"
     t.integer "user_id"
-    t.integer "district_id"
   end
 
   create_table "user_invitations", force: true do |t|

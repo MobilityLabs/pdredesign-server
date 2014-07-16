@@ -7,22 +7,25 @@ describe V1::ToolsController do
     request.env["HTTP_ACCEPT"] = 'application/json'
   end
 
+  before { sign_in Application::create_sample_user }
+
   describe '#create' do
     it 'can create a tool' do
       phase    = ToolPhase.create(title: 'test', description: 'description') 
       category = ToolCategory.create(title: 'category', tool_phase: phase)
+      subcategory = ToolSubcategory.create(title: 'category', tool_category: category)
 
       post :create, title: 'expected title',
         description: 'some description',
         url: 'http://www.google.com',
-        district_id: 1,
-        tool_category_id: category.id
+        tool_subcategory_id: subcategory.id
 
       tool = Tool.find_by(title: 'expected title')
+
       expect(tool).not_to be_nil
       expect(tool[:description]).to eq('some description')
       expect(tool[:url]).to eq('http://www.google.com')
-      expect(tool[:tool_category_id]).to eq(category.id)
+      expect(tool[:tool_subcategory_id]).to eq(subcategory.id)
     end
 
     it 'returns errors when tool cant be saved' do
@@ -30,10 +33,6 @@ describe V1::ToolsController do
       expect(json["errors"]).not_to be_empty
     end
 
-    it 'requires a district_id' do
-      post :create
-      expect(json["errors"]["district_id"]).not_to be_nil
-    end
   end
 
   describe '#index' do
@@ -78,8 +77,7 @@ describe V1::ToolsController do
       5.times do |i|
         Tool.create(title: 'Expected Title',
                     description: 'desc',
-                    district_id: 1,
-                    tool_category: category,
+                    is_default: true,
                     tool_subcategory: subcategory,
                     url: 'expected')
       end
@@ -92,6 +90,46 @@ describe V1::ToolsController do
       tools.each { |t| expect(t["url"]).to eq('expected') }
     end
 
+    context 'with data' do
+      def create_data
+        phase       = ToolPhase.create(title: 'test', description: 'description') 
+        category    = ToolCategory.create(title: "category 1", tool_phase: phase)
+        subcategory = ToolSubcategory.create(title: 'Expected Title',
+                                             tool_category: category)
+
+        district  = District.create!
+        
+        @creating_user = Application::create_sample_user
+        @login_user    = Application::create_sample_user
+        @other_user    = Application::create_sample_user
+
+        @creating_user.update(district_ids: [district.id])
+        @login_user.update(district_ids: [district.id])
+
+        Tool.create(title: 't',
+                    description: 'd',
+                    user: @creating_user,
+                    tool_subcategory: subcategory)
+
+      end
+
+      it 'returns user created tools' do
+        create_data
+        sign_in @login_user
+        get :index
+        tools = json.first["categories"].first["subcategories"].first["tools"]
+        expect(tools.count).to eq(1)
+      end
+
+      it 'returns user created tools for current district' do
+        create_data
+        sign_in @other_user
+
+        get :index
+        tools = json.first["categories"].first["subcategories"].first["tools"]
+        expect(tools.count).to eq(0)
+      end
+    end
   end
 
 end

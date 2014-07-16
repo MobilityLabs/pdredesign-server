@@ -1,3 +1,4 @@
+json.id            phase.id
 json.title         phase.title
 json.description   phase.description
 json.display_order phase.display_order

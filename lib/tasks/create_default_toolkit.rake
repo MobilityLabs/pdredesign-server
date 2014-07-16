@@ -15,15 +15,15 @@ namespace :db do
               {
                 title: 'Key Information Gathering' ,
                 tools: [
-                  {title: 'Readiness Assessment', url: 'test', description: 'The PD Readiness Assessment consists of 28 questions that support team engagement in a candid cross-functional discussion about PD using a common language, and the development of a shared team view to identify the elements to be strengthened or leveraged to support a PD system redesign effort.'},
+                  {title: 'Readiness Assessment', url: '/#/assessments', description: 'The PD Readiness Assessment consists of 28 questions that support team engagement in a candid cross-functional discussion about PD using a common language, and the development of a shared team view to identify the elements to be strengthened or leveraged to support a PD system redesign effort.'},
                   {title: 'Initiative Inventory', url: nil}
                 ]
               },
               {
                 title: 'Deep Dive Diagnostics' ,
                 tools: [
-                  {title: 'End User Survey', url: nil},
-                  {title: 'Technology Diagnostic Product Inventories', url: nil},
+                  {title: 'End User Survey', description: 'This survey is designed to understand the end user’s (i.e. teacher’s) points of view on the current state of Professional Development (PD) as well as their desired future state.', url: nil},
+                  {title: 'Technology Diagnostic Product Inventories', description: 'The tool helps districts identify the gaps in their data, delivery and product lines so that purchasing and integration priorities can be established. The language and terminology of the information gathering template and the output of the technology diagnostic are based on the D2S framework.', url: nil},
                   {title: 'Time Diagnostic', url: nil},
                   {title: 'Financial Systems & Budget', url: nil},
                   {title: 'Allocation Diagnostic', url: nil},
@@ -74,8 +74,8 @@ namespace :db do
               {
                 title: 'RFP Development',
                 tools: [
-                  {title: 'RFP Guidelines', url: nil},
-                  {title: 'Demand-to-Supply Framework', url: nil},
+                  {title: 'RFP Guidelines', description:'This document provides a list of considerations for the districts to help improve communication among the districts, vendors, and other stakeholders of the PD marketplace.', url: nil},
+                  {title: 'Demand-to-Supply Framework', description: 'This framework establishes a view of the processes, technologies, and actors involved in the delivery of PD, centered around core PD use cases and provides a means of classifying products and services that support PD functions.', url: nil},
                 ]
               },
               {

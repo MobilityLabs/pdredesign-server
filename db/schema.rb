@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707222136) do
+ActiveRecord::Schema.define(version: 20140716170009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "access_requests", force: true do |t|
+    t.integer  "assessment_id"
+    t.integer  "user_id"
+    t.string   "roles",         default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
 
   create_table "answers", force: true do |t|
     t.integer  "value"
@@ -264,6 +273,34 @@ ActiveRecord::Schema.define(version: 20140707222136) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
+  create_table "tool_categories", force: true do |t|
+    t.string  "title"
+    t.integer "display_order"
+    t.integer "tool_phase_id"
+  end
+
+  create_table "tool_phases", force: true do |t|
+    t.string  "title"
+    t.text    "description"
+    t.integer "display_order"
+  end
+
+  create_table "tool_subcategories", force: true do |t|
+    t.string  "title"
+    t.integer "display_order"
+    t.integer "tool_category_id"
+  end
+
+  create_table "tools", force: true do |t|
+    t.string  "title"
+    t.text    "description"
+    t.string  "url"
+    t.boolean "is_default"
+    t.integer "display_order"
+    t.integer "tool_subcategory_id"
+    t.integer "user_id"
+  end
 
   create_table "user_invitations", force: true do |t|
     t.string  "first_name"

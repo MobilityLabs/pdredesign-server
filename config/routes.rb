@@ -36,6 +36,9 @@ PdrServer::Application.routes.draw do
 
     get  'districts/search',  to: 'districts#search'
     
+    get  '/organizations/search', to: 'organizations#search'
+    resources  :organizations, only: :show
+    
     post 'invitations/:token', to: 'invitations#redeem'
     get  'invitations/:token', to: 'invitations#show'
 

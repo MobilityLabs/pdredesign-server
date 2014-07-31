@@ -12,6 +12,7 @@ PdrServer::Application.routes.draw do
     resources  :district_messages, only: [:create]
     resources  :tools, only: [:index, :create]
     resources  :rubrics, only: :index
+    resources  :categories, only: :index
     resources  :prospective_users, only: :create
     resources  :assessments, only: [:index, :show, :update, :create] do
       get 'report', to: 'report#show'

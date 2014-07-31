@@ -30,13 +30,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   include Authority::UserAbilities
-
   has_many :assessments, through: :participants
   has_many :participants
   has_many :rubrics
   has_many :feedbacks
   has_many :tools
 
+  has_and_belongs_to_many :organizations
   has_and_belongs_to_many :districts
 
   validates :first_name, presence: true

@@ -16,3 +16,9 @@ json.districts do
   json.partial! 'v1/shared/districts',
     districts: fetch_districts(user.district_ids)
 end
+if user.organizations.present?
+  json.organization do
+    json.partial! 'v1/shared/organization',
+      organization: user.organizations.first
+  end
+end

@@ -92,6 +92,7 @@ class V1::UserController < ApplicationController
               :team_role,
               :role,
               :password,
-              :password_confirmation)
+              :password_confirmation,
+              :organizations => :categories)
   end
 end

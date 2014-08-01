@@ -1,5 +1,5 @@
 class V1::UserController < ApplicationController
-  before_action :authenticate_user!, except: [:create, :reset, :request_reset]
+  # before_action :authenticate_user!, except: [:create, :reset, :request_reset]
 
   def show
     render partial: 'v1/shared/user', locals: { user: current_user }
@@ -22,7 +22,8 @@ class V1::UserController < ApplicationController
     @user = current_user
 
     update_params = user_params
-    update_params[:district_ids] = district_ids
+    update_params[:district_ids] = the_ids(:district_ids)
+    update_params[:organization_ids] = the_ids(:organization_ids)
 
     if current_user.update(update_params)
       render partial: 'v1/shared/user', locals: { user: current_user }
@@ -53,10 +54,6 @@ class V1::UserController < ApplicationController
   end
 
   private
-  def district_ids 
-    return '' unless params[:district_ids]
-    params[:district_ids].split(",")
-  end
 
   def hash
     SecureRandom.hex[0..9]
@@ -93,6 +90,6 @@ class V1::UserController < ApplicationController
               :role,
               :password,
               :password_confirmation,
-              :organizations => :categories)
+              :organization_ids)
   end
 end

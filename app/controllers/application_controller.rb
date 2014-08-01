@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
   def verified_request?
     super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
   end
+  def the_ids symbol
+    return '' unless params[symbol]
+    params[symbol].split(",")
+  end
 end

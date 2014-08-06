@@ -1,2 +1,2 @@
-json.partial! 'v1/organizations/organization',
-  organization: @organization
+json.name @organization.name
+json.id @organization.id

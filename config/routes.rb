@@ -2,13 +2,15 @@ PdrServer::Application.routes.draw do
   mount PdrClient::Engine, at: "/", as: :pdr_client
   mount RailsAdmin::Engine, at: '/admin', as: 'rails_admin'
 
-  devise_for :users, path: 'v1/users', controllers: { 
-    sessions: 'v1/sessions', 
-    registrations: 'devise/registrations', 
+  devise_for :users, path: 'v1/users', controllers: {
+    sessions: 'v1/sessions',
+    registrations: 'devise/registrations',
     invitations: 'devise/invitations' },
-    defaults: { format: :json} 
+    defaults: { format: :json}
 
   namespace :v1, defaults: { format: :json } do
+    get  '/organizations/search', to: 'organizations#search'
+    resources  :organizations, only: [:create,:update,:show, :index]
     resources  :district_messages, only: [:create]
     resources  :tools, only: [:index, :create]
     resources  :rubrics, only: :index
@@ -35,10 +37,6 @@ PdrServer::Application.routes.draw do
     post 'user/request_reset', to: 'user#request_reset'
 
     get  'districts/search',  to: 'districts#search'
-    
-    get  '/organizations/search', to: 'organizations#search'
-    resources  :organizations, only: [:create,:update,:show]
-    
     post 'invitations/:token', to: 'invitations#redeem'
     get  'invitations/:token', to: 'invitations#show'
 

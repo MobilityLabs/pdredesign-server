@@ -11,7 +11,8 @@
 
 class Category < ActiveRecord::Base
   belongs_to :axis
-	has_many :questions
+  has_many :questions
+  has_and_belongs_to_many :organizations
 
 	def rubric_questions(rubric)
     Question

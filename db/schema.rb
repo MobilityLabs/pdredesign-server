@@ -11,10 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716200235) do
+ActiveRecord::Schema.define(version: 20140731150132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
+  enable_extension "uuid-ossp"
+  enable_extension "pg_trgm"
 
   create_table "access_requests", force: true do |t|
     t.integer  "assessment_id"
@@ -76,6 +79,11 @@ ActiveRecord::Schema.define(version: 20140716200235) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "axis_id"
+  end
+
+  create_table "categories_organizations", id: false, force: true do |t|
+    t.integer "category_id",     null: false
+    t.integer "organization_id", null: false
   end
 
   create_table "delayed_jobs", force: true do |t|
@@ -178,6 +186,16 @@ ActiveRecord::Schema.define(version: 20140716200235) do
     t.string  "network"
     t.integer "district_ids", array: true
     t.string  "specialize",   array: true
+  end
+
+  create_table "organizations", force: true do |t|
+    t.string "name"
+    t.string "logo"
+  end
+
+  create_table "organizations_users", id: false, force: true do |t|
+    t.integer "organization_id", null: false
+    t.integer "user_id",         null: false
   end
 
   create_table "participants", force: true do |t|

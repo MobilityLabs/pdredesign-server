@@ -14,7 +14,11 @@ class V1::OrganizationsController < ApplicationController
     @organization = find_organization
     update_params = organization_params
     @organization.update(update_params)
-    render nothing: true
+
+    unless @organization.save
+      @errors = @organization.errors
+      render 'v1/shared/errors' , errors: @errors, status: 422
+    end
   end
 
   def search
@@ -31,6 +35,6 @@ class V1::OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.permit(:query, :name, :logo, :category_ids)
+    params.permit(:query, :id, :name, :logo, :category_ids=>[])
   end
 end

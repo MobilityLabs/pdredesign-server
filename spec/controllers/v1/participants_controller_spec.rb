@@ -38,7 +38,20 @@ describe V1::ParticipantsController do
 
   end
 
-  context '#new' do
+  context '#create' do
+    it 'sends an invite when :send_invite is present' do
+      sign_in @facilitator
+
+      double = double("AssessmentMailer")
+
+      expect(double).to receive(:deliver)
+      expect(AssessmentsMailer).to receive(:assigned).and_return(double)
+
+      other = Assessment.find_by_name("Assessment 1")
+      post :create, assessment_id: other.id, user_id: @user.id, send_invite: true
+      assert_response :success
+    end
+
     it 'can create a participant' do
       sign_in @facilitator
 

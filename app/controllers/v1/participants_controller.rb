@@ -3,7 +3,11 @@ class V1::ParticipantsController < ApplicationController
   authorize_actions_for :assessment
 
   def create
-    Participant.create!(participant_params)
+    params      = participant_params
+    send_invite = params.delete(:send_invite) 
+    participant = Participant.create!(params)
+
+    send_participant_assigned_email(participant) if send_invite
     render nothing: true
   end
   authority_actions create: 'update'
@@ -28,6 +32,13 @@ class V1::ParticipantsController < ApplicationController
   authority_actions all: 'update'
 
   protected
+
+  def send_participant_assigned_email(participant) 
+    AssessmentsMailer
+      .assigned(assessment, participant)
+      .deliver
+  end
+
   def users_from_district(assessment)
     district_id = assessment.district_id
     user_ids    = assessment.participants.pluck(:user_id)
@@ -39,7 +50,7 @@ class V1::ParticipantsController < ApplicationController
   end
 
   def participant_params
-    params.permit(:assessment_id, :user_id, :id)
+    params.permit(:assessment_id, :user_id, :id, :send_invite)
   end
 
   def assessment

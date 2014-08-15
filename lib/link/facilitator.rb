@@ -7,10 +7,21 @@ module Link
     end
 
     def execute
-      { dashboard: dashboard, consensus: consensus, report: report }
+      {consensus: consensus, report: report }.tap do |links|
+        if(assessment.status == :draft)
+          links[:finish]    =  finish
+        else
+          links[:dashboard] = dashboard
+        end
+      end
+
     end
 
     private
+    def finish
+      {title: 'Finish & Assign', active: true, type: :finish}
+    end
+
     def dashboard
       {title: 'Dashboard', active: true, type: :dashboard}
     end

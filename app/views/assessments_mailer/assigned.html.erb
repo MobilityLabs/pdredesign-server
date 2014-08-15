@@ -342,7 +342,8 @@ background: #CC0000 !important;
 
                             </td>
                             <td class="six sub-columns last" style="text-align: right; vertical-align: middle; word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; min-width: 0px; width: 50%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 5px;" align="right" valign="middle">
-                              <img src="http://staging.pdredesign.org/assets/logo-0e81dff463f7d8bd258f439b0d4d5a52.png" style="float: right; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both; display: block;" align="right"/></td>
+                              <%= image_tag('logo.png', style: "float: right; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both; display: block;", align:"right") %>
+                              </td>
                             <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
                           </tr></table></td>
                     </tr></table></center>
@@ -355,27 +356,12 @@ background: #CC0000 !important;
                   <tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 20px !important;" align="left" valign="top">
 
                       <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="left" valign="top">
-                            <p style="font-size: 28px; font-weight: bold; color: #2d3a40; font-family: 'Helvetica', 'Arial', sans-serif; text-align: center; line-height: 19px; margin: 20px 0px; padding: 0;" align="left">Assessment Reminder!</p>
+                            <p style="font-size: 28px; font-weight: bold; color: #2d3a40; font-family: 'Helvetica', 'Arial', sans-serif; text-align: center; line-height: 19px; margin: 20px 0px; padding: 0;" align="left">Invitation to participate in the Readiness Assessment</p>
                             
-                            <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><strong>Hi <%= @participant_name %></strong>, your response on the assessment <strong><%= @assessment_name %></strong> is due on...</p>
+                            <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><strong>Hi <%= @participant_name %></strong>, you have been invited to <strong><%= @assessment_name %></strong></p>
 
 
-                            <div style="background-color: #c4dbe1;padding: 40px 10px 10px;width: 40%;margin: 30px auto;">
-                              <div style="background-color: #f7f8fa;text-align: center;">
-                                <p style="color: #6f7d7d;font-size: 24px;font-weight: 300;line-height: 1.4em;"><%= @assessment_due_day %></p>
-                                <p style="font-size: 79px;font-weight: 800;color: #178c9e;line-height: 0.1em;margin: 0.6em;"><%= @assessment_due_date %></p>
-                                <p style="color: #6f7d7d;font-size: 24px;font-weight: 300;line-height: 1.4em;"><%= @assessment_due_month %></p>
-                              </div>
-                            </div>
 
-                          </td>
-                        </tr></table>
-
-                        <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto 5px; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="two sub-columns" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; min-width: 0px; width: 16.666666%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 10px 10px 0px;" align="left" valign="top">
-                            <img src="<%= @owner_image %>" style="float: right; border-radius: 50%; vertical-align: middle; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both; display: block;" align="right"/></td>
-
-                          <td class="ten sub-columns last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; min-width: 0px; width: 83.333333%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="left" valign="top">
-                            <p style="font-size: 22px; line-height: 1.4em; color: #2d3a40; font-weight: bold; font-family: 'Helvetica', 'Arial', sans-serif; text-align: left; margin: 0 0 10px; padding: 0;" align="left"><span style="color: #8b1b2f;"><%= @owner_name %></span> is waiting for you to complete your response on <%= @assessment_name %> for <%= @assessment_district%></p>
                           </td>
                         </tr></table>
 
@@ -383,7 +369,7 @@ background: #CC0000 !important;
 
                         <p style="text-align: center; font-family: sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; color: #222222; margin: 10px 0px 30px; padding: 0;" align="center"><a href="<%= @assessment_url %>" target="_blank" style="color: #f3e1d4; border-radius: 4px; text-decoration: none; font-size: 16px; font-family: sans-serif; background: #a51e29; padding: 10px;">View Assessment Now</a></p>
 
-                          <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><%= @reminder_message %></p>
+                          <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><%= @message %></p>
 
                           </td>
                           <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>

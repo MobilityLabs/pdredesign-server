@@ -6,12 +6,33 @@ describe Link::Facilitator do
   let(:assessment) { @assessment_with_participants }
   let(:subject)    { Link::Facilitator }
 
+  before do
+    allow(assessment).to receive(:status).and_return(:consensus)
+  end
+
   def links
     subject.new(assessment).execute
   end
 
+  it 'returns a dashboard link when an assessment is not a draft' do
+    allow(assessment).to receive(:status).and_return(:assessment)
+
+    expect(links[:dashboard][:title]).to  eq("Dashboard")
+    expect(links[:dashboard][:active]).to eq(true)
+    expect(links[:dashboard][:type]).to   eq(:dashboard)   
+
+
+    allow(assessment).to receive(:status).and_return(:draft)
+
+    expect(links[:dashboard]).to be_nil
+
+    expect(links[:finish][:title]).to  eq("Finish & Assign")
+    expect(links[:finish][:active]).to eq(true)
+    expect(links[:finish][:type]).to   eq(:finish)
+  end
+
   describe 'dashboard' do
-    it 'always returns a dashboard link' do
+    it 'returns a dashboard link' do
       expect(links[:dashboard][:title]).to  eq("Dashboard")
       expect(links[:dashboard][:active]).to eq(true)
       expect(links[:dashboard][:type]).to   eq(:dashboard)

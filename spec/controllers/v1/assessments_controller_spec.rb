@@ -65,6 +65,14 @@ describe V1::AssessmentsController do
       expect(@participant.invited_at).not_to be_nil
       expect(@participant2.invited_at).not_to be_nil
     end
+
+    it 'sends the invitation email to all participants' do
+      expect(AllParticipantsNotificationWorker).to receive(:perform_async)
+        .with(assessment.id)
+
+      put :update, assign: true, id: assessment.id, rubric_id: 42
+      assert_response :success
+    end
   end
 
   context '#show' do

@@ -50,6 +50,7 @@ class V1::AssessmentsController < ApplicationController
   private
   def invite_all_users(assessment)
     assessment.participants.update_all(invited_at: Time.now)
+    AllParticipantsNotificationWorker.perform_async(assessment.id)
   end
 
   def pick_rubric

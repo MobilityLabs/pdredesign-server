@@ -13,4 +13,8 @@ module ApplicationHelper
   def fetch_districts(district_ids)
     District.where(id: district_ids)
   end
+
+  def fetch_organization(organization_id)
+    Organization.where(id: organization_id)
+  end
 end

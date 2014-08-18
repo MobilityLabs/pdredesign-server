@@ -5,39 +5,36 @@ class V1::OrganizationsController < ApplicationController
     authorize_action_for Organization
     @organization = Organization.new(organization_params)
 
-    unless @organization.save
-      @errors = @organization.errors
-      render 'v1/shared/errors' , errors: @errors, status: 422
-    end
+    render_errors(@organization.errors) unless @organization.save
   end
 
   def update
     @organization = find_organization
     authorize_action_for @organization
 
-    update_params = organization_params
-    @organization.update(update_params)
-
-    unless @organization.save
-      @errors = @organization.errors
-      render 'v1/shared/errors' , errors: @errors, status: 422
-    end
+    @organization.update(organization_params)
+    render_errors(@organization.errors) unless @organization.save
   end
 
   def search
-    @results = Organization.search(organization_params[:query])
+    @results = Organization.search(params[:query])
   end
 
   def show
-    @organization = Organization.find(params[:id])
+    @organization = find_organization
   end
 
   private
+  def render_errors(errors)
+    @errors = errors
+    render 'v1/shared/errors', status: 422
+  end
+
   def find_organization
     Organization.find(params[:id])
   end
 
   def organization_params
-    params.permit(:query, :id, :name, :logo, :category_ids=>[])
+    params.permit(:name, :logo, :category_ids=>[])
   end
 end

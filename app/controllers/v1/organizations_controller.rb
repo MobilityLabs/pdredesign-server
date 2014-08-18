@@ -2,6 +2,7 @@ class V1::OrganizationsController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    authorize_action_for Organization
     @organization = Organization.new(organization_params)
 
     unless @organization.save
@@ -12,6 +13,8 @@ class V1::OrganizationsController < ApplicationController
 
   def update
     @organization = find_organization
+    authorize_action_for @organization
+
     update_params = organization_params
     @organization.update(update_params)
 

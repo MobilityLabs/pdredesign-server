@@ -8,6 +8,8 @@
 #
 
 class Organization < ActiveRecord::Base
+  include Authority::Abilities
+  
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :users
 

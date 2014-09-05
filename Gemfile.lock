@@ -193,6 +193,10 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.9.2)
+    launchy (2.4.2)
+      addressable (~> 2.3)
+    letter_opener (1.2.0)
+      launchy (~> 2.2)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mandrill-api (1.0.52)
@@ -421,6 +425,7 @@ DEPENDENCIES
   foreman
   jbuilder (~> 1.2)
   jquery-rails
+  letter_opener
   mandrill-api
   mandrill_mailer
   mini_magick

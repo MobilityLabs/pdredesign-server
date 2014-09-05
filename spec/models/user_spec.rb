@@ -32,6 +32,13 @@ describe User do
     User.new(opts)
   end
 
+  context '#avatar' do
+    it 'returns a default user avatar' do
+      user = new_user() 
+      expect(user.avatar).to eq('/assets/default.png')
+    end
+  end
+
   context '#network_partner?' do
     it 'returns true when a user is a network partner' do
       user = new_user(role: :network_partner)

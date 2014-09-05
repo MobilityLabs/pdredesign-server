@@ -197,8 +197,17 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.2.0)
       launchy (~> 2.2)
+<<<<<<< HEAD
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
+=======
+    letter_opener_web (1.2.2)
+      letter_opener (~> 1.0)
+      rails (>= 3.2)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+>>>>>>> Added letter opener web
     mandrill-api (1.0.52)
       excon (>= 0.16.0, < 1.0)
       json (>= 1.7.7, < 2.0)
@@ -426,6 +435,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   letter_opener
+  letter_opener_web
   mandrill-api
   mandrill_mailer
   mini_magick

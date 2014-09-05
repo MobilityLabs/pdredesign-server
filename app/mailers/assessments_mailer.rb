@@ -1,6 +1,5 @@
-class AssessmentsMailer < ActionMailer::Base
-  default from: 'support@pdredesign.org'
-  default from_name: 'PDredesign'
+class AssessmentsMailer < ApplicationMailer
+
 
   def assigned(assessment, participant)
     @assessment_name      = assessment.name 

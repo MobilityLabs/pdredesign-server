@@ -1,6 +1,4 @@
-class NotificationsMailer < ActionMailer::Base
-  default from: 'support@pdredesign.org'
-  default from_name: 'PD Redesign'
+class NotificationsMailer < ApplicationMailer
 
   def signup(user)
 

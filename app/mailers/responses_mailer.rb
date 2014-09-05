@@ -1,6 +1,4 @@
-class ResponsesMailer < ActionMailer::Base
-  default from: 'support@pdredesign.org'
-  default from_name: 'PD Redesign'
+class ResponsesMailer < ApplicationMailer
 
   def submitted(response)
     assessment        = response.responder.assessment

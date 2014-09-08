@@ -74,9 +74,11 @@
                   <table class="twelve columns" id="table_0311_7">
                     <tr align="left" id="tr_0311_9">
                       <td align="left" id="td_0311_12" valign="top">
-                        <p id="p_0311_6" style="text-align: center"><a href="%3C%=%20@assessment_url%20%%3E" style=
-                        "color: #f3e1d4; border-radius: 4px; text-decoration: none; font-size: 16px; font-family: sans-serif; background: #a51e29; padding: 10px;" target="_blank">View Assessment
-                        Now</a></p>
+                        <p id="p_0311_6" style="text-align: center">
+                        <%= link_to('View Assessment Now',
+                          @assessment_url,
+                          style: "color: #f3e1d4; border-radius: 4px; text-decoration: none; font-size: 16px; font-family: sans-serif; background: #a51e29; padding: 10px;") %>
+                        </p>
 
                         <p id="p_0311_7" style="text-align: left"><%= @reminder_message %></p>
                       </td>

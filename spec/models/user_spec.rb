@@ -35,7 +35,7 @@ describe User do
   context '#avatar' do
     it 'returns a default user avatar' do
       user = new_user() 
-      expect(user.avatar).to eq('/assets/default.png')
+      expect(user.avatar).to eq('/images/default.png')
     end
   end
 

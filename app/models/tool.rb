@@ -15,12 +15,12 @@
 class Tool < ActiveRecord::Base
   belongs_to :tool_subcategory
   belongs_to :user
+  belongs_to :tool_category
 
   has_one    :tool_category, through: :tool_subcategory
   has_many   :districts, through: :user
 
   validates :title, presence: true
-  validates :tool_subcategory, presence: true
 
   scope :the_defaults, -> { where(is_default: true) }
 end

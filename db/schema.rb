@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731150132) do
+ActiveRecord::Schema.define(version: 20140908130430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,6 +341,7 @@ ActiveRecord::Schema.define(version: 20140731150132) do
     t.integer "display_order"
     t.integer "tool_subcategory_id"
     t.integer "user_id"
+    t.integer "tool_category_id"
   end
 
   create_table "user_invitations", force: true do |t|

@@ -20,7 +20,7 @@ class V1::ToolsController < ApplicationController
   end
 
   def tools_for(subcategory)
-    default_tools(subcategory) + 
+    default_tools(subcategory) +
     subcategory
       .tools
       .joins(:districts)
@@ -34,6 +34,6 @@ class V1::ToolsController < ApplicationController
   end
 
   def tool_create_params
-    params.permit(:title, :description, :url, :tool_subcategory_id)
+    params.permit(:title, :description, :url, :tool_subcategory_id, :tool_category_id)
   end
 end

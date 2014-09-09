@@ -14,8 +14,8 @@
 
 class Tool < ActiveRecord::Base
   belongs_to :tool_subcategory
-  belongs_to :user
   belongs_to :tool_category
+  belongs_to :user
 
   has_one    :tool_category, through: :tool_subcategory
   has_many   :districts, through: :user

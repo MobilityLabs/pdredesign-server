@@ -48,6 +48,20 @@ describe V1::ToolsController do
       expect(tool[:tool_subcategory_id]).to eq(subcategory.id)
     end
 
+    it 'can create a tool with a category id' do
+      phase    = ToolPhase.create(title: 'test', description: 'description') 
+      category = ToolCategory.create(title: 'category', tool_phase: phase)
+
+      post :create, title: 'expected title',
+        description: 'some description',
+        url: 'http://www.google.com',
+        tool_category_id: category.id
+
+      tool = Tool.find_by(title: 'expected title')
+      expect(tool).not_to be_nil
+      expect(tool[:tool_category_id]).to eq(category.id)
+    end
+
     it 'returns errors when tool cant be saved' do
       post :create
       expect(json["errors"]).not_to be_empty

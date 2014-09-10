@@ -73,7 +73,7 @@ class V1::AssessmentsController < ApplicationController
 
   def welcome_message
     OpenStruct.new(id: nil,
-      category: "welcome", 
+      category: "welcome",
       sent_at:  assessment.updated_at,
       teaser:  assessment.message)
   end
@@ -83,7 +83,7 @@ class V1::AssessmentsController < ApplicationController
   end
 
   def assessment_params
-    params.permit(:rubric_id, :name, :meeting_date, :due_date, :message, :assign, :district_id)
+    params.permit(:rubric_id, :name, :meeting_date, :due_date, :message, :assign, :district_id, :report_takeaway)
   end
 
   def assessment

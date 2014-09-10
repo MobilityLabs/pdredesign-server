@@ -8,6 +8,7 @@ json.updated_at        assessment.updated_at
 json.created_at        assessment.created_at
 json.status            assessment.status
 json.rubric_id         assessment.rubric_id
+json.report_takeaway   assessment.report_takeaway
 json.message           assessment.message || default_assessment_message
 json.owner             (assessment.user.id == current_user.id)
 
@@ -16,7 +17,7 @@ if assessment.consensus
     json.id           assessment.consensus.id
     json.submitted_at assessment.consensus.submitted_at
     json.is_completed assessment.fully_complete?
-  end 
+  end
 end
 
 json.participant_count   assessment.participants.count
@@ -24,7 +25,7 @@ json.percent_completed   assessment.percent_completed
 json.completed_responses assessment.participant_responses.count
 
 json.messages @messages, :id, :category, :teaser, :sent_at do |message|
-  json.id       message.id 
+  json.id       message.id
   json.category message.category
   json.teaser   sanitize(message.teaser, tags: [])
   json.sent_at  message.sent_at

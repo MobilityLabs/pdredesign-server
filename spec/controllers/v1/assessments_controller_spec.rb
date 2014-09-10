@@ -24,13 +24,15 @@ describe V1::AssessmentsController do
                     name: 'some assessment',
                     due_date: time,
                     message: 'My message',
-                    another_value: 'something'}
+                    another_value: 'something',
+                    report_takeaway: 'The takeaway'}
 
       assessment.reload
       expect(assessment.rubric_id).to eq(42)
       expect(assessment.name).to eq('some assessment')
       expect(assessment.message).to eq('My message')
       expect(assessment.due_date).to eq(time.to_s)
+      expect(assessment.report_takeaway).to eq('The takeaway')
     end
 
     it 'only allows the owner to update' do
@@ -227,6 +229,14 @@ describe V1::AssessmentsController do
 
       expect(json["message"].empty?).to eq(false)
     end
+
+    it 'returns the report_takeaway field' do
+      assessment.update(report_takeaway: 'expected takeaway')
+
+      get :show, id: assessment.id
+      expect(json["report_takeaway"]).to eq('expected takeaway')
+    end
+
   end
 
   context '#create' do

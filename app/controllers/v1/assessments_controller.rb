@@ -83,7 +83,8 @@ class V1::AssessmentsController < ApplicationController
   end
 
   def assessment_params
-    params.permit(:rubric_id, :name, :meeting_date, :due_date, :message, :assign, :district_id, :report_takeaway)
+    params.permit(:rubric_id, :name, :meeting_date, :due_date,
+      :message, :assign, :district_id, :report_takeaway)
   end
 
   def assessment

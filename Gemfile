@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'yajl-ruby'
 gem 'devise', '~> 3.2'
-gem 'devise_masquerade'
 gem 'bcrypt', '~> 3.1.7'
 gem 'activerecord-session_store'
 gem 'sidekiq'
@@ -28,11 +27,8 @@ gem 'mandrill_mailer'
 
 gem 'descriptive-statistics'
 
-gem 'premailer-rails'
-gem 'zurb-ink-rails', '~> 1.0.5'
-
-gem 'pdr_client', git: 'https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git'
-# gem 'pdr_client', path: '../pdr-client'
+#gem 'pdr_client', git: 'https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git'
+gem 'pdr_client', path: '../pdr-client'
 
 group :development, :test do
   gem 'foreman'
@@ -44,8 +40,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'
-  gem 'letter_opener'
-  gem 'letter_opener_web'
 end
 
 group :test do

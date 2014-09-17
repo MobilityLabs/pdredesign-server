@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(version: 20140916175631) do
   end
 
   create_table "walk_through_slides", force: true do |t|
+    t.string   "title"
     t.string   "type"
     t.text     "content"
     t.text     "sidebar_content"

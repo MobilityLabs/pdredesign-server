@@ -405,7 +405,7 @@ ActiveRecord::Schema.define(version: 20140916175631) do
     t.string   "type"
     t.text     "content"
     t.text     "sidebar_content"
-    t.string   "url"
+    t.string   "image"
     t.integer  "container_id"
     t.datetime "created_at"
     t.datetime "updated_at"

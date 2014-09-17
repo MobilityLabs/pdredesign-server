@@ -11,7 +11,7 @@ class CreateWalkThrough < ActiveRecord::Migration
       t.string :type
       t.text   :content
       t.text   :sidebar_content
-      t.string :url
+      t.string :image
       t.belongs_to :container
 
       t.timestamps

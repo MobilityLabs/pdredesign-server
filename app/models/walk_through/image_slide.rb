@@ -1,3 +1,3 @@
 class WalkThrough::ImageSlide < WalkThrough::Slide
-  mount_uploader :url, SlideUploader
+  mount_uploader :image, SlideUploader
 end

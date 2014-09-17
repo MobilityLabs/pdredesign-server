@@ -1,3 +1,4 @@
 class WalkThrough::Container < ActiveRecord::Base
-  has_many :slides, polymorphic: true
+  validates :title, presence: true
+  has_many :slides
 end

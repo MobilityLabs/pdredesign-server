@@ -7,6 +7,7 @@ class CreateWalkThrough < ActiveRecord::Migration
     end
 
     create_table :walk_through_slides do |t|
+      t.string :title
       t.string :type
       t.text   :content
       t.text   :sidebar_content

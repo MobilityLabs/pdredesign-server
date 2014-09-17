@@ -20,7 +20,7 @@ describe V1::WalkThroughsController do
     end
 
     it 'returns all the slides for this container' do
-      image_slide = WalkThrough::ImageSlide.create!(url: "http://www.google.com")
+      image_slide = WalkThrough::ImageSlide.create!(image: "http://www.google.com")
       html_slide  = WalkThrough::HtmlSlide.create!(content: "some content")
 
       @container.slides << image_slide
@@ -28,7 +28,7 @@ describe V1::WalkThroughsController do
 
       get :show, id: @container.id
       expect(json["slides"].count).to eq(2)
-      expect(json["slides"].first["url"]).to eq("http://www.google.com")
+      expect(json["slides"].first["image"]).to eq("http://www.google.com")
       expect(json["slides"].last["content"]).to eq("some content")
     end
   end

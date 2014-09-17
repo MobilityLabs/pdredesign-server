@@ -7,7 +7,24 @@ module DefaultWalkThrough
         title: "What is the Readiness Assessment?",
         image: "slide-0.gif",
         sidebar_content: "<p>The Readiness Assessment is a tool to support school districts to gather feedback from leaders and teachers about the current state of a professional development system and build consensus to redesign systems to meet the needs of educators and students.</p><p>This collaborative survey was co-designed with school districts to understand strengths and limitations across key areas of a professional development system.</p>"
+      },
+      {
+        title: "It starts with a survey",
+        image: "slide-1.gif",
+        sidebar_content: "<p>A team of individuals from different roles and departments rate the teacher professional development program in their district and provide evidence.</p>"
+      },
+      {
+        title: "Consensus is reached",
+        image: "slide-2.gif",
+        sidebar_content: "<p>After individuals have provided feedback, the team meets in person and discusses the responses to understand current strengths, limitations, and opportunities to deepen connections between departments to better support teachers.</p>"
+      },
+      {
+        title: "Results are reported",
+        image: "slide-3.gif",
+        sidebar_content: "<p>The Readiness Assessment tool will generate a shareable report summarizing the consensus discussion and suggesting next steps to improve PD programs in the district.</p>"
       }
+
+
     ]
   end
 

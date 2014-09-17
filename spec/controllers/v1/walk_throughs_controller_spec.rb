@@ -20,15 +20,18 @@ describe V1::WalkThroughsController do
     end
 
     it 'returns all the slides for this container' do
-      image_slide = WalkThrough::ImageSlide.create!(image: "http://www.google.com")
+      image_slide = WalkThrough::ImageSlide.create!
       html_slide  = WalkThrough::HtmlSlide.create!(content: "some content")
+
+      image_slide.image = File.open(Rails.root.join("spec", "fixtures", "files", "logo.png"))
+      image_slide.save!
 
       @container.slides << image_slide
       @container.slides << html_slide
 
       get :show, id: @container.id
       expect(json["slides"].count).to eq(2)
-      expect(json["slides"].first["image"]).to eq("http://www.google.com")
+      expect(json["slides"].first["image"]).to match(/logo\.png/)
       expect(json["slides"].last["content"]).to eq("some content")
     end
   end

@@ -1,5 +1,6 @@
-PATH
-  remote: ../pdr-client
+GIT
+  remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
+  revision: be8137bdab4c3998f8162399e3cbd4da6607bce2
   specs:
     pdr_client (1.0.0)
       angular-rails-templates (>= 0.1.3)
@@ -239,7 +240,7 @@ GEM
       rails (>= 3.1.0)
       sass-rails
       sprockets
-    rails-assets-angular (1.2.24)
+    rails-assets-angular (1.2.25)
     rails-assets-angular-bootstrap (0.11.0)
       rails-assets-angular (>= 1)
     rails-assets-angular-file-upload (1.1.1)
@@ -251,12 +252,12 @@ GEM
     rails-assets-angular-redactor (1.0.0)
       rails-assets-angular (>= 1.2.0)
       rails-assets-jquery (>= 2.0.0)
-    rails-assets-angular-resource (1.2.24)
-      rails-assets-angular (= 1.2.24)
-    rails-assets-angular-route (1.2.24)
-      rails-assets-angular (= 1.2.24)
-    rails-assets-angular-sanitize (1.2.24)
-      rails-assets-angular (= 1.2.24)
+    rails-assets-angular-resource (1.2.25)
+      rails-assets-angular (= 1.2.25)
+    rails-assets-angular-route (1.2.25)
+      rails-assets-angular (= 1.2.25)
+    rails-assets-angular-sanitize (1.2.25)
+      rails-assets-angular (= 1.2.25)
     rails-assets-angular-ui-router (0.2.11)
       rails-assets-angular (>= 1.0.8)
     rails-assets-angular-ui-utils (0.1.1)

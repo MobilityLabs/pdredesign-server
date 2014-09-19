@@ -4,8 +4,7 @@ class V1::WalkThroughsController < ApplicationController
   def viewed
     container = find_container(params[:walk_through_id])
 
-    WalkThrough::View.create!(user: current_user,
-                              walk_through_container: container) 
+    WalkThrough::View.create!(user: current_user, container: container) 
     render nothing: true
   end
 
@@ -18,5 +17,3 @@ class V1::WalkThroughsController < ApplicationController
     WalkThrough::Container.find(id)
   end
 end
-
-

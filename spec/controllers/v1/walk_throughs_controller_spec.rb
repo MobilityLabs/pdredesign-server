@@ -24,7 +24,7 @@ describe V1::WalkThroughsController do
     it 'creates a user walk through view record' do
       post :viewed, walk_through_id: @container.id
 
-      record = WalkThrough::View.find_by(walk_through_container: @container)
+      record = WalkThrough::View.find_by(container: @container)
       expect(record).not_to be_nil
     end
   end

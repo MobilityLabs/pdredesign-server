@@ -7,7 +7,6 @@ describe V1::WalkThroughsController do
     request.env["HTTP_ACCEPT"] = 'application/json'
   end
 
-
   describe '#show' do
     before do
       @container = WalkThrough::Container.create!(title: "example")

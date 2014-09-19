@@ -32,15 +32,33 @@ module DefaultWalkThrough
     File.open(Rails.root.join("lib", "tasks", "walk_throughs", path))
   end
 
+  def self.create_image_slide(slide)
+    new_slide = WalkThrough::ImageSlide.create(
+      title: slide[:title],
+      sidebar_content: slide[:sidebar_content])
+
+    new_slide.tap do
+      new_slide.image = open_image_file(slide[:image])
+      new_slide.save!
+    end
+  end
+
+  def self.create_image_slide(slide)
+    WalkThrough::HtmlSlide.create(
+      title: slide[:title],
+      sidebar_content: slide[:sidebar_content],
+      content: slide[:content])
+  end
+
   def self.create
     container = WalkThrough::Container.create(title: "What is the Readiness Assessment?")
     slides.each do |slide|
-      new_slide = WalkThrough::ImageSlide.create(
-                    title: slide[:title],
-                    sidebar_content: slide[:sidebar_content])
 
-      new_slide.image = open_image_file(slide[:image])
-      new_slide.save!
+      if slide[:image]
+        new_slide = create_image_slide(slide)
+      else
+        new_slide = create_html_slide(slide)
+      end
 
       container.slides << new_slide
       puts "Created #{slide[:title]}"

@@ -22,9 +22,12 @@ module DefaultWalkThrough
         title: "Results are reported",
         image: "slide-3.gif",
         sidebar_content: "<p>The Readiness Assessment tool will generate a shareable report summarizing the consensus discussion and suggesting next steps to improve PD programs in the district.</p>"
+      },
+      {
+        title: "Next Steps",
+        content: "<p>Some content here</p>",
+        sidebar_content: "<p>You've completed the basic overview! For more detailed information view the content on the left.</p>"
       }
-
-
     ]
   end
 
@@ -43,7 +46,7 @@ module DefaultWalkThrough
     end
   end
 
-  def self.create_image_slide(slide)
+  def self.create_html_slide(slide)
     WalkThrough::HtmlSlide.create(
       title: slide[:title],
       sidebar_content: slide[:sidebar_content],

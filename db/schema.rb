@@ -412,7 +412,7 @@ ActiveRecord::Schema.define(version: 20140919165711) do
   end
 
   create_table "walk_through_views", force: true do |t|
-    t.integer  "walk_through_container_id"
+    t.integer  "container_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

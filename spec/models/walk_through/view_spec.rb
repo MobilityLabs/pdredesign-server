@@ -5,6 +5,6 @@ describe WalkThrough::View do
 
   it 'can create a view record for a container' do
     @container = WalkThrough::Container.new(title: "Some title")
-    subject.create!(walk_through_container: @container)
+    subject.create!(container: @container)
   end
 end

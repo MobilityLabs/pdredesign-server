@@ -1,6 +1,39 @@
 require 'rake'
 
 module DefaultWalkThrough
+  def self.final_slide
+<<-END
+  <div class="info">
+    <p>
+      Learn more about leading the Readiness Assessment.
+    </p>
+    <a href="slide-5.html" class="btn btn-primary" role="button">Facilitator walkthrough</a>
+  </div>
+
+    <div class="info">
+    <p>
+      Lead the Readiness Assessment in your district.
+    </p>
+    <a href="#" ng-click="close()" class="btn btn-primary" role="button">Start an Assessment</a>
+  </div>
+
+    <div class="info">
+    <p>
+      Tell a colleague about the Readiness Assessment.
+    </p>
+    <a href="mailto:support@mail.pdredesign.org" class="btn btn-primary" role="button">Open Email</a>
+  </div>
+
+  <div class="info">
+    <p>
+      Have more questions?
+    </p>
+    <a href="#" ng-click="close()" class="btn btn-primary" role="button">FAQ</a>
+  </div>
+END
+
+  end
+
   def self.slides
     [
       {
@@ -25,7 +58,7 @@ module DefaultWalkThrough
       },
       {
         title: "Next Steps",
-        content: "<p>Some content here</p>",
+        content: self.final_slide,
         sidebar_content: "<p>You've completed the basic overview! For more detailed information view the content on the left.</p>"
       }
     ]

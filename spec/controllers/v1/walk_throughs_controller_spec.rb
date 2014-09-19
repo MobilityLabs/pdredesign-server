@@ -6,7 +6,8 @@ describe V1::WalkThroughsController do
   before :each do
     request.env["HTTP_ACCEPT"] = 'application/json'
 
-    sign_in Application::create_user
+    @user = Application::create_user
+    sign_in @user
   end
 
   describe '#viewed' do
@@ -26,6 +27,14 @@ describe V1::WalkThroughsController do
 
       record = WalkThrough::View.find_by(container: @container)
       expect(record).not_to be_nil
+    end
+
+    it 'does not create duplicate records' do
+      WalkThrough::View.create!(container: @container, user: @user)
+      post :viewed, walk_through_id: @container.id
+
+      record = WalkThrough::View.where(container: @container, user: @user)
+      expect(record.count).to eq(1)
     end
   end
 

@@ -1,4 +1,5 @@
-json.title @container.title
+json.title  @container.title
+json.viewed @viewed 
 json.slides @container.slides do |slide|
   json.title   slide.title
   json.image   slide.image && slide.image.url

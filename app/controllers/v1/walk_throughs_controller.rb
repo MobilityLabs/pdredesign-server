@@ -13,13 +13,17 @@ class V1::WalkThroughsController < ApplicationController
 
   def show
     @container = find_container(params[:id])
+    @viewed    = existing_record?(current_user, @container)
   end
 
   private
-  def existing_record?(user, container)
+  def existing_view_record(user, container)
     WalkThrough::View
       .where(user: user, container: container)
-      .present?
+  end
+
+  def existing_record?(*args)
+    existing_view_record(*args).present?
   end
 
   def find_container(id)

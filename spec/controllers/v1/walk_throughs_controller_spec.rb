@@ -49,6 +49,13 @@ describe V1::WalkThroughsController do
       expect(json["title"]).to eq("example")
     end
 
+    it 'returns if the user has viewed this walkthrough' do
+      WalkThrough::View.create!(container: @container, user: @user)
+
+      get :show, id: @container.id
+      expect(json["viewed"]).to eq(true)
+    end
+
     it 'returns all the slides for this container' do
       image_slide = WalkThrough::ImageSlide.create!
       html_slide  = WalkThrough::HtmlSlide.create!(content: "some content")

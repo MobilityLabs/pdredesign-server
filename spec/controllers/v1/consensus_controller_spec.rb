@@ -53,7 +53,7 @@ describe V1::ConsensusController do
 
     describe '#show' do
       it 'returns scores for provided team_role' do
-        get :show, assessment_id: assessment.id, consensus_id: 42, team_role: :stuff
+        get :show, assessment_id: assessment.id, id: 42, team_role: :stuff
         expect(assigns(:team_role)).to eq("stuff")
       end
     end

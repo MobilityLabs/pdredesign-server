@@ -221,13 +221,6 @@ class Assessment < ActiveRecord::Base
 		 responder: participants)
   end
 	
-	def consensus_responses
-		self
-		  .includes(:response)
-		  .where("responses.responder_type = 'Assessment' AND responses.submitted_at IS NOT NULL")
-		  .references(:responses)
-	end
-
 	def self.consensus_responses
 		Assessment
 	    .includes(:response)

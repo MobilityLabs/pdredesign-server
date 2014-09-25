@@ -1,5 +1,5 @@
 json.participant_count   @response.responder.participants.count
-json.scores scores_for_assessment(@response.responder) do |score|
+json.scores scores_for_assessment(@response.responder, @team_role) do |score|
   json.id          score.id
   json.value       score.value
   json.evidence    score.evidence

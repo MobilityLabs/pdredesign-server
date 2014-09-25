@@ -122,6 +122,14 @@ describe V1::UserController do
       expect(kim[:role]).to eq('member')
     end
 
+    it 'returns errors' do
+      post_create_user(email: 'some_invalid-email!!1one') 
+
+      assert_response 422
+      expect(json["errors"]).not_to be_nil
+    end
+
+
     it 'sets the user to the role provided' do
       post_create_user(role: :other)
 

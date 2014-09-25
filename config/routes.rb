@@ -26,6 +26,9 @@ PdrServer::Application.routes.draw do
       resources :participants, except: [:update, :show]
       resources :user_invitations, only: [:create]
       resources :consensus, except: [:delete, :index]
+      #route is trucated
+      get 'consensus/:id/:team_role', to: 'consensus#show'
+
       resources :responses, except: [:delete] do
         resources :scores, only: [:update, :create, :index]
       end

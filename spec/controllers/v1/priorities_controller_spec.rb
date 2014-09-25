@@ -64,6 +64,11 @@ describe V1::PrioritiesController do
       ]
     end
 
+    it 'assigns categories' do
+      get :index, assessment_id: assessment.id
+      expect(assigns(:categories)).to eq(fake_categories)
+    end
+
     it 'gets the order of the priority' do
       get :index, assessment_id: assessment.id
       assert_response :success

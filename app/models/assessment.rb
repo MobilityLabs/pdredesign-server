@@ -224,7 +224,8 @@ class Assessment < ActiveRecord::Base
 	def self.consensus_responses
 		Assessment
 	    .includes(:response)
-	    .where("responses.responder_type = 'Assessment' AND responses.submitted_at IS NOT NULL")
+	    .where("responses.responder_type = 'Assessment' " +
+             "AND responses.submitted_at IS NOT NULL")
 	    .references(:responses)
 	end
 

@@ -51,7 +51,14 @@ describe V1::ConsensusController do
       assert_template partial: 'v1/consensus/_consensus'
     end
 
-    context '#update' do
+    describe '#show' do
+      it 'returns scores for provided team_role' do
+        get :show, assessment_id: assessment.id, consensus_id: 42, team_role: :stuff
+        expect(assigns(:team_role)).to eq("stuff")
+      end
+    end
+
+    describe '#update' do
       it 'doesnt allow user to update' do
         sign_in @user
         put :update, assessment_id: assessment.id, id: 42, submit: true
@@ -70,7 +77,7 @@ describe V1::ConsensusController do
     end
   end
 
-  context '#create' do
+  describe '#create' do
     it 'requires a participant to create and owner' do
       sign_out :user
 

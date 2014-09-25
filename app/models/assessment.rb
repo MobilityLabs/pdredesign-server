@@ -165,7 +165,9 @@ class Assessment < ActiveRecord::Base
   end
 
   def scores_for_team_role(role)
-
+    Score
+      .includes(:response, :participant, :user)
+      .where(users: { team_role: role })
   end
 
   def response_scores

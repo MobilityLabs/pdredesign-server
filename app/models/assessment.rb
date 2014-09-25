@@ -160,9 +160,8 @@ class Assessment < ActiveRecord::Base
 		  .new(scores)
   end
 
-  def all_scores
-    response_scores
-      .where.not(value: nil)
+  def answered_scores
+    response_scores.where.not(value: nil)
   end
 
   def scores_for_team_role(role)

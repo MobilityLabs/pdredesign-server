@@ -1,6 +1,6 @@
 module ApplicationHelper
   def scores_for_assessment(assessment)
-    assessment.all_scores
+    assessment.answered_scores
   end
 
   def timestamp(date_time)

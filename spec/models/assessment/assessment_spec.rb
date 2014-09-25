@@ -128,7 +128,7 @@ describe Assessment do
     end
   end
   
-  describe '#all_scores' do
+  describe '#answered_scores' do
     let(:assessment) { @assessment_with_participants }
 
     before { create_magic_assessments }
@@ -140,7 +140,7 @@ describe Assessment do
     end
 
     it 'returns all the scores for an assessment' do
-      expect(assessment.all_scores.count).to eq(3)
+      expect(assessment.answered_scores.count).to eq(3)
     end
 
     it 'does not count Assessment scores' do
@@ -149,12 +149,12 @@ describe Assessment do
                       submitted_at: Time.now,
                       id: 42)
 
-      expect(assessment.all_scores.count).to eq(3)
+      expect(assessment.answered_scores.count).to eq(3)
     end
 
     it 'does not return nil scores' do
       Score.first.update(value: nil)
-      expect(assessment.all_scores.count).to eq(2)
+      expect(assessment.answered_scores.count).to eq(2)
     end
 
     describe '#scores_for_team_role' do

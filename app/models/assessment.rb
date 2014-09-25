@@ -161,14 +161,21 @@ class Assessment < ActiveRecord::Base
   end
 
   def all_scores
-    Score
-      .where(response_id: participant_responses.pluck(:id))
+    response_scores
       .where.not(value: nil)
   end
 
+  def scores_for_team_role(role)
+
+  end
+
   def response_scores
-    Score
-      .where(response_id: all_participant_responses.pluck(:id))
+    scores_for_response_ids(all_participant_responses.pluck(:id)) 
+  end
+
+  def scores_for_response_ids(response_ids)
+   Score
+    .where(response_id: response_ids)
   end
 
   def scores(question_id)
@@ -180,9 +187,8 @@ class Assessment < ActiveRecord::Base
 
 	def consensus_score(question_id)
     return unless response
-    Score
-      .find_by(question_id: question_id,
-               response_id: self.response.id).value
+    Score.find_by(question_id: question_id,
+                  response_id: self.response.id).value
 	end
 
   def responses(user)

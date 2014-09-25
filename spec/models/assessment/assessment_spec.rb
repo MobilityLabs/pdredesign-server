@@ -152,6 +152,11 @@ describe Assessment do
       expect(assessment.all_scores.count).to eq(3)
     end
 
+    it 'does not return nil scores' do
+      Score.first.update(value: nil)
+      expect(assessment.all_scores.count).to eq(2)
+    end
+
     describe '#scores_for_team_role' do
       let(:assessment) { @assessment_with_participants }
       before { create_magic_assessments }
@@ -165,11 +170,11 @@ describe Assessment do
       end     
 
       it 'returns scores for the specified :team_role' do
-        expect(assessment.scores_for_role(:worker)).to eq(0)
+        expect(assessment.scores_for_team_role(:worker).count).to eq(0)
 
         @user.update(team_role: :worker)
 
-        expect(assessment.scores_for_role(:worker)).to eq(3)
+        expect(assessment.scores_for_team_role(:worker).count).to eq(3)
       end
     end
 

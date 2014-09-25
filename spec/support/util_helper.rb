@@ -7,6 +7,8 @@ def no_active_record_error(record, field, error)
 end
 
 def create_struct
+  Response.find_by(id: 99).tap { |r| r.destroy if r }
+
   responder = Participant.create!(user: @user)
   rubric    = @rubric
   response  = Response.create!(

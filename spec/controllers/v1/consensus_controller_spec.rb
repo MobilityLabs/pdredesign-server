@@ -56,6 +56,11 @@ describe V1::ConsensusController do
         get :show, assessment_id: assessment.id, id: 42, team_role: :stuff
         expect(assigns(:team_role)).to eq("stuff")
       end
+
+      it 'assigns :team_roles' do
+        get :show, assessment_id: assessment.id, id: 42
+        expect(assigns(:team_roles)).not_to be_nil
+      end
     end
 
     describe '#update' do

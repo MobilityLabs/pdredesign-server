@@ -185,6 +185,29 @@ describe Assessment do
       end
     end
 
+    describe '#team_roles_for_scores' do
+      let(:assessment) { @assessment_with_participants }
+      before { create_magic_assessments }
+
+      before do
+       create_struct
+
+       Response
+         .find(99)
+         .update(responder: @participant, submitted_at: Time.now)
+      end      
+
+      it 'returns distinct roles for all answered scores participant' do
+        @user.update(team_role: :worker)
+        @user2.update(team_role: :worker)
+
+        expect(assessment.team_roles_for_participants).to eq(["worker"])
+
+        @user.update(team_role: :non_worker)
+        @user2.update(team_role: :worker)
+        expect(assessment.team_roles_for_participants).to eq(["non_worker", "worker"])
+      end
+    end
 
     describe '#scores' do
       it 'returns scores for a particular question id' do

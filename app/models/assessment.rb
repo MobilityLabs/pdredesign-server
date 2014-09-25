@@ -132,7 +132,6 @@ class Assessment < ActiveRecord::Base
     access_requests.where(user_id: user.id).present?
   end
 
-
 	def score_count(question_id, value)
     response_ids = participant_responses.pluck(:id)
 		Score.where(value: value,
@@ -168,6 +167,13 @@ class Assessment < ActiveRecord::Base
     answered_scores
       .includes(:response, :participant, :user)
       .where(users: { team_role: role })
+  end
+
+  def team_roles_for_participants
+    participants 
+      .joins(:user)
+      .pluck("users.team_role")
+      .uniq
   end
 
   def response_scores

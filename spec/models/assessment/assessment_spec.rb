@@ -185,7 +185,7 @@ describe Assessment do
       end
     end
 
-    describe '#team_roles_for_scores' do
+    describe '#team_roles_for_participants' do
       let(:assessment) { @assessment_with_participants }
       before { create_magic_assessments }
 

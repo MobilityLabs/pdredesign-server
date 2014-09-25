@@ -165,7 +165,7 @@ class Assessment < ActiveRecord::Base
   end
 
   def scores_for_team_role(role)
-    Score
+    answered_scores
       .includes(:response, :participant, :user)
       .where(users: { team_role: role })
   end
@@ -201,7 +201,7 @@ class Assessment < ActiveRecord::Base
 	## methods for participants
   #TODO: extract
 	def participant_responses
-      all_participant_responses
+    all_participant_responses
       .where.not(submitted_at: nil)
 	end
 

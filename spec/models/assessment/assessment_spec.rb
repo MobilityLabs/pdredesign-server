@@ -176,6 +176,13 @@ describe Assessment do
 
         expect(assessment.scores_for_team_role(:worker).count).to eq(3)
       end
+
+      it 'does not return nil scores' do
+        assessment.answered_scores.first.update(value: nil)
+
+        @user.update(team_role: :worker)
+        expect(assessment.scores_for_team_role(:worker).count).to eq(2)
+      end
     end
 
 

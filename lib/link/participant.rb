@@ -19,7 +19,7 @@ module Link
     end
 
     def response
-      {title: 'Vote Now', active: true, type: :response}
+      {title: 'Complete Survey', active: true, type: :response}
     end
 
     def report

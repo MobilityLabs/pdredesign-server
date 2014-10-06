@@ -19,7 +19,7 @@ describe Link::Facilitator do
 
     expect(links[:dashboard][:title]).to  eq("Dashboard")
     expect(links[:dashboard][:active]).to eq(true)
-    expect(links[:dashboard][:type]).to   eq(:dashboard)   
+    expect(links[:dashboard][:type]).to   eq(:dashboard)
 
 
     allow(assessment).to receive(:status).and_return(:draft)
@@ -43,7 +43,7 @@ describe Link::Facilitator do
     it 'returns a new consensus link when there isnt one' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:consensus][:title]).to  eq("Consensus")
+      expect(links[:consensus][:title]).to  eq("Create Consensus")
       expect(links[:consensus][:active]).to eq(true)
       expect(links[:consensus][:type]).to   eq(:new_consensus)
     end
@@ -70,6 +70,6 @@ describe Link::Facilitator do
       expect(links[:report][:active]).to eq(true)
     end
   end
-  
+
 end
 

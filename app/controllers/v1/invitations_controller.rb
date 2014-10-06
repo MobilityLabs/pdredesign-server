@@ -23,10 +23,11 @@ class V1::InvitationsController < ApplicationController
 
   private
   def permitted_params
-    params.permit :first_name, 
-      :last_name, 
+    params.permit :first_name,
+      :last_name,
       :email,
-      :password
+      :password,
+      :team_role
   end
 
   def invited_user

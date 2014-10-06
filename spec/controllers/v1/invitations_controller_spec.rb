@@ -53,6 +53,7 @@ describe V1::InvitationsController do
           token:      'expected_token',
           first_name: 'new',
           last_name:  'user',
+          team_role:  'teacher',
           email:      'some_other@email.com'
 
         assert_response :success
@@ -61,6 +62,7 @@ describe V1::InvitationsController do
 
         expect(@user.first_name).to eq('new')
         expect(@user.last_name).to eq('user')
+        expect(@user.team_role).to eq('teacher')
         expect(@user.email).to eq('some_other@email.com')
       end
 
@@ -91,7 +93,6 @@ describe V1::InvitationsController do
 
         expect(UserInvitation.find_by(token: 'expected_token')).to be_nil
       end
-
     end
   end
 

@@ -23,7 +23,7 @@ module Link
     end
 
     def dashboard
-      {title: 'Dashboard', active: true, type: :dashboard}
+      {title: 'View Dashboard', active: true, type: :dashboard}
     end
 
     def consensus
@@ -40,7 +40,7 @@ module Link
     end
 
     def report
-      {title: 'Report', active: consensus?, type: :report}
+      {title: 'View Report', active: consensus?, type: :report}
     end
 
     def consensus?

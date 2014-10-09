@@ -13,6 +13,8 @@ PdrServer::Application.routes.draw do
     defaults: { format: :json}
 
   namespace :v1, defaults: { format: :json } do
+    resources :faqs, only: [:index]
+
     get  '/organizations/search', to: 'organizations#search'
     resources  :organizations, only: [:create, :update, :show] do
       post 'logo', to: 'organizations#upload'

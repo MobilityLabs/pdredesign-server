@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id          :integer          not null, primary key
+#  headline    :string(255)
+#  content     :text
+#  order       :integer
+#  category_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  help_text   :text
+#
+
 require 'spec_helper'
 
 describe Question do

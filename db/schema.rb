@@ -11,13 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009141646) do
+ActiveRecord::Schema.define(version: 20141009150320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
-  enable_extension "uuid-ossp"
-  enable_extension "pg_trgm"
 
   create_table "access_requests", force: true do |t|
     t.integer  "assessment_id"
@@ -157,12 +154,23 @@ ActiveRecord::Schema.define(version: 20141009141646) do
     t.integer "user_id"
   end
 
+  create_table "faq_categories", force: true do |t|
+    t.string   "heading"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "faq_category", force: true do |t|
+    t.string   "heading"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "faq_questions", force: true do |t|
-    t.integer  "tool_id"
     t.string   "role"
-    t.string   "status"
-    t.string   "content"
-    t.string   "answer"
+    t.integer  "category_id"
+    t.text     "content"
+    t.text     "answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,14 +2,13 @@
 #
 # Table name: faq_questions
 #
-#  id         :integer          not null, primary key
-#  tool_id    :integer
-#  role       :string(255)
-#  category   :string(255)
-#  content    :string(255)
-#  answer     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  role        :string(255)
+#  category_id :integer
+#  content     :text
+#  answer      :text
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class Faq::Question < ActiveRecord::Base

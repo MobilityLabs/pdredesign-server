@@ -83,5 +83,6 @@ questions = [
 
   def down
     Faq::Question.destroy_all
+    Faq::Category.destroy_all
   end
 end

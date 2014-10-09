@@ -8,6 +8,7 @@ describe V1::FaqsController do
   
   before :all do 
     Faq::Question.destroy_all
+    Faq::Category.destroy_all
   end
 
   describe '#index' do
@@ -26,28 +27,25 @@ describe V1::FaqsController do
       create_questions
     end
 
+    it 'returns the category' do
+      get :index
+      category = json.first
+      expect(category["heading"]).to eq('example')
+    end
+
     it 'returns the list of FAQ Questions' do
       get :index
-      expect(json.count).to eq(3)
+      expect(json.first["questions"].count).to eq(3)
     end
 
     it 'returns the correct fields' do
       get :index
-      question = json.first
+      question = json.first["questions"].first
       expect(question["id"]).not_to be_nil
       expect(question["role"]).to eq('facilitator')
       expect(question["content"]).to eq('test')
       expect(question["answer"]).to eq('test')
     end
-
-    it 'returns the category' do
-      get :index
-      question = json.first
-      expect(question["category"]["heading"]).to eq('example')
-    end
-
-
   end
-
 
 end

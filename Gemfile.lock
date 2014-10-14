@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 GIT
   remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
   revision: 5c9009048cb6caa486a5d44fb8673fb1dc8621c2
@@ -6,6 +7,11 @@ GIT
 PATH
   remote: ../pdr-client
 >>>>>>> Completed Assessment template
+=======
+GIT
+  remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
+  revision: 5c9009048cb6caa486a5d44fb8673fb1dc8621c2
+>>>>>>> Fix client gem path
   specs:
     pdr_client (1.0.0)
       angular-rails-templates (>= 0.1.3)

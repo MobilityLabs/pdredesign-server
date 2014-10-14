@@ -1,133 +1,45 @@
-<table class="body">
-  <tr align="left" id="tr_0311_0">
-    <td align="center" class="center" id="td_0311_0" valign="top">
-      <table class="row header" id="table_0311_0" style="background-color: #2D3A40">
-        <tr align="left" id="tr_0311_1">
-          <td align="center" class="center" id="td_0311_1" valign="top">
-            <table class="container" id="table_0311_1">
-              <tr align="left" id="tr_0311_2">
-                <td align="left" class="wrapper last" id="td_0311_2" valign="top">
-                  <table class="twelve columns" id="table_0311_2">
-                    <tr align="left" id="tr_0311_3">
-                      <td align="left" class="six sub-columns" id="td_0311_3" valign="top"></td>
+<table class="row">
+  <tr>
+    <td class="wrapper last">
 
-                      <td align="right" class="six sub-columns last" id="td_0311_4" valign="middle">
-                      <%= image_tag(asset_path('images/logo.png')) %>
-                      </td>
+    <table class="twelve columns">
+      <tr>
+        <td class="left-text-pad">
+          <h2>Assessment Reminder</h2>
+          <br>
+          <p class="lead">
+            Hi <b><%= @participant_name %></b>, your response on <%= @assessment_name %> is
+            due on <b><%= @due_date %></b>.
+          </p>
 
-                      <td align="left" class="expander" id="td_0311_5" valign="top"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-            <br>
-          </td>
-        </tr>
-      </table>
+          <br>
+          <br>
+          <p class="lead"> 
+            <%= @message %> 
+          </p>
 
-      <table class="container" id="table_0311_3">
-        <tr align="left" id="tr_0311_4">
-          <td align="left" id="td_0311_6" valign="top">
-            <table class="row" id="table_0311_4" style="background-color: #F7F9FA">
-              <tr align="left" id="tr_0311_5">
-                <td id="td_0311_7">
-                  <%= image_tag(asset_path('images/colorbar.jpg')) %>
-                </td>
-              </tr>
+          <br>
+          <br>
+          <p class="lead"> 
+            <center>
+              <a href="<%= @assessment_link %>" taget="_blank" class="button">View Assessment</a> 
+            </center>
+          </p>
 
-              <tr align="left" id="tr_0311_6">
-                <td align="left" class="wrapper last" id="td_0311_8" valign="top">
-                  <table class="twelve columns" id="table_0311_5">
-                    <tr align="left" id="tr_0311_7">
-                      <td align="left" id="td_0311_9" valign="top">
-                        <p id="p_0311_0" style="text-align: left">Assessment Reminder!</p>
-                        <p id="p_0311_1" style="text-align: left">
-                          <strong>Hi <%= @participant_name %></strong>, your response on the assessment 
-                          <strong><%= @assessment_name %></strong> is due on...
-                        </p>
+          <br>
+          <br>
+          <p class="lead">
+            <b><%= @facilitator_name %></b> is waiting for you to complete your response on
+            <%= @assessment_name %> for <%= @district_name %>.
+          </p>
+          <br>
+          <br>
+        </td>
+        <td class="expander"></td>
+      </tr>
+    </table>
 
-                        <div id="div_0311_0">
-                          <div id="div_0311_1">
-                            <p id="p_0311_2"><%= @assessment_due_day %></p>
-                            <p id="p_0311_3"><%= @assessment_due_date %></p>
-                            <p id="p_0311_4"><%= @assessment_due_month %></p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-
-                  <table class="twelve columns" id="table_0311_6">
-                    <tr align="left" id="tr_0311_8">
-                      <td align="left" class="two sub-columns" id="td_0311_10" valign="top">
-                        <%= image_tag(@owner_image, style:"float: right; border-radius: 50%; vertical-align: middle; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both; display: block;") %>
-                      </td>
-
-                      <td align="left" class="ten sub-columns last" id="td_0311_11" valign="top">
-                        <p id="p_0311_5" style="text-align: left"><span id="span_0311_0"><%= @owner_name %></span> is waiting for you to complete your response on <%= @assessment_name %> for
-                        <%= @assessment_district%></p>
-                      </td>
-                    </tr>
-                  </table>
-
-                  <table class="twelve columns" id="table_0311_7">
-                    <tr align="left" id="tr_0311_9">
-                      <td align="left" id="td_0311_12" valign="top">
-                        <p id="p_0311_6" style="text-align: center">
-                        <%= link_to('View Assessment Now',
-                          @assessment_url,
-                          style: "color: #f3e1d4; border-radius: 4px; text-decoration: none; font-size: 16px; font-family: sans-serif; background: #a51e29; padding: 10px;") %>
-                        </p>
-
-                        <p id="p_0311_7" style="text-align: left"><%= @reminder_message %></p>
-                      </td>
-
-                      <td align="left" class="expander" id="td_0311_13" valign="top"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-
-            <table class="row footer" id="table_0311_8" style="background-color: #D4D2C8">
-              <tr align="left" id="tr_0311_10">
-                <td align="left" class="wrapper last" id="td_0311_14" style="background-color: #EBEBEB" valign="top">
-                  <table class="twelve columns" id="table_0311_9">
-                    <tr align="left" id="tr_0311_11">
-                      <td align="left" id="td_0311_15" valign="top">
-                        <p id="p_0311_8" style="text-align: left">You are receiving this email because you?re registered to PDredesign. By creating an account, you've agreed to receive email from us
-                        regarding your assessment, new features, events and updates from our services. 
-                        <!-- If you wish to be unsubscribed from receiving these emails, <a href="#" target="_blank" id="a_0311_0">click here</a>. --></p>
-                      </td>
-
-                      <td align="left" class="expander" id="td_0311_16" valign="top"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-
-            <table class="row" id="table_0311_10" style="background-color: #03232E">
-              <tr align="left" id="tr_0311_12">
-                <td align="left" class="wrapper last" id="td_0311_17" valign="top">
-                  <table class="twelve columns" id="table_0311_11">
-                    <tr align="left" id="tr_0311_13">
-                      <td align="center" id="td_0311_18" valign="top">
-                        <p id="p_0311_9" style="text-align: center">PDredesign is a registered trademark of the Gates Foundation.<br>
-                        © 1999 - 2014 Bill and Melinda Gates Foundation. All Rights Reserved. 
-                        <!-- <a href="#" id="a_0311_1">About</a> | <a href="#" id="a_0311_2">Contact</a> | <a href="#" id="a_0311_3">Privacy</a> --></p>
-                      </td>
-
-                      <td align="left" class="expander" id="td_0311_19" valign="top"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table><!-- container end below -->
-          </td>
-        </tr>
-      </table><br>
     </td>
   </tr>
 </table>
+

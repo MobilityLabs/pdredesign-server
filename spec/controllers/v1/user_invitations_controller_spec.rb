@@ -80,8 +80,9 @@ describe V1::UserInvitationsController do
     context 'worker' do
       before { sign_in @facilitator2 }
 
-      it 'creates a worker for sending invite email' do
+      it 'sends an invite when :send_invite is present' do
         post :create,
+          send_invite: true,
           assessment_id: assessment.id,
           first_name:    "john",
           last_name:     "doe",
@@ -89,6 +90,16 @@ describe V1::UserInvitationsController do
 
         expect(UserInvitationNotificationWorker.jobs.count).to eq(1)
 
+      end
+
+      it 'does not send an invite' do
+        post :create,
+          assessment_id: assessment.id,
+          first_name:    "john",
+          last_name:     "doe",
+          email:         "john_doe@gmail.com"
+
+        expect(UserInvitationNotificationWorker.jobs.count).to eq(0)
       end
     end 
 

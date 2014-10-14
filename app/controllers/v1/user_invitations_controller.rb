@@ -6,11 +6,11 @@ class V1::UserInvitationsController < ApplicationController
     create_params = user_invitiation_params
     create_params[:assessment_id] = params[:assessment_id]
 
+    send_invite = create_params.delete(:send_invite)
     invite = UserInvitation.new(create_params)
 
     if invite.save
-      UserInvitationNotificationWorker
-        .perform_async(invite.id)
+      queue_worker(invite.id) if send_invite
 
       Invitation::InsertFromInvite
         .new(invite)
@@ -26,9 +26,13 @@ class V1::UserInvitationsController < ApplicationController
   authority_actions create: 'update'
 
   private
+  def queue_worker(invite_id)
+    UserInvitationNotificationWorker.perform_async(invite_id)
+  end
+
   def user_invitiation_params
     params
-      .permit(:first_name, :last_name, :email)
+      .permit(:first_name, :last_name, :email, :send_invite)
   end
 
   def assessment

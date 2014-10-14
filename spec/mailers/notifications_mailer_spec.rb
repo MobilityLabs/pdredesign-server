@@ -10,6 +10,7 @@ describe NotificationsMailer do
         .create!(first_name: 'some',
                  last_name:  'user',
                  email:      'test@user.com',
+                 token:      'expected',
                  assessment: assessment,
                  user_id:    @user.id)
     end
@@ -18,6 +19,10 @@ describe NotificationsMailer do
 
     it 'sends the invite mail to the user on invite' do
       expect(mail.to).to include('test@user.com')
+    end
+    
+    it 'has the correct invite link' do
+      expect(mail.body).to include('/#/invitations/expected')
     end
   end
 end

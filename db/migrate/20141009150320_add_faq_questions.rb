@@ -4,7 +4,7 @@ class AddFaqQuestions < ActiveRecord::Migration
 answer: "The Readiness Assessment is a collaborative diagnostic tool to support school districts to understand the current state of their professional development system and build consensus around priorities for growth. This formative assessment consists of an individual online survey followed by a facilitated, in-person consensus meeting of district staff across roles and departments. The Readiness Assessment is designed to be used at the beginning of a redesign process, but can be used at any stage of an initiative to support continuous improvement."},
 
 {content: "Can I view the Readiness Assessment questions without starting an assessment?",
-answer: "Yes, the questions and rubric may be found in the Facilitation Guide (http://pdredesign.org/assets/PDRedesign%20RA%20Facilitation%20Guide.pdf)."},
+answer: "Yes, the questions and rubric may be found in the <A target='_blank' href='http://pdredesign.org/assets/PDRedesign%20RA%20Facilitation%20Guide.pdf'>Facilitation Guide</a>."},
 
 {content: "Who should take on the facilitator role for my district?",
 answer: "The person in this role guides the district cross-team through the assessment process by building the team, leading and documenting the consensus meeting, and supporting the team to take next steps. To ensure a rich, open dialogue, the facilitator should be an objective colleague or a trusted partner who is committed to improving professional development in the district. The role may be shared between two or more people. If you would like an existing member of your district to share the facilitator role, email support@mail.pdredesign.org to have us upgrade their account."},

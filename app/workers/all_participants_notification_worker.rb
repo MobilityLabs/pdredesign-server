@@ -23,7 +23,9 @@ class AllParticipantsNotificationWorker
   end
 
   def send_invitation_email(invitation_record)
-    NotificationsMailer.invite(invitation_record)
+    NotificationsMailer
+      .invite(invitation_record)
+      .deliver
   end
 
   def send_assessment_mail(assessment, participant)

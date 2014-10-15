@@ -10,12 +10,12 @@ class V1::UserInvitationsController < ApplicationController
     invite = UserInvitation.new(create_params)
 
     if invite.save
-      queue_worker(invite.id) if send_invite
 
       Invitation::InsertFromInvite
         .new(invite)
         .execute
 
+      queue_worker(invite.id) if send_invite
       render nothing: true
     else
       @errors = invite.errors.messages

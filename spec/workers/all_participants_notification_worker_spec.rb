@@ -47,6 +47,8 @@ describe AllParticipantsNotificationWorker do
       .with(anything, @participant2)
       .and_return(double)
 
+    expect(double).to receive(:deliver)
+
     subject.new.perform(assessment.id)
   end
 
@@ -71,9 +73,13 @@ describe AllParticipantsNotificationWorker do
         .with(@invite)
         .and_return(double)
 
+      expect(double).to receive(:deliver)
+
       expect(AssessmentsMailer).to receive(:assigned)
         .with(anything, @participant2)
         .and_return(double)
+
+      expect(double).to receive(:deliver)
 
       subject.new.perform(assessment.id)
     end

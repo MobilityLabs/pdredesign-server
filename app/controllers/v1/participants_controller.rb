@@ -7,7 +7,7 @@ class V1::ParticipantsController < ApplicationController
     send_invite = params.delete(:send_invite) 
     participant = Participant.create!(params)
 
-    send_participant_assigned_email(participant) if send_invite
+    send_participant_assigned_email(assessment, participant) if send_invite
     render nothing: true
   end
   authority_actions create: 'update'
@@ -33,7 +33,7 @@ class V1::ParticipantsController < ApplicationController
 
   protected
 
-  def send_participant_assigned_email(participant) 
+  def send_participant_assigned_email(assessment, participant) 
     AssessmentsMailer
       .assigned(assessment, participant)
       .deliver

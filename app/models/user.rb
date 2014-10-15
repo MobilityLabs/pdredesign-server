@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     TwitterAvatarWorker.perform_async(id)
   end
 
+  def avatar
+    self[:avatar] || ActionController::Base.helpers.asset_path('images/default.png')
+  end
+
   def role
     return :network_partner if network_partner?
     :district_member

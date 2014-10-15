@@ -57,17 +57,6 @@ describe V1::AssessmentsController do
       expect(updated_assessment.assigned_at).not_to be_nil
     end
 
-    it 'update the participants invited_at attr if submitted' do
-      put :update, assign: true, id: assessment.id, rubric_id: 42
-      assert_response :success
-
-      @participant.reload
-      @participant2.reload
-
-      expect(@participant.invited_at).not_to be_nil
-      expect(@participant2.invited_at).not_to be_nil
-    end
-
     it 'sends the invitation email to all participants' do
       expect(AllParticipantsNotificationWorker).to receive(:perform_async)
         .with(assessment.id)

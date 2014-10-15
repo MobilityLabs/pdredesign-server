@@ -1,6 +1,4 @@
-class NotificationsMailer < ActionMailer::Base
-  default from: 'support@pdredesign.org'
-  default from_name: 'PD Redesign'
+class NotificationsMailer < ApplicationMailer
 
   def signup(user)
 
@@ -11,13 +9,13 @@ class NotificationsMailer < ActionMailer::Base
     user   = invite.user
 
     @first_name          = user.first_name
+    @facilitator_name    = invite.assessment.user.first_name
     @assessment_name     = invite.assessment.name 
-    @assessment_district = invite.assessment.district.name
-    @owner_name          = invite.assessment.user.first_name
+    @district_name       = invite.assessment.district.name
     @message             = invite.assessment.message.html_safe
     @due_date            = invite.assessment.due_date.strftime("%B %d, %Y")    
-    @avatar              = user.avatar || default_avatar
-    @invite_link         = invite_url(invite.token)
+    @assessment_link     = invite_url(invite.token)
+
     mail(to: invite.email)
   end
 

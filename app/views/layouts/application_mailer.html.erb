@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <%= stylesheet_link_tag 'mail'%>
+  </head>
+  <body>
+  <table class="body">
+    <tr>
+      <td class="center" align="center" valign="top">
+        <center>
+
+          <table class="row header">
+            <tr>
+              <td class="center" align="center">
+                <center>
+
+                  <table class="container">
+                    <tr>
+                      <td class="wrapper last">
+
+                        <table class="twelve columns">
+                          <tr>
+                            <td class="topbar"><%= image_tag('logo.png') %></td>
+                            <td class="expander"></td>
+                          </tr>
+                          <tr>
+                            <td><%= image_tag('colorbar.jpg') %></td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                </center>
+              </td>
+            </tr>
+          </table>
+
+          <table class="container content">
+            <tr>
+              <td>
+                <%= yield %>
+                <table class="row legal">
+                  <tr>
+                    <td class="wrapper last">
+                      <table class="twelve columns">
+                        <tr>
+                          <td class="panel">
+                            <p>
+                                You are receiving this email because you’re registered to PD Redesign. By creating an account, 
+                                you've agreed to receive email from us regarding your assessment, new features, events and 
+                                updates from our services.
+                            </p>
+                          </td>
+                          <td class="expander"></td>
+                        </tr>
+                      </table>
+
+                      <table class="twelve columns footer">
+                        <tr>
+                          <td align="center">
+                            <center>
+                              <p class="outro">
+                             <br>
+                              PRedesign is a registered trademark of the Gates Foundation.
+                             <br>
+                              © 1999 - 2014 Bill and Melinda Gates Foundation. All Rights Reserved.</p>
+                            </center>
+                          </td>
+                          <td class="expander"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+        </center>
+      </td>
+    </tr>
+  </table>
+</body>
+<html>

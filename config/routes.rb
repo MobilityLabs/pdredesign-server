@@ -2,6 +2,10 @@ PdrServer::Application.routes.draw do
   mount PdrClient::Engine, at: "/", as: :pdr_client
   mount RailsAdmin::Engine, at: '/admin', as: 'rails_admin'
 
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   devise_for :users, path: 'v1/users', controllers: {
     sessions: 'v1/sessions',
     registrations: 'devise/registrations',

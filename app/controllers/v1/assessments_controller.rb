@@ -56,7 +56,6 @@ class V1::AssessmentsController < ApplicationController
   end
 
   def invite_all_users(assessment)
-    assessment.participants.update_all(invited_at: Time.now)
     AllParticipantsNotificationWorker.perform_async(assessment.id)
   end
 

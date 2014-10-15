@@ -4,7 +4,7 @@ describe PasswordResetMailer do
   context '#reset' do
     before do
       @user = Application::create_sample_user
-      @user.update(reset_password_token: 'xyz',
+      @user.update(reset_password_token: 'expected_token',
                    email: 'some@user.com')
     end
 
@@ -14,5 +14,8 @@ describe PasswordResetMailer do
       expect(mail.to).to include('some@user.com')
     end
 
+    it 'sends a link to the reset URL' do
+      expect(mail.body).to match('/#/reset/expected_token')
+    end
   end
 end

@@ -1,6 +1,4 @@
-class PasswordResetMailer < ActionMailer::Base
-  default from: 'support@pdredesign.org'
-  default from_name: 'PD Redesign'
+class PasswordResetMailer < ApplicationMailer
 
   def reset(user)
     @token      = user.reset_password_token

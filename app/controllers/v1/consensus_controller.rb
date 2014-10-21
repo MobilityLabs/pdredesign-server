@@ -32,7 +32,7 @@ class V1::ConsensusController < V1::ResponsesController
       @team_roles = assessment.team_roles_for_participants
       authorize_action_for @response
     else
-      render status: 404, nothing: true
+      not_found
     end
   end
 

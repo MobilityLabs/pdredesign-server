@@ -27,7 +27,9 @@ PdrServer::Application.routes.draw do
       resources :reminders, only: [:create]
       resources :access_request, only: [:create]
       resources :priorities, only: [:create, :index]
-      resources :participants, except: [:update, :show]
+      resources :participants, except: [:update, :show] do
+        get 'mail', to: 'participants#mail'
+      end
       resources :user_invitations, only: [:create]
       resources :consensus, except: [:delete, :index]
       resources :responses, except: [:delete] do

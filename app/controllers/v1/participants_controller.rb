@@ -18,7 +18,7 @@ class V1::ParticipantsController < ApplicationController
       participant.destroy
       render nothing: true
     else
-      render status: 404, nothing: true
+      not_found
     end
   end
 
@@ -31,12 +31,38 @@ class V1::ParticipantsController < ApplicationController
   end
   authority_actions all: 'update'
 
+  def mail
+    participant = Participant.find_by(id: params[:participant_id]) 
+    not_found and return unless participant 
+
+    invite_record = invitation_record(assessment.id, participant.user.id)
+
+    if(invite_record)
+      mailer = invite_mailer(invite_record)
+    else
+      mailer = assessments_mailer(assessment, participant)
+    end
+
+    render text: mailer.body
+  end
+  authority_actions mail: 'update'
+
   protected
 
+  def invitation_record(assessment_id, user_id)
+    UserInvitation.find_by(assessment_id: assessment_id, user_id: user_id)
+  end
+
   def send_participant_assigned_email(assessment, participant) 
-    AssessmentsMailer
-      .assigned(assessment, participant)
-      .deliver
+    assessments_mailer(assessment, participant).deliver
+  end
+
+  def invite_mailer(record)
+    NotificationsMailer.invite(record)
+  end
+ 
+  def assessments_mailer(assessment, participant)
+    AssessmentsMailer.assigned(assessment, participant)
   end
 
   def users_from_district(assessment)

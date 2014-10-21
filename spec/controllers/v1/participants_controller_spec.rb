@@ -151,4 +151,47 @@ describe V1::ParticipantsController do
     end
   end
 
+  describe '#mail' do
+    it 'does not allow a non-facilitator user' do
+      sign_in @user
+      get :mail, assessment_id: assessment.id, participant_id: @participant.id
+      assert_response :forbidden
+    end
+
+    it 'allows facilitators' do
+      sign_in @facilitator2
+      get :mail, assessment_id: assessment.id, participant_id: @participant.id
+      assert_response :success
+    end
+
+    context 'with facilitator' do
+      before { sign_in @facilitator2 }
+
+      it 'returns a 404 when the participant is not found' do
+        get :mail, assessment_id: assessment.id, participant_id: 0
+        assert_response :missing
+      end
+
+      it 'returns the invitation email body of assigned email' do
+        double = double('AssessmentMailer', body: 'expected')
+        allow(AssessmentsMailer).to receive(:assigned).and_return(double)
+
+        get :mail, assessment_id: assessment.id, participant_id: @participant.id
+        expect(response.body).to eq('expected')
+      end
+
+      it 'returns the invitation email body of the user invitation email' do
+        double = double('NotificationsMailer', body: 'expected')
+        allow(NotificationsMailer).to receive(:invite).and_return(double)
+
+        UserInvitation.create!(user_id: @participant.user.id,
+                               assessment_id: assessment.id,
+                               email: 'example_user@gmail.com')
+        get :mail, assessment_id: assessment.id, participant_id: @participant.id
+        expect(response.body).to eq('expected')
+
+      end
+    end
+  end
+
 end

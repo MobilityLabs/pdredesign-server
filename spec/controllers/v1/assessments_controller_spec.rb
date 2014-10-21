@@ -142,6 +142,14 @@ describe V1::AssessmentsController do
       expect(assessments.count).to eq(3)
     end
 
+    it 'get defaults to distrcit_member as a role' do
+      @user.update(role: nil)
+      sign_in @user
+
+      get :index
+      expect(assigns(:role)).to eq(:district_member)
+    end
+
     it 'gets a members assessments' do
       @user.update(role: :member)
       sign_in @user

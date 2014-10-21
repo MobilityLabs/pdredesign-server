@@ -64,11 +64,7 @@ class V1::AssessmentsController < ApplicationController
   end
 
   def user_role
-    if current_user.role.present?
-      current_user.role.to_sym
-    else
-      :member
-    end
+    current_user.role.to_sym
   end
 
   def messages

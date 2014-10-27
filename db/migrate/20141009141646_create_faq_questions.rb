@@ -7,6 +7,7 @@ class CreateFaqQuestions < ActiveRecord::Migration
 
     create_table :faq_questions do |t|
       t.string  :role
+      t.string  :topic
       t.integer :category_id
       t.text    :content
       t.text    :answer

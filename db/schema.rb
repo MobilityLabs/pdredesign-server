@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20141009150320) do
 
   create_table "faq_questions", force: true do |t|
     t.string   "role"
+    t.string   "topic"
     t.integer  "category_id"
     t.text     "content"
     t.text     "answer"

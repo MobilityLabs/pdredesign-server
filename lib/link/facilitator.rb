@@ -23,12 +23,12 @@ module Link
     end
 
     def dashboard
-      {title: 'Dashboard', active: true, type: :dashboard}
+      {title: 'View Dashboard', active: true, type: :dashboard}
     end
 
     def consensus
       return new_consensus unless consensus?
-      existing_consensus 
+      existing_consensus
     end
 
     def existing_consensus
@@ -36,11 +36,11 @@ module Link
     end
 
     def new_consensus
-      {title: 'Consensus', active: true, type: :new_consensus}
+      {title: 'Create Consensus', active: true, type: :new_consensus}
     end
 
     def report
-      {title: 'Report', active: consensus?, type: :report}
+      {title: 'View Report', active: consensus?, type: :report}
     end
 
     def consensus?

@@ -19,11 +19,11 @@ module Link
     end
 
     def response
-      {title: 'Vote Now', active: true, type: :response}
+      {title: 'Complete Survey', active: true, type: :response}
     end
 
     def report
-      {title: 'Report', active: fully_complete?, type: :report}
+      {title: 'View Report', active: fully_complete?, type: :report}
     end
 
     def consensus

@@ -1,8 +1,8 @@
-json.consensu_id        @consensu.id
+json.consensu_id        @consensus.id
 json.assessment_id      @assessment.id
 json.participant_id     @participant.id
 
-json.questions          @consensu.questions do |question|
+json.questions          @consensus.questions do |question|
   
   json.id           question.id
   json.order        question.order

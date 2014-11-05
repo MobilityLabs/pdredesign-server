@@ -11,7 +11,7 @@ describe V1::ReportController do
   before { create_struct }
   before { sign_in @user2 }
   let(:assessment) { @assessment_with_participants }
-  let(:consensu)   { Response.create!(responder_id: assessment.id, responder_type: 'Assessment') } 
+  let(:consensu){ Response.create(responder_id:   assessment.id, responder_type: 'Assessment') }
 
   context '#show' do
 
@@ -64,9 +64,11 @@ describe V1::ReportController do
     it 'get the consensus report response' do
       get :consensus_report, assessment_id: assessment.id, consensu_id: consensu.id
 
+      expect(json["participants"].count).to eq(assessment.participants.count)
+      expect(json["participant_count"]).not_to be_nil
+      expect(json["questions"]).to be_kind_of(Array)
+      expect(json["scores"]).to be_kind_of(Array)
       assert_response 200
-      assert_match /participants/, response.body
-      assert_match /questions/, response.body
     end
 
     it 'render not found when consensus does not exist' do
@@ -81,11 +83,15 @@ describe V1::ReportController do
     end
   end
 
-  xcontext "#participant_consensu_report" do
+  context "#participant_consensu_report" do
     it 'get the participant consensus report' do
-      get :participant_consensu_report, assessment_id: assessment.id, consensu_id: consensu.id, participant_id: 1
-      assert_match /participants/, response.body
-      assert_match /questions/, response.body
+      get :participant_consensu_report, assessment_id: assessment.id, consensu_id: consensu.id, participant_id: @participant.id
+      
+      expect(json["questions"]).to be_kind_of(Array)
+      expect(json["consensu_id"]).not_to be_nil
+      expect(json["assessment_id"]).not_to be_nil
+      expect(json["participant_id"]).not_to be_nil
+
       assert_response 200
     end
 

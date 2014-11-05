@@ -16,16 +16,21 @@ class V1::ReportController < ApplicationController
     @assessment   = assessment
     @rubric       = assessment.rubric
     @response     = consensus
-    not_found and return unless @response
-    @categories   = @response.categories
-    not_found and return unless @categories
+    if @response
+      @categories   = @response.categories  
+    else
+      not_found
+    end
   end
 
   def participant_consensu_report
     @assessment   = assessment
-    @consensu     = consensus
-    @participant  = Participant.find_by(assessment: assessment)
-    not_found and return unless @response
+    @consensus    = consensus
+    if @assessment && @consensus
+      @participant  = Participant.find_by(assessment: assessment)
+    else
+      not_found
+    end
   end
 
   private
@@ -50,4 +55,3 @@ class V1::ReportController < ApplicationController
     Response.find_by(responder_type: 'Assessment', id: params[:consensu_id])
   end
 end
-

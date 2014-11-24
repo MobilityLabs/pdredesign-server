@@ -9,6 +9,7 @@ describe Invitation::InsertFromInvite do
     UserInvitation.create!(assessment_id: assessment.id,
       first_name:    "john",
       last_name:     "doe",
+      team_role:     "Finance",
       email:         "john_doe@gmail.com")
   end
 
@@ -16,6 +17,7 @@ describe Invitation::InsertFromInvite do
     UserInvitation.create!(assessment_id: assessment.id,
       first_name:    "john",
       last_name:     "doe",
+      team_role:     "Finance",
       email:         @user.email)
   end
 
@@ -24,20 +26,22 @@ describe Invitation::InsertFromInvite do
     expect(User.find_by(email: 'john_doe@gmail.com')).not_to be_nil
   end
 
-  it 'sets the correct district for a new user' do
+  it 'sets the correct district and team_role for a new user' do
     subject.new(create_valid_invite).execute
 
     user = User.find_by(email: 'john_doe@gmail.com')
     expect(user.district_ids).to eq([@district2.id])
-  end 
+    expect(user.team_role).to eq('Finance')
+  end
 
-  it 'appends the district_id to an already existing user' do
+  it 'appends the district_id and team_role to an already existing user' do
     @user.update(district_ids: [])
     expect(@user.district_ids).not_to include([@district2.id])
     subject.new(existing_user_invite).execute
 
     user = User.find_by(email: @user.email)
     expect(user.district_ids).to include(@district2.id)
+    expect(user.team_role).to eq('Finance')
   end
 
   it 'does not create multiple district entries for existing user' do

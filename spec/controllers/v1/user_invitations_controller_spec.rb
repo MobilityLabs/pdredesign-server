@@ -42,6 +42,14 @@ describe V1::UserInvitationsController do
         expect(UserInvitation.find_by_email('john_doe@gmail.com')).not_to be_nil
       end
 
+      it 'sets the team_role when is a new participant' do
+        params = { first_name: "john", last_name: "doe", email: "johndoe+newuser@mobility-labs.com", team_role: "Finance", assessment_id: assessment.id }
+        post :create, params
+
+        assert_response :success
+        expect(UserInvitation.find_by(email: 'johndoe+newuser@mobility-labs.com').team_role).not_to be_nil
+      end
+
       it 'returns errors gracefully with errors' do
         post :create,
           assessment_id: assessment.id,

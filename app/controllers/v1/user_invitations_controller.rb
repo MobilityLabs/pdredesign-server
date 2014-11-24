@@ -32,7 +32,7 @@ class V1::UserInvitationsController < ApplicationController
 
   def user_invitiation_params
     params
-      .permit(:first_name, :last_name, :email, :send_invite)
+      .permit(:first_name, :last_name, :email, :send_invite, :team_role)
   end
 
   def assessment

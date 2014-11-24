@@ -33,10 +33,17 @@ module Invitation
     end
 
     def update_user(user)
-      return user if district_member?(user)
-      user.tap do
-        user.districts << invite.assessment.district 
-        user.save
+      add_district_to_user(user)
+      user.update_column(:team_role, invite.team_role)
+      return user
+    end
+
+    def add_district_to_user(user)
+      unless district_member?(user)
+        user.tap do
+          user.districts << invite.assessment.district 
+          user.save
+        end
       end
     end
 
@@ -49,6 +56,7 @@ module Invitation
                    last_name:    invite.last_name,
                    email:        invite.email,
                    password:     generate_password,
+                   team_role:    invite.team_role,
                    district_ids: invite.assessment.district_id)
     end
 

@@ -14,7 +14,7 @@ module DefaultWalkThrough
     <p>
       Lead the Readiness Assessment in your district.
     </p>
-    <a href="#/assessments" ng-click="close()" class="btn btn-primary" role="button">Start an Assessment</a>
+    <a ui-sref="assessments" ng-click="close()" class="btn btn-primary" role="button">Start an Assessment</a>
   </div>
 
     <div class="info">
@@ -28,7 +28,7 @@ module DefaultWalkThrough
     <p>
       Have more questions?
     </p>
-    <a href="" ng-click="close()" class="btn btn-primary" role="button">FAQ</a>
+    <a ui-sref="faqs" ng-click="close()" class="btn btn-primary" role="button">FAQ</a>
   </div>
 END
 
@@ -97,7 +97,7 @@ END
       end
 
       container.slides << new_slide
-      puts "Created #{slide[:title]}"
+      puts "Created #{slide[:title]} id: #{new_slide[:id]} container id: #{container[:id]}"
     end
 
   end

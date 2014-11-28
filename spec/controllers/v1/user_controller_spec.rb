@@ -69,8 +69,10 @@ describe V1::UserController do
       post :reset, token: 'expected_token', password: 'xyz1235'
       assert_response :success
 
-      expect(User.find(@user.id).reset_password_token).to eq(nil)
-      expect(User.find(@user.id).reset_password_sent_at).to eq(nil)
+      user = User.find(@user.id)
+      expect(user.reset_password_token).to eq(nil)
+      expect(user.reset_password_sent_at).to eq(nil)
+      expect(subject.current_user).to eq(user)
     end
 
     it 'returns errors when user cant be updated' do

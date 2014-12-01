@@ -38,7 +38,7 @@ module Link
     end
 
     def new_consensus
-      {title: 'Consensus', active: true, type: :new_consensus}
+      {title: 'Create Consensus', active: true, type: :new_consensus}
     end
 
     def report

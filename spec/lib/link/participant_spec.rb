@@ -14,7 +14,7 @@ describe Link::Participant do
     it 'returns a disabled report link when not consensus' do
       allow(assessment).to receive(:fully_complete?).and_return(false)
 
-      expect(links[:report][:title]).to  eq("Report")
+      expect(links[:report][:title]).to  eq("View Report")
       expect(links[:report][:active]).to eq(false)
       expect(links[:report][:type]).to   eq(:report)
     end

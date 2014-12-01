@@ -17,7 +17,7 @@ describe Link::Facilitator do
   it 'returns a dashboard link when an assessment is not a draft' do
     allow(assessment).to receive(:status).and_return(:assessment)
 
-    expect(links[:dashboard][:title]).to  eq("Dashboard")
+    expect(links[:dashboard][:title]).to  eq("View Dashboard")
     expect(links[:dashboard][:active]).to eq(true)
     expect(links[:dashboard][:type]).to   eq(:dashboard)
 
@@ -33,7 +33,7 @@ describe Link::Facilitator do
 
   describe 'dashboard' do
     it 'returns a dashboard link' do
-      expect(links[:dashboard][:title]).to  eq("Dashboard")
+      expect(links[:dashboard][:title]).to  eq("View Dashboard")
       expect(links[:dashboard][:active]).to eq(true)
       expect(links[:dashboard][:type]).to   eq(:dashboard)
     end
@@ -65,7 +65,7 @@ describe Link::Facilitator do
     it 'returns a disabled report link when not consensus' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:report][:title]).to  eq("Report")
+      expect(links[:report][:title]).to  eq("View Report")
       expect(links[:report][:active]).to eq(false)
       expect(links[:report][:type]).to   eq(:report)
     end

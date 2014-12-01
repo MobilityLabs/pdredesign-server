@@ -7,14 +7,15 @@ module Link
     end
 
     def execute
-      {consensus: consensus, report: report }.tap do |links|
-        if(assessment.status == :draft)
+      if draft?
+        {report: report }.tap do |links|
           links[:finish]    =  finish
-        else
+        end
+      else
+        {consensus: consensus, report: report }.tap do |links|
           links[:dashboard] = dashboard
         end
       end
-
     end
 
     private
@@ -27,8 +28,9 @@ module Link
     end
 
     def consensus
+
       return new_consensus unless consensus?
-      existing_consensus 
+      existing_consensus
     end
 
     def existing_consensus
@@ -45,6 +47,10 @@ module Link
 
     def consensus?
       assessment.status == :consensus
+    end
+
+    def draft?
+      assessment.status == :draft
     end
 
   end

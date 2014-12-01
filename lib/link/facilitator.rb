@@ -7,25 +7,15 @@ module Link
     end
 
     def execute
-
       if draft?
         {report: report }.tap do |links|
-          if(assessment.status == :draft)
-            links[:finish]    =  finish
-          else
-            links[:dashboard] = dashboard
-          end
+          links[:finish]    =  finish
         end
       else
         {consensus: consensus, report: report }.tap do |links|
-          if(assessment.status == :draft)
-            links[:finish]    =  finish
-          else
-            links[:dashboard] = dashboard
-          end
+          links[:dashboard] = dashboard
         end
       end
-
     end
 
     private

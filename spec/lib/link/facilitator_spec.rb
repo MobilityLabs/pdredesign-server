@@ -48,7 +48,7 @@ describe Link::Facilitator do
     it 'returns a new consensus link when there isnt one' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:consensus][:title]).to  eq("Consensus")
+      expect(links[:consensus][:title]).to  eq("Create Consensus")
       expect(links[:consensus][:active]).to eq(true)
       expect(links[:consensus][:type]).to   eq(:new_consensus)
     end
@@ -56,6 +56,7 @@ describe Link::Facilitator do
     it 'returns a consensus link when is a consensus' do
       allow(assessment).to receive(:status).and_return(:consensus)
 
+      expect(links[:consensus][:title]).to  eq("Consensus")
       expect(links[:consensus][:type]).to   eq(:consensus)
     end
   end

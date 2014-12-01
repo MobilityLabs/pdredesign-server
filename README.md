@@ -42,3 +42,4 @@ redis server needs to start independently since its more a platform dependency
 ##Rake Tasks
 The `rake db:create_default_toolkit` - task creates the default toolkits.
 The `rake db:create_default_key_questions` - task creates the default key questions.
+The `rake db:create_default_walk_throughs` - task creates the default walk throughs for the flyover feature.

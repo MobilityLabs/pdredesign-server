@@ -14,6 +14,9 @@ PdrServer::Application.routes.draw do
 
   namespace :v1, defaults: { format: :json } do
     resources :faqs, only: [:index]
+    resources :walk_throughs, only: [:show] do
+      post 'viewed', to: 'walk_throughs#viewed'
+    end
 
     get  '/organizations/search', to: 'organizations#search'
     resources  :organizations, only: [:create, :update, :show] do

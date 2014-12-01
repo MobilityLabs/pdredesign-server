@@ -9,7 +9,7 @@ module Link
     end
 
     def execute
-      { report: report, action: action }
+      { action: action, report: report }
     end
 
     private

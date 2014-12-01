@@ -15,7 +15,7 @@ module Link
 
     private
     def report
-      {title: 'Report', active: consensus?, type: :report}
+      {title: 'View Report', active: consensus?, type: :report}
     end
 
     def access

@@ -44,8 +44,7 @@ class V1::UserController < ApplicationController
       return render_errors(user.errors)
     else
       sign_in(:user, user)
-      render 'v1/sessions/create', locals: { user: user }, formats: [:json]
-      return
+      render nothing: true
     end
   end
 

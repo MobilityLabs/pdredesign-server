@@ -24,7 +24,7 @@ module Link
     end
 
     def dashboard
-      {title: 'Dashboard', active: true, type: :dashboard}
+      {title: 'View Dashboard', active: true, type: :dashboard}
     end
 
     def consensus

@@ -56,7 +56,6 @@ describe Link::Facilitator do
     it 'returns a consensus link when is a consensus' do
       allow(assessment).to receive(:status).and_return(:consensus)
 
-      expect(links[:consensus][:title]).to  eq("Consensus")
       expect(links[:consensus][:type]).to   eq(:consensus)
     end
   end

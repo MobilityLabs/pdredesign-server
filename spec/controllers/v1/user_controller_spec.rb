@@ -41,6 +41,11 @@ describe V1::UserController do
       post :request_reset, email: 'some_user@gmail.com'
     end
 
+    it 'return error when the email does not exist' do
+      post :request_reset, email: 'notexisting@user.com'
+      assert_response 422
+    end
+
   end
 
   context '#reset' do

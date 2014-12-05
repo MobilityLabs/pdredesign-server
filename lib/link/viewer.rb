@@ -10,7 +10,7 @@ module Link
     end
 
     def execute
-      { report: report, access: access }
+      { access: access }
     end
 
     private

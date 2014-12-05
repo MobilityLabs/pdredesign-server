@@ -20,6 +20,11 @@ describe V1::UserController do
       assert_response :success
     end
 
+    it 'sends the reset to a user even if the email contains capital letters' do
+      post :request_reset, email: 'SOME_User@GMail.com'
+      assert_response :success
+    end
+
     it 'sets the reset_password_token' do
       allow(controller).to receive(:hash).and_return('xyz')
 

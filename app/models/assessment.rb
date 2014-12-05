@@ -48,7 +48,7 @@ class Assessment < ActiveRecord::Base
   has_and_belongs_to_many :network_partners,
     class_name: 'User',
     join_table: :assessments_network_partners
-	
+
 
 	accepts_nested_attributes_for :participants, allow_destroy: true
 
@@ -65,12 +65,12 @@ class Assessment < ActiveRecord::Base
 
 	def validate_participants
     return unless self.participants.empty?
-		errors.add :participant_ids, "You must assign participants to this assessment." 
+		errors.add :participant_ids, "You must assign participants to this assessment."
 	end
-	
+
 	## ASSESSMENT METHODS FOR RESPONSES
   def status
-    return :draft     if assigned_at.nil?  
+    return :draft     if assigned_at.nil?
     return :consensus if response.present?
     :assessment
   end
@@ -87,13 +87,13 @@ class Assessment < ActiveRecord::Base
   end
 
   def network_partner?(user)
-    network_partners 
+    network_partners
       .where(id: [user.id])
       .present?
   end
 
   def viewer?(user)
-    viewers 
+    viewers
       .where(id: [user.id])
       .present?
   end
@@ -102,6 +102,10 @@ class Assessment < ActiveRecord::Base
     participants
       .where(user_id: user.id)
       .present?
+  end
+
+  def request_access?(user)
+    !facilitator?(user) && !participant?(user)
   end
 
 	def completed?
@@ -125,7 +129,7 @@ class Assessment < ActiveRecord::Base
 	end
 
   def fully_complete?
-    has_response? && response.completed? 
+    has_response? && response.completed?
   end
 
   def pending_requests?(user)
@@ -172,7 +176,7 @@ class Assessment < ActiveRecord::Base
   end
 
   def team_roles_for_participants
-    participants 
+    participants
       .joins(:user)
       .pluck("users.team_role")
       .uniq
@@ -180,7 +184,7 @@ class Assessment < ActiveRecord::Base
   end
 
   def response_scores
-    scores_for_response_ids(all_participant_responses.pluck(:id)) 
+    scores_for_response_ids(all_participant_responses.pluck(:id))
   end
 
   def scores_for_response_ids(response_ids)
@@ -202,7 +206,7 @@ class Assessment < ActiveRecord::Base
 	end
 
   def responses(user)
-    participant = participants.find_by(user: user) 
+    participant = participants.find_by(user: user)
     return [] unless participant
     [participant.response].compact
   end
@@ -226,10 +230,10 @@ class Assessment < ActiveRecord::Base
 	end
 
 	def all_participant_responses
-		Response.where(responder_type: 'Participant', 
+		Response.where(responder_type: 'Participant',
 		 responder: participants)
   end
-	
+
 	def self.consensus_responses
 		Assessment
 	    .includes(:response)

@@ -32,7 +32,7 @@ describe Assessment do
       end
 
       it 'requires :due_date when assigned_at is present' do
-        expect(@assessment.valid?).to eq(false) 
+        expect(@assessment.valid?).to eq(false)
         expect(@assessment.errors[:due_date])
           .to include("can\'t be blank")
 
@@ -43,7 +43,7 @@ describe Assessment do
       end
 
       it 'requires :due_date when assigned_at is present' do
-        expect(@assessment.valid?).to eq(false) 
+        expect(@assessment.valid?).to eq(false)
         expect(@assessment.errors[:message])
           .to include("can\'t be blank")
 
@@ -57,7 +57,7 @@ describe Assessment do
         it 'requires participants when assigned' do
           participant = Participant.new(user_id: 1)
 
-          expect(@assessment.valid?).to eq(false) 
+          expect(@assessment.valid?).to eq(false)
           expect(@assessment.errors[:participant_ids])
             .to include("You must assign participants to this assessment.")
 
@@ -92,7 +92,7 @@ describe Assessment do
       expect(@assessment.completed?).to eq(true)
     end
 
-    it 'is not completed' do 
+    it 'is not completed' do
       allow(@assessment).to receive(:percent_completed)
         .and_return(99)
       expect(@assessment.completed?).to eq(false)
@@ -103,31 +103,31 @@ describe Assessment do
     before { @assessment = Assessment.new }
 
     it 'is draft when not assigned' do
-      allow(@assessment).to receive(:assigned_at).and_return(nil) 
+      allow(@assessment).to receive(:assigned_at).and_return(nil)
       expect(@assessment.status).to eq(:draft)
     end
 
     it 'is consensus when response is present' do
       allow(@assessment).to receive(:assigned_at)
-        .and_return(true) 
+        .and_return(true)
 
       allow(@assessment).to receive(:response)
-        .and_return(true) 
+        .and_return(true)
 
       expect(@assessment.status).to eq(:consensus)
     end
 
     it 'is assessment when response is not present' do
       allow(@assessment).to receive(:assigned_at)
-        .and_return(true) 
+        .and_return(true)
 
       allow(@assessment).to receive(:response)
-        .and_return(false) 
+        .and_return(false)
 
       expect(@assessment.status).to eq(:assessment)
     end
   end
-  
+
   describe '#answered_scores' do
     let(:assessment) { @assessment_with_participants }
 
@@ -172,7 +172,7 @@ describe Assessment do
        Response
          .find(99)
          .update(responder: @participant, submitted_at: Time.now)
-      end     
+      end
 
       it 'returns scores for the specified :team_role' do
         expect(assessment.scores_for_team_role(:worker).count).to eq(0)
@@ -204,7 +204,7 @@ describe Assessment do
        Response
          .find(99)
          .update(responder: @participant, submitted_at: Time.now)
-      end      
+      end
 
       it 'returns distinct roles for all answered scores participant' do
         @user.update(team_role: :worker)
@@ -282,10 +282,27 @@ describe Assessment do
       end
     end
 
+    context '#request_access?' do
+      it 'returns false when a user is a participant of an assessment' do
+        expect(assessment.request_access?(@user)).to eq(false)
+      end
+
+      it 'returns true when a user is not a participant of an assessment' do
+        assessment.participants.find_by(user_id: @user.id).destroy
+        expect(assessment.request_access?(@user)).to eq(true)
+      end
+
+      it 'returns false when a user is a facilitator of an assessment' do
+        assessment.participants.find_by(user_id: @user.id).destroy
+        assessment.facilitators[0].id = @user.id
+        expect(assessment.request_access?(@user)).to eq(false)
+      end
+    end
+
     context 'with consensus' do
-      before do 
+      before do
         @consensus = Response
-          .create(responder_type: 'Assessment', 
+          .create(responder_type: 'Assessment',
                   responder: @assessment_with_participants)
 
       end
@@ -305,9 +322,9 @@ describe Assessment do
     end
 
     context 'with response' do
-      before do 
+      before do
         @response = Response
-          .create(responder_type: 'Participant', 
+          .create(responder_type: 'Participant',
         responder: @participant)
       end
 
@@ -375,7 +392,7 @@ describe Assessment do
         end
 
         it 'gets 100% complete' do
-          Response.create(responder_type: 'Participant', 
+          Response.create(responder_type: 'Participant',
                           responder: @participant2,
                           submitted_at: Time.now)
 

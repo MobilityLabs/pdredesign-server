@@ -10,7 +10,11 @@ module Link
     end
 
     def execute
-      { access: access }
+      if consensus?
+        { report: report, access: access }
+      else
+        { access: access }
+      end
     end
 
     private

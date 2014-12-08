@@ -11,12 +11,10 @@ describe Link::Viewer do
   end
 
   describe 'report' do
-    it 'returns a disabled report link when not consensus' do
+    it 'returns no report link when not consensus' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:report][:title]).to  eq("Report")
-      expect(links[:report][:active]).to eq(false)
-      expect(links[:report][:type]).to   eq(:report)
+      expect(links[:report]).to  eq(nil)
     end
 
     it 'returns an active report link when consensus' do
@@ -34,7 +32,7 @@ describe Link::Viewer do
     end
 
     it 'returns pending when there is a pending request' do
-      AccessRequest.create!(user_id: @user.id, assessment_id: assessment.id, 
+      AccessRequest.create!(user_id: @user.id, assessment_id: assessment.id,
                             roles: [:viewer])
 
       expect(links[:access][:type]).to   eq(:pending)

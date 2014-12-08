@@ -9,10 +9,12 @@ module Link
     def execute
       if draft?
         {finish: finish }
-      else
+      elsif consensus?
         {consensus: consensus, report: report }.tap do |links|
           links[:dashboard] = dashboard
         end
+      else
+        {consensus: consensus, dashboard: dashboard }
       end
     end
 

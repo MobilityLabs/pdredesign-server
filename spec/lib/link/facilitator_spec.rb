@@ -19,7 +19,7 @@ describe Link::Facilitator do
 
     expect(links[:dashboard][:title]).to  eq("Dashboard")
     expect(links[:dashboard][:active]).to eq(true)
-    expect(links[:dashboard][:type]).to   eq(:dashboard)   
+    expect(links[:dashboard][:type]).to   eq(:dashboard)
 
 
     allow(assessment).to receive(:status).and_return(:draft)
@@ -43,7 +43,7 @@ describe Link::Facilitator do
     it 'returns a new consensus link when there isnt one' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:consensus][:title]).to  eq("Consensus")
+      expect(links[:consensus][:title]).to  eq("Create Consensus")
       expect(links[:consensus][:active]).to eq(true)
       expect(links[:consensus][:type]).to   eq(:new_consensus)
     end
@@ -53,15 +53,25 @@ describe Link::Facilitator do
 
       expect(links[:consensus][:type]).to   eq(:consensus)
     end
+
+    it 'returns a no consensus link when is a draft' do
+      allow(assessment).to receive(:status).and_return(:draft)
+
+      expect(links[:consensus]).to  eq(nil)
+    end
   end
 
   describe 'report' do
-    it 'returns a disabled report link when not consensus' do
+    it 'returns no report link when is assessment' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:report][:title]).to  eq("Report")
-      expect(links[:report][:active]).to eq(false)
-      expect(links[:report][:type]).to   eq(:report)
+      expect(links[:report]).to  eq(nil)
+    end
+
+    it 'returns no report link when is draft' do
+      allow(assessment).to receive(:status).and_return(:draft)
+
+      expect(links[:report]).to  eq(nil)
     end
 
     it 'returns an active report link when consensus' do
@@ -70,6 +80,6 @@ describe Link::Facilitator do
       expect(links[:report][:active]).to eq(true)
     end
   end
-  
+
 end
 

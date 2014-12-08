@@ -9,7 +9,11 @@ module Link
     end
 
     def execute
-      { report: report, action: action }
+      if consensus?
+        { report: report, action: action }
+      else
+        { action: action }
+      end
     end
 
     private

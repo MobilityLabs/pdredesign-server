@@ -10,20 +10,6 @@ describe Link::Viewer do
     subject.new(assessment, @user).execute
   end
 
-  describe 'report' do
-    it 'returns no report link when not consensus' do
-      allow(assessment).to receive(:status).and_return(:assessment)
-
-      expect(links[:report]).to  eq(nil)
-    end
-
-    it 'returns an active report link when consensus' do
-      allow(assessment).to receive(:status).and_return(:consensus)
-
-      expect(links[:report][:active]).to eq(true)
-    end
-  end
-
   context 'access' do
     it 'returns a request access link' do
       expect(links[:access][:title]).to  eq("Request Access")

@@ -27,7 +27,7 @@ module Link
     end
 
     def report
-      {title: 'Report', active: fully_complete?, type: :report}
+      {title: 'View Report', active: fully_complete?, type: :report}
     end
 
     def consensus

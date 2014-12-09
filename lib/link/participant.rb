@@ -19,11 +19,16 @@ module Link
     private
     def action
       return response unless consensus?
+      return edit_response unless fully_complete?
       consensus
     end
 
     def response
       {title: 'Complete Survey', active: true, type: :response}
+    end
+
+    def edit_response
+      {title: 'Edit Survey', active: true, type: :response}
     end
 
     def report

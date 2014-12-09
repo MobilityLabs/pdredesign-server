@@ -10,9 +10,7 @@ module Link
       if draft?
         {finish: finish }
       elsif consensus?
-        {consensus: consensus, report: report }.tap do |links|
-          links[:dashboard] = dashboard
-        end
+        {consensus: consensus, report: report, dashboard: dashboard }
       else
         {consensus: consensus, dashboard: dashboard }
       end

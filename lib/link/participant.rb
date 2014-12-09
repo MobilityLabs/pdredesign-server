@@ -9,7 +9,7 @@ module Link
     end
 
     def execute
-      if consensus?
+      if fully_complete?
         { report: report, action: action }
       else
         { action: action }

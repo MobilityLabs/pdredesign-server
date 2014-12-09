@@ -9,7 +9,7 @@ module Link
     end
 
     def execute
-      { report: report, action: action }
+      { action: action, report: report }
     end
 
     private
@@ -23,7 +23,7 @@ module Link
     end
 
     def report
-      {title: 'Report', active: fully_complete?, type: :report}
+      {title: 'View Report', active: fully_complete?, type: :report}
     end
 
     def consensus

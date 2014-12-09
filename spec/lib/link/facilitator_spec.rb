@@ -17,9 +17,9 @@ describe Link::Facilitator do
   it 'returns a dashboard link when an assessment is not a draft' do
     allow(assessment).to receive(:status).and_return(:assessment)
 
-    expect(links[:dashboard][:title]).to  eq("Dashboard")
+    expect(links[:dashboard][:title]).to  eq("View Dashboard")
     expect(links[:dashboard][:active]).to eq(true)
-    expect(links[:dashboard][:type]).to   eq(:dashboard)   
+    expect(links[:dashboard][:type]).to   eq(:dashboard)
 
 
     allow(assessment).to receive(:status).and_return(:draft)
@@ -33,17 +33,22 @@ describe Link::Facilitator do
 
   describe 'dashboard' do
     it 'returns a dashboard link' do
-      expect(links[:dashboard][:title]).to  eq("Dashboard")
+      expect(links[:dashboard][:title]).to  eq("View Dashboard")
       expect(links[:dashboard][:active]).to eq(true)
       expect(links[:dashboard][:type]).to   eq(:dashboard)
     end
   end
 
   describe 'consensus' do
+    it 'does not return a consensus link when status is draft' do
+      allow(assessment).to receive(:status).and_return(:draft)
+      expect(links[:consensus]).to  eq(nil)
+    end
+
     it 'returns a new consensus link when there isnt one' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:consensus][:title]).to  eq("Consensus")
+      expect(links[:consensus][:title]).to  eq("Create Consensus")
       expect(links[:consensus][:active]).to eq(true)
       expect(links[:consensus][:type]).to   eq(:new_consensus)
     end
@@ -59,7 +64,7 @@ describe Link::Facilitator do
     it 'returns a disabled report link when not consensus' do
       allow(assessment).to receive(:status).and_return(:assessment)
 
-      expect(links[:report][:title]).to  eq("Report")
+      expect(links[:report][:title]).to  eq("View Report")
       expect(links[:report][:active]).to eq(false)
       expect(links[:report][:type]).to   eq(:report)
     end
@@ -70,6 +75,6 @@ describe Link::Facilitator do
       expect(links[:report][:active]).to eq(true)
     end
   end
-  
+
 end
 

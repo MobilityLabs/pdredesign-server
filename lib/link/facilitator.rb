@@ -2,6 +2,8 @@ module Link
   class Facilitator
 
     attr_reader :assessment
+    delegate :participant?, to: :assessment
+
     def initialize(assessment, *args)
       @assessment = assessment
     end
@@ -11,6 +13,8 @@ module Link
         {finish: finish }
       elsif consensus?
         {consensus: consensus, report: report, dashboard: dashboard }
+      elsif participant?
+        { response: response, consensus: consensus, dashboard: dashboard}
       else
         {consensus: consensus, dashboard: dashboard }
       end
@@ -30,6 +34,10 @@ module Link
       existing_consensus
     end
 
+    def response
+      {title: 'Complete Survey', active: true, type: :response}
+    end
+
     def existing_consensus
       {title: 'Consensus', active: true, type: :consensus}
     end
@@ -44,6 +52,10 @@ module Link
 
     def consensus?
       assessment.status == :consensus
+    end
+
+    def participant?
+      assessment.participant?(assessment.user)
     end
 
     def draft?

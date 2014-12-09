@@ -81,5 +81,40 @@ describe Link::Facilitator do
     end
   end
 
-end
+  describe 'execute' do
+    it 'only returns finish when is draft' do
+      allow(assessment).to receive(:status).and_return(:draft)
+      expect(links.length).to eq(1)
+      expect(links[:finish][:title]).to eq('Finish & Assign')
+    end
 
+    it 'returns dashboard, report, and consensus finish when is consensus' do
+      allow(assessment).to receive(:status).and_return(:consensus)
+      expect(links.length).to eq(3)
+      expect(links[:dashboard][:title]).to eq('View Dashboard')
+      expect(links[:report][:title]).to eq('View Report')
+      expect(links[:consensus][:title]).to eq('Consensus')
+    end
+
+    it 'returns response, consensus, and dashboard when assessment and is participant' do
+      p = assessment.participants.last
+      p.user_id = assessment.user.id
+      assessment.participants.push(p)
+
+      allow(assessment).to receive(:status).and_return(:assessment)
+
+      expect(links.length).to eq(3)
+      expect(links[:dashboard][:title]).to eq('View Dashboard')
+      expect(links[:response][:title]).to eq('Complete Survey')
+      expect(links[:consensus][:title]).to eq('Create Consensus')
+    end
+
+    it 'returns consensus and dashboard when assessment and is not participant' do
+      allow(assessment).to receive(:status).and_return(:assessment)
+      expect(links.length).to eq(2)
+      expect(links[:dashboard][:title]).to eq('View Dashboard')
+      expect(links[:consensus][:title]).to eq('Create Consensus')
+    end
+  end
+
+end

@@ -74,8 +74,9 @@ describe Link::Facilitator do
       expect(links[:report]).to  eq(nil)
     end
 
-    it 'returns an active report link when consensus' do
+    it 'returns an active report link when consensus is fully complete' do
       allow(assessment).to receive(:status).and_return(:consensus)
+      allow(assessment).to receive(:fully_complete?).and_return(true)
 
       expect(links[:report][:active]).to eq(true)
     end
@@ -88,11 +89,22 @@ describe Link::Facilitator do
       expect(links[:finish][:title]).to eq('Finish & Assign')
     end
 
-    it 'returns dashboard, report, and consensus finish when is consensus' do
+    it 'returns dashboard, report, and consensus finish when is fully complete' do
       allow(assessment).to receive(:status).and_return(:consensus)
+      allow(assessment).to receive(:fully_complete?).and_return(true)
+
       expect(links.length).to eq(3)
       expect(links[:dashboard][:title]).to eq('View Dashboard')
       expect(links[:report][:title]).to eq('View Report')
+      expect(links[:consensus][:title]).to eq('Consensus')
+    end
+
+    it 'returns dashboard and consensus finish when consensus but not  fully complete' do
+      allow(assessment).to receive(:status).and_return(:consensus)
+      allow(assessment).to receive(:fully_complete?).and_return(false)
+
+      expect(links.length).to eq(2)
+      expect(links[:dashboard][:title]).to eq('View Dashboard')
       expect(links[:consensus][:title]).to eq('Consensus')
     end
 

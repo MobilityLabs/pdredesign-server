@@ -11,8 +11,10 @@ module Link
     def execute
       if draft?
         {finish: finish }
-      elsif consensus?
+      elsif fully_complete?
         {consensus: consensus, report: report, dashboard: dashboard }
+      elsif consensus?
+        {consensus: consensus, dashboard: dashboard }
       elsif participant?
         { response: response, consensus: consensus, dashboard: dashboard}
       else

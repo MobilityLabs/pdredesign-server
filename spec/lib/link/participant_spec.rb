@@ -13,19 +13,22 @@ describe Link::Participant do
   describe 'draft'  do
     it "returns nil if assesment is a draft" do
       allow(assessment).to receive(:status).and_return(:draft)
+
       expect(links).to  eq(nil)
     end
   end
 
   describe 'report' do
-    it 'returns no report link when not fully_complete' do
+    it 'returns no report link when not fully_complete and consensus' do
       allow(assessment).to receive(:fully_complete?).and_return(false)
+      allow(assessment).to receive(:status).and_return(:consensus)
 
       expect(links[:report]).to  eq(nil)
     end
 
-    it 'returns report link when fully_complete' do
+    it 'returns report link when fully_complete and consensus' do
       allow(assessment).to receive(:fully_complete?).and_return(true)
+      allow(assessment).to receive(:status).and_return(:consensus)
 
       expect(links[:report][:active]).to eq(true)
     end

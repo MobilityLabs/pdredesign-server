@@ -10,6 +10,13 @@ describe Link::Participant do
     subject.new(assessment).execute
   end
 
+  describe 'draft'  do
+    it "returns nil if assesment is a draft" do
+      allow(assessment).to receive(:status).and_return(:draft)
+      expect(links).to  eq(nil)
+    end
+  end
+
   describe 'report' do
     it 'returns no report link when not fully_complete' do
       allow(assessment).to receive(:fully_complete?).and_return(false)

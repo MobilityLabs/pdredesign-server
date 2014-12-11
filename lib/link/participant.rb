@@ -9,6 +9,8 @@ module Link
     end
 
     def execute
+      return nil if draft?
+
       if fully_complete?
         { report: report, action: action }
       else
@@ -41,6 +43,10 @@ module Link
 
     def consensus?
       assessment.status == :consensus
+    end
+
+    def draft?
+      assessment.status == :draft
     end
 
   end

@@ -2,7 +2,7 @@ module Link
   class Facilitator
 
     attr_reader :assessment
-    delegate :participant?, to: :assessment
+    delegate :fully_complete?, to: :assessment
 
     def initialize(assessment, *args)
       @assessment = assessment

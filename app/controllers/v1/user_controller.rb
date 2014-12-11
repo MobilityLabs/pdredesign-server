@@ -1,5 +1,6 @@
 class V1::UserController < ApplicationController
   before_action :authenticate_user!, except: [:create, :reset, :request_reset]
+  before_action :downcase_email
 
   def show
     render partial: 'v1/shared/user', locals: { user: current_user }
@@ -49,7 +50,7 @@ class V1::UserController < ApplicationController
   end
 
   def request_reset
-    user = User.find_by(email: params[:email].downcase)
+    user = User.find_by(email: params[:email])
 
     render_errors("Email doesn't exist") and return unless user
     user.update(reset_password_token: hash, 
@@ -94,6 +95,10 @@ class V1::UserController < ApplicationController
 
   def send_notification_email
     SignupNotificationWorker.perform_async(@user.id)
+  end
+
+  def downcase_email
+    params[:email].downcase! unless params[:email].nil?
   end
   
   def user_params

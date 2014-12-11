@@ -25,6 +25,11 @@ describe V1::UserController do
       assert_response :success
     end
 
+    it 'does not break when email param is nil' do
+      expect{ post :request_reset }.not_to raise_error
+      assert_response 422
+    end
+
     it 'sets the reset_password_token' do
       allow(controller).to receive(:hash).and_return('xyz')
 

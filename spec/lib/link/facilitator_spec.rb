@@ -109,10 +109,7 @@ describe Link::Facilitator do
     end
 
     it 'returns response, consensus, and dashboard when assessment and is participant' do
-      p = assessment.participants.last
-      p.user_id = assessment.user.id
-      assessment.participants.push(p)
-
+      allow(assessment).to receive(:participant?).and_return(:true)
       allow(assessment).to receive(:status).and_return(:assessment)
 
       expect(links.length).to eq(3)

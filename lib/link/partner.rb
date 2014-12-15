@@ -1,5 +1,5 @@
 module Link
-  class Partner 
+  class Partner
 
     attr_reader :assessment, :user
     delegate :pending_requests?, :network_partner?, to: :assessment
@@ -20,11 +20,11 @@ module Link
     end
 
     def request
-      { title: 'Request Access', type: :request_access, active: true }
+      { title: 'Request Access', type: :request_access }
     end
 
     def pending
-      { title: 'Access Pending', type: :pending, active: false }
+      { title: 'Access Pending', type: :pending }
     end
 
   end

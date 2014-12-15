@@ -13,7 +13,6 @@ describe Link::Viewer do
   context 'access' do
     it 'returns a request access link' do
       expect(links[:access][:title]).to  eq("Request Access")
-      expect(links[:access][:active]).to eq(true)
       expect(links[:access][:type]).to   eq(:request_access)
     end
 

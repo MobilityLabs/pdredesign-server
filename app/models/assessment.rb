@@ -104,8 +104,8 @@ class Assessment < ActiveRecord::Base
       .present?
   end
 
-  def request_access?(user)
-    !facilitator?(user) && !participant?(user)
+  def has_access?(user)
+    facilitator?(user) || participant?(user)
   end
 
 	def completed?

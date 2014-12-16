@@ -282,20 +282,20 @@ describe Assessment do
       end
     end
 
-    context '#request_access?' do
-      it 'returns false when a user is a participant of an assessment' do
-        expect(assessment.request_access?(@user)).to eq(false)
+    context '#has_access?' do
+      it 'returns true when a user is a participant of an assessment' do
+        expect(assessment.has_access?(@user)).to eq(true)
       end
 
-      it 'returns true when a user is not a participant of an assessment' do
+      it 'returns false when a user is not a participant of an assessment' do
         assessment.participants.find_by(user_id: @user.id).destroy
-        expect(assessment.request_access?(@user)).to eq(true)
+        expect(assessment.has_access?(@user)).to eq(false)
       end
 
-      it 'returns false when a user is a facilitator of an assessment' do
+      it 'returns true when a user is a facilitator of an assessment' do
         assessment.participants.find_by(user_id: @user.id).destroy
         assessment.facilitators[0].id = @user.id
-        expect(assessment.request_access?(@user)).to eq(false)
+        expect(assessment.has_access?(@user)).to eq(true)
       end
     end
 

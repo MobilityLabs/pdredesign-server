@@ -19,7 +19,7 @@ describe Link::Participant do
   end
 
   describe 'report' do
-    it 'returns no report link when not fully_complete and consensus' do
+    it 'does not return a report link when not fully_complete and consensus' do
       allow(assessment).to receive(:fully_complete?).and_return(false)
       allow(assessment).to receive(:status).and_return(:consensus)
 

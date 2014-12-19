@@ -4,7 +4,7 @@ ruby '2.1.2'
 
 gem 'rails', '~> 4.1.0'
 
-gem 'unicorn'
+gem 'puma'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'

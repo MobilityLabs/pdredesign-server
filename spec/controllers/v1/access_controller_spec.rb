@@ -46,7 +46,7 @@ describe V1::AccessController do
       expect(assessment.facilitator?(@user)).to eq(true)
     end
     
-    describe '#user permission with :participant' do
+    context 'user permission is :participant' do
       before :each do
         create_token_chain([:participant])
         post :grant, token: @record.token

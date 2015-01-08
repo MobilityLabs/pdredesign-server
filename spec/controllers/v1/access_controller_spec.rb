@@ -56,7 +56,7 @@ describe V1::AccessController do
         expect(assessment.participant?(@user)).to eq(true)
       end
     
-      it 'sets new participant param invited_at not to be nil ' do
+      it 'sets participant param invited_at to not be nil ' do
         new_participant = Participant.find_by_user_id(@user.id)       
         expect(new_participant.invited_at).not_to eq(nil)
       end

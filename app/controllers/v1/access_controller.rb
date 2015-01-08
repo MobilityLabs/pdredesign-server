@@ -29,7 +29,7 @@ class V1::AccessController < ApplicationController
   end
 
   def grant_participant(assessment, user)
-    Participant.create!(assessment: assessment, user: user)
+    Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
   end
 
   #TODO: extract to authorizer
@@ -41,4 +41,3 @@ class V1::AccessController < ApplicationController
     AccessRequest.find_by(token: params[:token])
   end
 end
-

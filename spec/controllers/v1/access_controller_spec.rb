@@ -45,12 +45,21 @@ describe V1::AccessController do
       post :grant, token: @record.token
       expect(assessment.facilitator?(@user)).to eq(true)
     end
+    
+    context 'user permission is :participant' do
+      before :each do
+        create_token_chain([:participant])
+        post :grant, token: @record.token
+      end
 
-    it 'grants a user permission with :participant' do
-      create_token_chain([:participant])
-
-      post :grant, token: @record.token
-      expect(assessment.participant?(@user)).to eq(true)
+      it 'grants a user permission with :participant' do
+        expect(assessment.participant?(@user)).to eq(true)
+      end
+    
+      it 'sets participant param invited_at to not be nil ' do
+        participant = Participant.find_by_user_id(@user.id)       
+        expect(participant.invited_at).not_to eq(nil)
+      end
     end
 
     it 'grants a user permission with :viewer' do

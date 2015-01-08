@@ -57,8 +57,8 @@ describe V1::AccessController do
       end
     
       it 'sets participant param invited_at to not be nil ' do
-        new_participant = Participant.find_by_user_id(@user.id)       
-        expect(new_participant.invited_at).not_to eq(nil)
+        participant = Participant.find_by_user_id(@user.id)       
+        expect(participant.invited_at).not_to eq(nil)
       end
     end
 

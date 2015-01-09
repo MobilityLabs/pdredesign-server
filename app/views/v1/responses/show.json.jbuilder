@@ -2,7 +2,7 @@ json.id           @response.id
 json.submitted_at @response.submitted_at
 json.is_completed @response.submitted_at && true
 
-json.partial!     'consensus' if @response.is_consensus?
+json.partial!     'v1/consensus/consensus' if @response.is_consensus?
 
 number = 0
 json.categories @categories do |category|
@@ -19,7 +19,7 @@ json.categories @categories do |category|
     json.category_id question.category_id
     json.score       controller.score_for(@response, question)
     json.answers     question.ordered_answers
-    json.partial!    'question', question: question if @response.is_consensus?
+    json.partial!    'v1/consensus/question', question: question if @response.is_consensus?
     json.partial!    'v1/shared/key_question', key_question: question.key_question if question.key_question
 
   end

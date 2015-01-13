@@ -1,6 +1,8 @@
 class V1::ConsensusController < V1::ResponsesController
   before_action :authenticate_user!
 
+  caches_action :show, layout: false
+
   def create
     @response = Response.find_or_initialize_by(
                   responder_type: 'Assessment',
@@ -8,6 +10,7 @@ class V1::ConsensusController < V1::ResponsesController
                   rubric: assessment.rubric)
 
     authorize_action_for @response
+    expire_action action: :show
     @response.save
   end
 
@@ -18,6 +21,8 @@ class V1::ConsensusController < V1::ResponsesController
     if consensus_params[:submit]
       @response.update(submitted_at: Time.now)
     end
+
+    expire_action action: :show
 
     render nothing: true
   end

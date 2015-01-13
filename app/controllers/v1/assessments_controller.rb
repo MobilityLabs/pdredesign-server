@@ -1,6 +1,8 @@
 class V1::AssessmentsController < ApplicationController
   before_action :authenticate_user!
 
+  caches_action :index, :show, layout: false
+
   def index
     @assessments = user_assessments
     @role        = user_role
@@ -42,6 +44,8 @@ class V1::AssessmentsController < ApplicationController
     assign_current_user_as_participant(@assessment) if current_user.district_member?
 
     if @assessment.save
+      expire_action action: :show
+      expire_action action: :index
       render :show
     else
       @errors = @assessment.errors

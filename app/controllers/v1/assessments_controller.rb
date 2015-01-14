@@ -1,7 +1,7 @@
 class V1::AssessmentsController < ApplicationController
   before_action :authenticate_user!
 
-  caches_action :index, :show, layout: false
+  caches_action :index, :show
 
   def index
     @assessments = user_assessments

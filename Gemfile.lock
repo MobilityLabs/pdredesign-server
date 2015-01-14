@@ -220,6 +220,7 @@ GEM
       actionpack
       activesupport
       mandrill-api (~> 1.0.9)
+    memcachier (0.0.2)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
@@ -450,6 +451,7 @@ DEPENDENCIES
   letter_opener_web
   mandrill-api
   mandrill_mailer
+  memcachier
   mini_magick
   pdr_client!
   pg

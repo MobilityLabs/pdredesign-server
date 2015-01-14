@@ -10,9 +10,9 @@ PdrServer::Application.routes.draw do
     sessions: 'v1/sessions',
     registrations: 'devise/registrations',
     invitations: 'devise/invitations' },
-    defaults: { format: :json}
+    defaults: { format: 'json'}
 
-  namespace :v1, defaults: { format: :json } do
+  namespace :v1, defaults: { format: 'json' } do
     resources :faqs, only: [:index]
 
     get  '/organizations/search', to: 'organizations#search'

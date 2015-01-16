@@ -8,7 +8,6 @@ class V1::ConsensusController < V1::ResponsesController
                   rubric: assessment.rubric)
 
     authorize_action_for @response
-    expire_action action: :show
     @response.save
   end
 

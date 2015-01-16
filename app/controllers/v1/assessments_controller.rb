@@ -1,7 +1,8 @@
 class V1::AssessmentsController < ApplicationController
   before_action :authenticate_user!
 
-  caches_action :index, :show, cache_path: Proc.new { |c| "/assessments/#{c.current_user.id}" }
+  caches_action :index, cache_path: Proc.new { |c| "#{c.current_user.id}/assessments" }
+  caches_action :show,  cache_path: Proc.new { |c| "#{c.current_user.id}/assessments/#{c.params[:id]}" }
 
   def index
     @assessments = user_assessments
@@ -44,8 +45,8 @@ class V1::AssessmentsController < ApplicationController
     assign_current_user_as_participant(@assessment) if current_user.district_member?
 
     if @assessment.save
-      expire_action action: :show, cache_path: Proc.new { |c| "/assessments/#{c.current_user.id}" }
-      expire_action action: :index, cache_path: Proc.new { |c| "/assessments/#{c.current_user.id}" }
+      expire_action :index, cache_path: Proc.new { |c| "#{c.current_user.id}/assessments" }
+      expire_action :show,  cache_path: Proc.new { |c| "#{c.current_user.id}/assessments/#{c.params[:id]}" }
       render :show
     else
       @errors = @assessment.errors

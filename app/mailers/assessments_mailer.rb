@@ -30,8 +30,4 @@ class AssessmentsMailer < ApplicationMailer
          to: participant.user.email)
   end
 
-  private
-  def assessment_url(id)
-    "#{ENV['BASE_URL']}/#/assessments/#{id}/responses"
-  end
 end

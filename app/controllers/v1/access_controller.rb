@@ -7,6 +7,7 @@ class V1::AccessController < ApplicationController
     status(401) and return unless allowed?(@record)
 
     grant_access(@record)
+    send_granted_notification(@record)
     render nothing: true
   end
 
@@ -39,5 +40,9 @@ class V1::AccessController < ApplicationController
 
   def find_access_request
     AccessRequest.find_by(token: params[:token])
+  end
+
+  def send_granted_notification(record)
+    AccessGrantedNotificationWorker.perform_async(record.assessment.id, record.user.id)
   end
 end

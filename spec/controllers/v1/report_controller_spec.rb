@@ -11,7 +11,7 @@ describe V1::ReportController do
   before { create_struct }
   before { sign_in @user2 }
   let(:assessment) { @assessment_with_participants }
-  let(:consensu){ Response.create(responder_id:   assessment.id, responder_type: 'Assessment') }
+  let(:consensu){ assessment.response.nil? ? Response.create(responder_id:   assessment.id, responder_type: 'Assessment') : assessment.response }
 
   context '#show' do
 

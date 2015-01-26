@@ -1,9 +1,6 @@
 class V1::AssessmentsController < ApplicationController
   before_action :authenticate_user!
 
-  caches_action :index, cache_path: Proc.new { |c| "#{c.current_user.id}/assessments" }
-  caches_action :show,  cache_path: Proc.new { |c| "#{c.current_user.id}/assessments/#{c.params[:id]}" }
-
   def index
     @assessments = user_assessments
     @role        = user_role
@@ -27,7 +24,6 @@ class V1::AssessmentsController < ApplicationController
     end
 
     @assessment.update(update_params)
-    clear_assessments_cached
     render nothing: true
   end
 
@@ -46,7 +42,6 @@ class V1::AssessmentsController < ApplicationController
     assign_current_user_as_participant(@assessment) if current_user.district_member?
 
     if @assessment.save
-      clear_assessments_cached
       render :show
     else
       @errors = @assessment.errors
@@ -102,7 +97,4 @@ class V1::AssessmentsController < ApplicationController
     Assessment.assessments_for_user(user)
   end
 
-  def clear_assessments_cached
-    Rails.cache.clear("views/#{current_user.id}/assessments.json")
-  end
 end

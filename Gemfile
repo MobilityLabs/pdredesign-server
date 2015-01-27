@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
-ruby '2.1.2'
+ruby '2.2.0'
 
 gem 'rails', '~> 4.1.0'
 
@@ -33,6 +33,7 @@ gem 'zurb-ink-rails', '~> 1.0.5'
 
 gem 'pdr_client', git: 'https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git'
 # gem 'pdr_client', path: '../pdr-client'
+gem 'rails-assets-angular', :source => 'https://rails-assets.org/'
 
 gem 'actionpack-action_caching'
 

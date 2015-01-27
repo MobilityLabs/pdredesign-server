@@ -459,6 +459,7 @@ DEPENDENCIES
   pry
   puma
   rails (~> 4.1.0)
+  rails-assets-angular!
   rails_12factor
   rails_admin
   rspec-collection_matchers

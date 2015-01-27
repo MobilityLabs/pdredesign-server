@@ -1,5 +1,5 @@
 json.array! @assessments do |assessment|
-  json.cache! ['v1', assessment] do
+  json.cache! ['v1', current_user.id, assessment] do
     json.partial! 'v1/assessments/assessment', 
                   assessment: assessment
 

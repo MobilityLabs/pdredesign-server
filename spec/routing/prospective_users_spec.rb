@@ -5,7 +5,7 @@ describe '' do
     expect(post: "/v1/prospective_users").to route_to(
       controller: "v1/prospective_users",
       action: 'create',
-      format: :json
+      format: 'json'
     )
   end
 end

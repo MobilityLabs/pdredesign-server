@@ -96,4 +96,5 @@ class V1::AssessmentsController < ApplicationController
   def user_assessments(user = current_user)
     Assessment.assessments_for_user(user)
   end
+
 end

@@ -10,7 +10,7 @@ class ReminderNotificationWorker
       next if participant.response && participant.response.completed?
       AssessmentsMailer
         .reminder(assessment, message, participant)
-        .deliver
+        .deliver_now
 
       participant.update(reminded_at: Time.now)
     end

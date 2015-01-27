@@ -25,7 +25,7 @@ describe AccessRequestNotificationWorker do
       .with(@request, @facilitator2.email)
       .and_return(double)
 
-    expect(double).to receive(:deliver).twice
+    expect(double).to receive(:deliver_now).twice
     subject.new.perform(@request.id)
   end
 

@@ -3,7 +3,7 @@ class PasswordResetNotificationWorker
 
   def perform(user_id)
     user = find_user(user_id)
-    PasswordResetMailer.reset(user).deliver
+    PasswordResetMailer.reset(user).deliver_now
   end
 
   private

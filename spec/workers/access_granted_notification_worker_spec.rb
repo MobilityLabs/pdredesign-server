@@ -13,7 +13,7 @@ describe AccessGrantedNotificationWorker do
       .with(assessment, user_without_access)
       .and_return(double)
 
-    expect(double).to receive(:deliver)
+    expect(double).to receive(:deliver_now)
     subject.new.perform(assessment.id, user_without_access.id)
   end
 end

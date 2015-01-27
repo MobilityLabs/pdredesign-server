@@ -8,7 +8,7 @@ class AccessRequestNotificationWorker
     facilitators(assessment).uniq.each do |facilitator|
       ::AccessRequestMailer
         .request_access(request, facilitator.email)
-        .deliver
+        .deliver_now
     end
   end
 

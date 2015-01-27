@@ -6,7 +6,7 @@ class SignupNotificationWorker
 
     NotificationsMailer
       .signup(user)
-      .deliver
+      .deliver_now
   end
 
   private

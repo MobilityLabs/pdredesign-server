@@ -3,7 +3,7 @@ class UserInvitationNotificationWorker
 
   def perform(invite_id)
     invite = find_invite(invite_id)
-    NotificationsMailer.invite(invite).deliver
+    NotificationsMailer.invite(invite).deliver_now
 
     participant = find_participant(invite)
     participant.update(invited_at: Time.now)

@@ -13,7 +13,7 @@ describe ReminderNotificationWorker do
       .with(assessment, 'the message', anything)
       .and_return(double)
 
-    expect(double).to receive(:deliver).twice
+    expect(double).to receive(:deliver_now).twice
     subject.new.perform(assessment.id, 'the message')
   end
 

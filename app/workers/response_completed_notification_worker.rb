@@ -6,7 +6,7 @@ class ResponseCompletedNotificationWorker
 
     ResponsesMailer
       .submitted(response)
-      .deliver
+      .deliver_now
   end
 
   private

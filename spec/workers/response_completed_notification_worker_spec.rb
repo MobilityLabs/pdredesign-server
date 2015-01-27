@@ -15,7 +15,7 @@ describe ResponseCompletedNotificationWorker do
       .with(response)
       .and_return(double)
 
-    expect(double).to receive(:deliver)
+    expect(double).to receive(:deliver_now)
     subject.new.perform(response.id)
   end
 

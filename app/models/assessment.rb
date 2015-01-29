@@ -63,6 +63,8 @@ class Assessment < ActiveRecord::Base
 
 	validate :validate_participants, if: "assigned_at.present?"
 
+  before_save :set_assigned_at
+
 	def validate_participants
     return unless self.participants.empty?
 		errors.add :participant_ids, "You must assign participants to this assessment."
@@ -232,6 +234,10 @@ class Assessment < ActiveRecord::Base
 	def all_participant_responses
 		Response.where(responder_type: 'Participant',
 		 responder: participants)
+  end
+
+  def set_assigned_at
+    self.assigned_at = Time.now if self.assign
   end
 
 	def self.consensus_responses

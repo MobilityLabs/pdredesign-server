@@ -20,7 +20,6 @@ class V1::AssessmentsController < ApplicationController
 
     @assessment.update(update_params)
     if update_params[:assign]
-      update_params[:assigned_at] = Time.now
       invite_all_users(@assessment)
     end
     render nothing: true

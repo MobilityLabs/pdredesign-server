@@ -17,13 +17,12 @@ class V1::AssessmentsController < ApplicationController
     authorize_action_for @assessment
 
     update_params = assessment_params
+
+    @assessment.update(update_params)
     if update_params[:assign]
-      update_params.delete :assign
       update_params[:assigned_at] = Time.now
       invite_all_users(@assessment)
     end
-
-    @assessment.update(update_params)
     render nothing: true
   end
 

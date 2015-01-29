@@ -52,7 +52,7 @@ class Assessment < ActiveRecord::Base
 
 	accepts_nested_attributes_for :participants, allow_destroy: true
 
-	attr_accessor :add_participants
+	attr_accessor :add_participants, :assign
 
 	## VALIDATIONS
 	validates :name, presence: true

@@ -61,7 +61,7 @@ describe V1::AssessmentsController do
       expect(AllParticipantsNotificationWorker).to receive(:perform_async)
         .with(assessment.id)
 
-      put :update, assign: true, id: assessment.id, rubric_id: 42
+      put :update, assign: true, id: assessment.id, rubric_id: 42, message: "some custom message here"
       assert_response :success
     end
   end

@@ -54,7 +54,7 @@ class V1::ParticipantsController < ApplicationController
   end
 
   def send_participant_assigned_email(assessment, participant) 
-    assessments_mailer(assessment, participant).deliver
+    assessments_mailer(assessment, participant).deliver_now
   end
 
   def invite_mailer(record)

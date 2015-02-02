@@ -25,13 +25,13 @@ class AllParticipantsNotificationWorker
   def send_invitation_email(invitation_record)
     NotificationsMailer
       .invite(invitation_record)
-      .deliver
+      .deliver_now
   end
 
   def send_assessment_mail(assessment, participant)
     AssessmentsMailer
       .assigned(assessment, participant)
-      .deliver
+      .deliver_now
   end
 
   def invite_record(assessment_id, participant)

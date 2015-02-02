@@ -5,7 +5,7 @@ class AccessGrantedNotificationWorker
     asessment = find_assessment(assessment_id)
     user      = find_user(user_id)
 
-    AccessGrantedMailer.notify(asessment, user).deliver
+    AccessGrantedMailer.notify(asessment, user).deliver_now
   end
 
   private

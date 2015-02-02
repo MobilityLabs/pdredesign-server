@@ -22,7 +22,7 @@ describe SignupNotificationWorker do
       .with(@user)
       .and_return(double)
 
-    expect(double).to receive(:deliver)
+    expect(double).to receive(:deliver_now)
 
     subject.new.perform(@user.id)
   end

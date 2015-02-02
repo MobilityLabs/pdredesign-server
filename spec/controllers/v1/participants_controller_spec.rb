@@ -44,7 +44,7 @@ describe V1::ParticipantsController do
 
       double = double("AssessmentMailer")
 
-      expect(double).to receive(:deliver)
+      expect(double).to receive(:deliver_now)
       expect(AssessmentsMailer).to receive(:assigned).and_return(double)
 
       other = Assessment.find_by_name("Assessment 1")

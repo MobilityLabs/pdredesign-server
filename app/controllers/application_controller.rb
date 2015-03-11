@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include ScoreQuery
   include RenderStatus
   include ExtractIds
+  protect_from_forgery
 
   layout nil
   respond_to :json

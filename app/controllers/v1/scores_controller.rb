@@ -1,6 +1,6 @@
 class V1::ScoresController < ApplicationController
   before_action :authenticate_user!
-  
+
   def create
     authorize_action_for user_response
 
@@ -16,9 +16,9 @@ class V1::ScoresController < ApplicationController
     @rubric        = assessment.rubric
     @user_response = user_response
     @questions = []
-    
+
     user_response.categories.each do |category|
-      category.rubric_questions(@rubric).each do |question| 
+      category.rubric_questions(@rubric).each do |question|
         @questions << question
       end
     end

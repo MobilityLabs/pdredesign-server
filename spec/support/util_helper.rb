@@ -12,7 +12,7 @@ def create_struct
   responder = Participant.create!(user: @user)
   rubric    = @rubric
   response  = Response.create!(
-    responder_type: 'Assessment', 
+    responder_type: 'Assessment',
     responder: responder,
     rubric: rubric,
     id: 99)

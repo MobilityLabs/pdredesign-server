@@ -11,7 +11,7 @@ json.role_human       (user.role && user.role.to_s.humanize)
 json.team_role        user.team_role
 json.avatar           avatar_image(user.avatar)
 json.district_ids     user.district_ids
-json.organization_ids user.organization_ids.first
+json.organization_ids user.organization_ids.first 
 
 json.districts do
   json.partial! 'v1/shared/districts',

@@ -36,6 +36,13 @@ describe V1::ParticipantsController do
       expect(participants.count).to eq(2) 
     end
 
+    it 'should include permissions data' do
+      get :index, assessment_id: assessment.id
+
+      expect(response.body).to match(/permission_level/)
+      expect(response.body).to match(/possible_permission_levels/)
+    end
+
   end
 
   context '#create' do

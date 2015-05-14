@@ -17,7 +17,7 @@ describe Assessments::ParticipantStatus do
 
   def status(participant = @participant)
     subject.new(participant).status
-  end 
+  end
 
   def date(participant = @participant)
     subject.new(participant).date

@@ -12,6 +12,23 @@ describe Assessments::Permission do
     expect(subject.available_permissions).to eq([:facilitator, :viewer, :partner, :participant])
   end
 
+  context 'possible levels for a user' do
+    
+    before do
+      participant = Participant.new
+      participant.user = user
+      participant.assessment = assessment
+      participant.save!
+    end
+
+    it 'return the possible permissions level for a user' do
+      @assessment_permission = Assessments::Permission.new(assessment)
+
+      expect(@assessment_permission.possible_roles_permissions(user)).to eq([:facilitator, :viewer, :partner])
+    end
+
+  end
+
   context 'permission level' do
 
     before do

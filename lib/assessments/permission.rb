@@ -1,6 +1,8 @@
 module Assessments
   class Permission
 
+    PERMISSIONS = [:facilitator, :viewer, :partner, :participant]
+
     attr_reader :assessment
 
     def initialize(assessment)
@@ -25,9 +27,13 @@ module Assessments
       grant_access(ar)
     end
 
+    def possible_roles_permissions(user)
+      PERMISSIONS-[user_level(user)]
+    end
+
     def self.available_permissions
       # this would be return the available and valid permissions for Assessments
-      [:facilitator, :viewer, :partner, :participant]
+      PERMISSIONS
     end
 
     private

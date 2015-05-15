@@ -29,7 +29,7 @@ describe V1::AssessmentsPermissionsController do
   describe '#show' do
     context 'respond to GET#show' do
       it 'responds successfully to GET#show' do
-        sign_in @facilitator
+        sign_in @facilitator2
 
         get :show, assessment_id: assessment.id, id: 1
         assert_response :success
@@ -53,7 +53,7 @@ describe V1::AssessmentsPermissionsController do
   describe '#update' do
     context 'respond to PUT#update' do
       it 'responds successfully to PUT#update' do
-        sign_in @facilitator
+        sign_in @facilitator2
 
         put :update, assessment_id: assessment.id, id: 1
         assert_response :success

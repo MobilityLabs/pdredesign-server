@@ -58,7 +58,9 @@ describe V1::AssessmentsPermissionsController do
         ra = Application.request_access_to_assessment(assessment: assessment, user: brand_new_user, roles: ["facilitator"])
         sign_in @facilitator2
 
-        put :update, assessment_id: assessment.id, id: ra.id, level: "facilitator", user_requested_email: brand_new_user.email
+        put :update, assessment_id: assessment.id, id: ra.id, 
+          permissions: [ { level: "facilitator", email: brand_new_user.email }]
+
         expect(assessment.facilitator?(brand_new_user)).to eq(true)
         assert_response :success
       end

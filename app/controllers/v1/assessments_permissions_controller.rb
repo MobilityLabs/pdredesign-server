@@ -11,13 +11,17 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def update
-    user = User.find_by(email: params[:user_requested_email])
-    assessment_permission = Assessments::Permission.new(@assessment)
-    assessment_permission.accept_permission_requested(user)
+    params[:permissions].each{ |permission| update_permission(permission) }
 
     render nothing: true
   end
   private
+
+  def update_permission(permission)
+    user = User.find_by(email: permission[:email])
+    assessment_permission = Assessments::Permission.new(@assessment)
+    assessment_permission.add_level(user, permission[:level])
+  end
 
   def assessment
     @assessment = Assessment.find(params[:assessment_id])

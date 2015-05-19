@@ -41,6 +41,15 @@ describe Assessments::Permission do
       expect(assessment.facilitator?(user)).to eq(true)
     end
 
+    it 'accept a participant request' do
+      new_user = Application.create_user
+      Application.request_access_to_assessment(
+        assessment: assessment, user: new_user, roles: ["participant"])
+
+      @assessment_permission.accept_permission_requested(new_user)
+      expect(assessment.participant?(new_user)).to eq(true)
+    end
+
     it 'Add permission level to user' do
       @assessment_permission.add_level(user, "network_partner")
       expect(assessment.network_partner?(user)).to eq(true)

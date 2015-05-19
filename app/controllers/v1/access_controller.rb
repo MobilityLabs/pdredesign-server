@@ -14,23 +14,9 @@ class V1::AccessController < ApplicationController
   private
   def grant_access(record)
     assessment = record.assessment
-    record.roles.each do |role|
-      send("grant_#{role}", assessment, record.user)
-    end
+    permission = Assessments::Permission.new(assessment)
 
-    record.destroy
-  end
-
-  def grant_facilitator(assessment, user)
-    assessment.facilitators << user   
-  end
-
-  def grant_viewer(assessment, user)
-    assessment.viewers << user   
-  end
-
-  def grant_participant(assessment, user)
-    Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
+    permission.accept_permission_requested(record.user)
   end
 
   #TODO: extract to authorizer

@@ -67,5 +67,9 @@ module Assessments
     def grant_viewer(assessment, user)
       assessment.viewers << user   
     end
+
+    def grant_participant(assessment, user)
+      Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
+    end
   end
 end

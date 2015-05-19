@@ -3,7 +3,6 @@ class V1::AccessRequestController < ApplicationController
 
   def create
 
-    assessment_permission = Assessments::Permission.new(assessment)
     @request = Assessments::Permission.request_access(
       user: current_user, 
       assessment_id: request_params[:assessment_id],

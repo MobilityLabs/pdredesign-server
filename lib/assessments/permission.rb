@@ -29,11 +29,11 @@ module Assessments
     def add_level(user, level)
       case level.to_sym
         when :facilitator
-          assessment.facilitators << user
+          grant_facilitator(assessment, user)
         when :viewer
-          assessment.viewers << user
+          grant_viewer(assessment, user)
         when :network_partner
-          assessment.network_partners << user
+          grant_network_partner(assessment, user)
         else
           return false
       end
@@ -43,6 +43,7 @@ module Assessments
     def accept_permission_requested(user)
       ar = AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
       grant_access(ar)
+      notify_user_for_access_granted(ar.assessment, ar.user)
     end
 
     def self.available_permissions
@@ -77,8 +78,16 @@ module Assessments
       assessment.viewers << user   
     end
 
+    def grant_network_partner(assessment, user)
+      assessment.network_partners << user
+    end
+
     def grant_participant(assessment, user)
       Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
+    end
+
+    def notify_user_for_access_granted(assessment, user)
+      AccessGrantedNotificationWorker.perform_async(assessment.id, user.id)
     end
   end
 end

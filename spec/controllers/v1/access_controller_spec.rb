@@ -46,13 +46,6 @@ describe V1::AccessController do
       expect(assessment.facilitator?(@user)).to eq(true)
     end
 
-    it 'should send notification email when the access is grant' do
-      create_token_chain
-      expect(AccessGrantedNotificationWorker).to receive(:perform_async)
-      
-      post :grant, token: @record.token
-    end
-    
     context 'user permission is :participant' do
       before :each do
         create_token_chain([:participant])

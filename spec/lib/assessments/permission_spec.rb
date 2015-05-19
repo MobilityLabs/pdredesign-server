@@ -52,7 +52,10 @@ describe Assessments::Permission do
     end
 
     it 'accept permission request' do
+      expect(AccessGrantedNotificationWorker).to receive(:perform_async)
+      
       @assessment_permission.accept_permission_requested(user)
+
       expect(assessment.facilitator?(user)).to eq(true)
     end
 
@@ -79,6 +82,19 @@ describe Assessments::Permission do
       expect(@assessment_permission.get_level(user)).to eq(:facilitator)
     end
 
+  end
+
+  context 'notification emails' do
+    before do
+      @ra = Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["facilitator"])
+      @assessment_permission = Assessments::Permission.new(assessment)
+    end
+
+    it 'Notify the user by email' do
+      expect(AccessGrantedNotificationWorker).to receive(:perform_async)
+      
+      @assessment_permission.accept_permission_requested(user)
+    end
   end
 
 end

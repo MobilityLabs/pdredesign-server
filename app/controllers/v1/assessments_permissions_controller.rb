@@ -17,13 +17,11 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def current_level
-    # respond_to do |format|
-    #   format.json do
-    #     render json: { permission_level: assessment_permission.user_level(current_user) }
-    #   end
-    # end
-
-    render json: { permission_level: assessment_permission.user_level(current_user) }.to_json
+    respond_to do |format|
+      format.json do
+        render json: { permission_level: assessment_permission.user_level(current_user) }
+      end
+    end
   end
   private
 

@@ -85,7 +85,6 @@ describe V1::AssessmentsPermissionsController do
       sign_in @facilitator2
 
       assert_response :success
-      expect(response.body).to eq({permission_level: "facilitator"}.to_json)
     end
 
     it 'security: responds with 401 auth error' do

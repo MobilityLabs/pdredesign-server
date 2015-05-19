@@ -1,9 +1,10 @@
 class V1::AssessmentsPermissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :assessment, only: [:show, :update, :current_level]
+  before_action :assessment, only: [:index, :show, :update, :current_level]
 
   def index
-    render nothing: true
+    ap = Assessments::Permission.new(@assessment)
+    @access_requested = ap.requested
   end
 
   def show

@@ -41,6 +41,11 @@ describe Assessments::Permission do
       expect(assessment.facilitator?(user)).to eq(true)
     end
 
+    it 'Add permission level to user' do
+      @assessment_permission.add_level(user, "network_partner")
+      expect(assessment.network_partner?(user)).to eq(true)
+    end
+
     it 'should respond with the list of users requesting access' do
       expect(@assessment_permission.requested).to include(@ra)
     end

@@ -9,6 +9,10 @@ module Assessments
       @assessment = assessment
     end
 
+    def possible_roles_permissions(user)
+      PERMISSIONS-[user_level(user)]
+    end
+
     def requested
       AccessRequest.where(assessment_id: assessment.id)
     end
@@ -17,7 +21,7 @@ module Assessments
       return case
         when assessment.facilitator?(user); :facilitator
         when assessment.participant?(user); :participant
-        when assessment.network_partner?(user); :facilitator
+        when assessment.network_partner?(user); :network_partner
         when assessment.viewer?(user); :viewer
         end
     end
@@ -27,8 +31,18 @@ module Assessments
       grant_access(ar)
     end
 
-    def possible_roles_permissions(user)
-      PERMISSIONS-[user_level(user)]
+    def add_level(user, level)
+      case level.to_sym
+        when :facilitator
+          assessment.facilitators << user
+        when :viewer
+          assessment.viewers << user
+        when :network_partner
+          assessment.network_partners << user
+        else
+          return false
+      end
+      return true 
     end
 
     def self.available_permissions

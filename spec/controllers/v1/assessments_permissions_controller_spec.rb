@@ -79,4 +79,20 @@ describe V1::AssessmentsPermissionsController do
     end
   end
 
+  describe "GET#current_level - for current_user" do
+
+    it 'returns the current_user permission level' do
+      sign_in @facilitator2
+
+      assert_response :success
+      expect(response.body).to eq({permission_level: "facilitator"}.to_json)
+    end
+
+    it 'security: responds with 401 auth error' do
+      get :current_level, assessment_id: assessment.id
+      assert_response :unauthorized
+    end
+
+  end
+
 end

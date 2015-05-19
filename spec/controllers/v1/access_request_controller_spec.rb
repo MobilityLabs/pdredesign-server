@@ -25,16 +25,6 @@ describe V1::AccessRequestController do
       assert_response :success
     end
 
-    it 'creates a token for the record' do
-      expect(controller).to receive(:hash).and_return('expected')
-      post :create,
-        assessment_id: assessment.id,
-        roles: [:facilitator, :participant]
-
-      access_request = AccessRequest.find(json["id"])
-      expect(access_request.token).to eq('expected')
-    end
-
     it 'returns errors if not successful' do
       post :create,
         assessment_id: assessment.id

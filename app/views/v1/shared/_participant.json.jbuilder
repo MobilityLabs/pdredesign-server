@@ -10,7 +10,7 @@ json.status        participant_status.status
 json.status_human  participant_status.to_s
 json.status_date   participant_status.date
 if params[:assessment_id]
-  json.permission_level 			assessment_permission.user_level(participant.user)
+  json.permission_level 			assessment_permission.get_level(participant.user)
   json.possible_permission_levels 	assessment_permission.possible_roles_permissions(participant.user)
 end
 

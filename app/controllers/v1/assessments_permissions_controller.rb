@@ -11,6 +11,10 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def update
+    user = User.find_by(email: params[:user_requested_email])
+    assessment_permission = Assessments::Permission.new(@assessment)
+    assessment_permission.accept_permission_requested(user)
+
     render nothing: true
   end
   private

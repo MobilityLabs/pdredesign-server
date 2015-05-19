@@ -52,10 +52,14 @@ describe V1::AssessmentsPermissionsController do
 
   describe '#update' do
     context 'respond to PUT#update' do
+      let(:brand_new_user) { Application.create_user }      
+
       it 'responds successfully to PUT#update' do
+        ra = Application.request_access_to_assessment(assessment: assessment, user: brand_new_user, roles: ["facilitator"])
         sign_in @facilitator2
 
-        put :update, assessment_id: assessment.id, id: 1
+        put :update, assessment_id: assessment.id, id: ra.id, level: "facilitator", user_requested_email: brand_new_user.email
+        expect(assessment.facilitator?(brand_new_user)).to eq(true)
         assert_response :success
       end
 
@@ -65,7 +69,6 @@ describe V1::AssessmentsPermissionsController do
       end
 
       it 'security: regular user should not be allowed to update the permissions' do
-        brand_new_user = Application.create_user
         sign_in brand_new_user
 
         put :update, assessment_id: assessment.id, id: 1

@@ -87,6 +87,23 @@ describe V1::ScoresController do
       expect(score.value).to eq(1)
       expect(score.evidence).to eq('new score')
     end
+
+    it 'allows a facilitator access to make changes to a consensus' do
+      assessment.facilitators << @facilitator
+      sign_in @facilitator
+
+      Response.find(99).update(responder: assessment,
+                               responder_type: 'Assessment')
+
+      question = Question.first
+      post :create, assessment_id: assessment.id,
+                    response_id: 99,
+                    question_id: question.id,
+                    value: 1,
+                    evidence: 'new score'
+
+      assert_response :success
+    end
   end
 
   context '#index' do
@@ -99,14 +116,14 @@ describe V1::ScoresController do
 
     it 'gives a score for each question' do
       question = Question.first
-      score = Score.create(response_id: 99, 
-        question_id: question.id, 
-        value: 2, 
+      score = Score.create(response_id: 99,
+        question_id: question.id,
+        value: 2,
         evidence: 'test')
 
       get :index, assessment_id: assessment.id,
                   response_id: 99
-      first = json.detect { |q| q["id"] == question.id } 
+      first = json.detect { |q| q["id"] == question.id }
       expect(first["score"]["id"]).to eq(score.id)
     end
   end

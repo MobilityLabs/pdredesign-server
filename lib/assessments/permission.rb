@@ -10,25 +10,20 @@ module Assessments
     end
 
     def possible_roles_permissions(user)
-      PERMISSIONS-[user_level(user)]
+      PERMISSIONS-[get_level(user)]
     end
 
     def requested
       AccessRequest.where(assessment_id: assessment.id)
     end
 
-    def user_level(user)
+    def get_level(user)
       return case
         when assessment.facilitator?(user); :facilitator
         when assessment.participant?(user); :participant
         when assessment.network_partner?(user); :network_partner
         when assessment.viewer?(user); :viewer
         end
-    end
-
-    def accept_permission_requested(user)
-      ar = AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
-      grant_access(ar)
     end
 
     def add_level(user, level)
@@ -45,9 +40,23 @@ module Assessments
       return true 
     end
 
+    def accept_permission_requested(user)
+      ar = AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
+      grant_access(ar)
+    end
+
     def self.available_permissions
       # this would be return the available and valid permissions for Assessments
       PERMISSIONS
+    end
+
+    def self.request_access(request_options)
+      roles = request_options[:roles].class == String ? [request_options[:roles]] : request_options[:roles]
+      
+      return AccessRequest.create({
+        roles: roles, token: SecureRandom.hex[0..9],
+        user: request_options[:user], assessment_id: request_options[:assessment_id]
+      })
     end
 
     private

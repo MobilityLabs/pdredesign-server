@@ -12,6 +12,21 @@ describe Assessments::Permission do
     expect(subject.available_permissions).to eq([:facilitator, :viewer, :partner, :participant])
   end
 
+  context 'request access to assessment' do
+    
+    it 'should create the access request object using request_access method' do
+      Assessments::Permission.request_access(
+        user: user, 
+        roles: "facilitator",
+        assessment_id: assessment.id)
+
+      expect(
+        AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
+      ).not_to be_nil
+    end
+
+  end
+
   context 'possible levels for a user' do
     
     before do
@@ -59,9 +74,9 @@ describe Assessments::Permission do
       expect(@assessment_permission.requested).to include(@ra)
     end
 
-    it 'should return the permission level of a user' do
+    it 'should return the permission level of a user: #get_level method' do
       @assessment_permission.accept_permission_requested(user)
-      expect(@assessment_permission.user_level(user)).to eq(:facilitator)
+      expect(@assessment_permission.get_level(user)).to eq(:facilitator)
     end
 
   end

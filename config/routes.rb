@@ -43,7 +43,11 @@ PdrServer::Application.routes.draw do
         resources :scores, only: [:update, :create, :index]
       end
       get 'participants/all', to: 'participants#all', as: :all_participants
-      resources :permissions, only: [:index, :update, :show], controller: 'assessments_permissions'
+      resources :permissions, only: [:index, :update, :show], controller: 'assessments_permissions' do
+        collection do
+          get :current_level
+        end
+      end
     end
 
     get  'user', to: 'user#show'

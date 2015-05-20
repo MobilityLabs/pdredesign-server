@@ -1,0 +1,1 @@
+json.partial! 'assessment_permission', access_request: @access_request

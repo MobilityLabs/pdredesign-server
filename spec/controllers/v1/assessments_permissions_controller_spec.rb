@@ -13,7 +13,7 @@ describe V1::AssessmentsPermissionsController do
   describe '#index' do
     context 'respond to GET#index' do
       before do
-        
+
         Application.request_access_to_assessment(assessment: assessment, user: Application.create_user, roles: ["facilitator"])
       end
 
@@ -35,10 +35,19 @@ describe V1::AssessmentsPermissionsController do
   describe '#show' do
     context 'respond to GET#show' do
       it 'responds successfully to GET#show' do
+        ar = Application.request_access_to_assessment(assessment: assessment, user: Application.create_user, roles: ["facilitator"])
+        sign_in @facilitator2
+
+        get :show, assessment_id: assessment.id, id: ar.id, email: ar.user.email
+        assert_response :success
+        expect(response.body).to match(/roles/)
+      end
+
+      it 'responds 404 to GET#show' do
         sign_in @facilitator2
 
         get :show, assessment_id: assessment.id, id: 1
-        assert_response :success
+        assert_response :missing
       end
 
       it 'security: responds with 401 auth error' do

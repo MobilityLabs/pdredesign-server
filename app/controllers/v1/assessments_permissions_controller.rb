@@ -4,7 +4,7 @@ class V1::AssessmentsPermissionsController < ApplicationController
   before_action :access_request, only: [:show, :deny]
 
   def index
-    ap = Assessments::Permission.new(@assessment)
+    ap = assessment_permission
     @access_requested = ap.requested
   end
 

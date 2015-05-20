@@ -103,12 +103,15 @@ describe Assessments::Permission do
     before do
       @ra = Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["facilitator"])
       @assessment_permission = Assessments::Permission.new(assessment)
+      expect(AccessGrantedNotificationWorker).to receive(:perform_async)
     end
 
     it 'Notify the user by email' do
-      expect(AccessGrantedNotificationWorker).to receive(:perform_async)
-      
       @assessment_permission.accept_permission_requested(user)
+    end
+
+    it 'Send an email when the permission level is added' do
+      @assessment_permission.add_level(user, "facilitator")
     end
   end
 

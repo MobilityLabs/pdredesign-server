@@ -41,13 +41,14 @@ module Assessments
         else
           return false
       end
+      notify_user_for_access_granted(assessment, user, level)
       return true 
     end
 
     def accept_permission_requested(user)
       ar = get_access_request(user)
       grant_access(ar)
-      notify_user_for_access_granted(ar.assessment, ar.user)
+      notify_user_for_access_granted(ar.assessment, ar.user, ar.roles.first)
     end
 
     def deny(user)
@@ -95,8 +96,8 @@ module Assessments
       Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
     end
 
-    def notify_user_for_access_granted(assessment, user)
-      AccessGrantedNotificationWorker.perform_async(assessment.id, user.id)
+    def notify_user_for_access_granted(assessment, user, role)
+      AccessGrantedNotificationWorker.perform_async(assessment.id, user.id, role)
     end
   end
 end

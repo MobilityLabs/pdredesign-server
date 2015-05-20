@@ -84,6 +84,21 @@ describe Assessments::Permission do
 
   end
 
+  context 'deny permission request' do
+    before do
+      Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["facilitator"])
+      @assessment_permission = Assessments::Permission.new(assessment)
+    end
+
+    it 'should deny permission by deleting the request' do
+      @assessment_permission.deny(user)
+
+      expect(
+        @assessment_permission.get_access_request(user)
+      ).to eq(nil)
+    end
+  end
+
   context 'notification emails' do
     before do
       @ra = Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["facilitator"])

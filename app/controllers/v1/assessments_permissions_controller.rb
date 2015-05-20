@@ -4,8 +4,7 @@ class V1::AssessmentsPermissionsController < ApplicationController
   before_action :access_request, only: [:show, :deny]
 
   def index
-    ap = assessment_permission
-    @access_requested = ap.requested
+    @access_requested = assessment_permission.requested
   end
 
   def show;end
@@ -17,7 +16,7 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def deny
-    @access_request.destroy
+    @ap.deny(@requester)
     render nothing: true
   end
 
@@ -40,10 +39,10 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def access_request
-    ap    = assessment_permission
-    user  = User.find_by(email: params[:email])
+    @ap    = assessment_permission
+    @requester  = User.find_by(email: params[:email])
 
-    @access_request = ap.get_access_request(user) if user
+    @access_request = @ap.get_access_request(@requester) if @requester
 
     unless @access_request
       not_found

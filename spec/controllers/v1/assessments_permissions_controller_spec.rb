@@ -22,7 +22,7 @@ describe V1::AssessmentsPermissionsController do
 
         get :index, assessment_id: assessment.id
         assert_response :success 
-        expect(response.body).to match(/roles/)
+        expect(response.body).to match(/requested_permission_level/)
       end
 
       it 'security: responds with 401 auth error' do
@@ -40,7 +40,7 @@ describe V1::AssessmentsPermissionsController do
 
         get :show, assessment_id: assessment.id, id: ar.id, email: ar.user.email
         assert_response :success
-        expect(response.body).to match(/roles/)
+        expect(response.body).to match(/requested_permission_level/)
       end
 
       it 'responds 404 to GET#show' do

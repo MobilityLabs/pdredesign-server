@@ -17,6 +17,10 @@ module Assessments
       AccessRequest.where(assessment_id: assessment.id)
     end
 
+    def get_access_request(user)
+      AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
+    end
+
     def get_level(user)
       return case
         when assessment.facilitator?(user); :facilitator
@@ -41,7 +45,7 @@ module Assessments
     end
 
     def accept_permission_requested(user)
-      ar = AccessRequest.find_by(assessment_id: assessment.id, user_id: user.id)
+      ar = get_access_request(user)
       grant_access(ar)
       notify_user_for_access_granted(ar.assessment, ar.user)
     end

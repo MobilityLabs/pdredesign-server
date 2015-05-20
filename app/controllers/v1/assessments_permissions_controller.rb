@@ -8,7 +8,14 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def show
-    render nothing: true
+    ap    = Assessments::Permission.new(@assessment)
+    user  = User.find_by(email: params[:email])
+
+    @access_request = ap.get_access_request(user) if user
+
+    unless @access_request
+      not_found
+    end
   end
 
   def update

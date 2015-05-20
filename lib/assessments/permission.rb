@@ -50,6 +50,11 @@ module Assessments
       notify_user_for_access_granted(ar.assessment, ar.user)
     end
 
+    def deny(user)
+      ar = get_access_request(user)
+      ar.destroy
+    end
+
     def self.available_permissions
       # this would be return the available and valid permissions for Assessments
       PERMISSIONS

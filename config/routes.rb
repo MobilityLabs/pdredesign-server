@@ -44,6 +44,9 @@ PdrServer::Application.routes.draw do
       end
       get 'participants/all', to: 'participants#all', as: :all_participants
       resources :permissions, only: [:index, :update, :show], controller: 'assessments_permissions' do
+        member do
+          put :deny
+        end
         collection do
           get :current_level
         end

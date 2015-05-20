@@ -28,7 +28,8 @@ Authority.configure do |config|
     :edit           => 'update',
     :update         => 'update',
     :destroy        => 'delete',
-    :current_level  => 'read'    #Custom action for checking the current_user permissions in an assessment
+    :current_level  => 'read',    #Custom action for checking the current_user permissions in an assessment
+    :deny           => 'update'   #Custom action for deny permissions requested for an assessment
   }
 
   # ABILITIES

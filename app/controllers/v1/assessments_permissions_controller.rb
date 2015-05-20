@@ -1,26 +1,23 @@
 class V1::AssessmentsPermissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :assessment, only: [:index, :show, :update, :current_level]
+  before_action :assessment, only: [:index, :show, :update, :deny, :current_level]
+  before_action :access_request, only: [:show, :deny]
 
   def index
     ap = Assessments::Permission.new(@assessment)
     @access_requested = ap.requested
   end
 
-  def show
-    ap    = Assessments::Permission.new(@assessment)
-    user  = User.find_by(email: params[:email])
-
-    @access_request = ap.get_access_request(user) if user
-
-    unless @access_request
-      not_found
-    end
-  end
+  def show;end
 
   def update
     params[:permissions].each{ |permission| update_permission(permission) }
 
+    render nothing: true
+  end
+
+  def deny
+    @access_request.destroy
     render nothing: true
   end
 
@@ -40,6 +37,17 @@ class V1::AssessmentsPermissionsController < ApplicationController
 
   def assessment_permission
     Assessments::Permission.new(@assessment)
+  end
+
+  def access_request
+    ap    = assessment_permission
+    user  = User.find_by(email: params[:email])
+
+    @access_request = ap.get_access_request(user) if user
+
+    unless @access_request
+      not_found
+    end
   end
 
   def assessment

@@ -18,9 +18,9 @@ class V1::AccessController < ApplicationController
     permission.accept_permission_requested(record.user)
   end
 
-  #TODO: extract to authorizer
   def allowed?(record)
-    record.assessment.facilitator?(current_user) 
+    auth = AssessmentAuthorizer.new(record.assessment)
+    auth.updatable_by?(current_user)
   end
 
   def find_access_request

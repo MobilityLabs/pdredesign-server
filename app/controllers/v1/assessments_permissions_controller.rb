@@ -1,7 +1,7 @@
 class V1::AssessmentsPermissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :assessment, only: [:index, :show, :update, :deny, :current_level]
-  before_action :access_request, only: [:show, :deny]
+  before_action :assessment, only: [:index, :show, :update, :accept, :deny, :current_level]
+  before_action :access_request, only: [:show, :deny, :accept]
 
   def index
     @access_requested = assessment_permission.requested
@@ -12,6 +12,11 @@ class V1::AssessmentsPermissionsController < ApplicationController
   def update
     params[:permissions].each{ |permission| update_permission(permission) }
 
+    render nothing: true
+  end
+
+  def accept
+    @ap.accept_permission_requested(@requester)
     render nothing: true
   end
 

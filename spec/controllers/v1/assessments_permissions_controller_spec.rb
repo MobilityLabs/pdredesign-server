@@ -94,33 +94,62 @@ describe V1::AssessmentsPermissionsController do
     end
   end
 
-  describe "PUT#deny permission" do
+  describe "PUT#deny PUT#accept permission" do
 
     let(:brand_new_user) { Application.create_user }
     let(:ra) { Application.request_access_to_assessment(assessment: assessment, user: brand_new_user, roles: ["facilitator"]) }
 
-    it 'deny the permission request ' do
-      ap = Assessments::Permission.new(assessment)
-      sign_in @facilitator2
+    context 'PUT#deny' do
+
+      it 'deny the permission request ' do
+        ap = Assessments::Permission.new(assessment)
+        sign_in @facilitator2
+        
+        put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
+
+        assert_response :success
+        expect(assessment.facilitator?(brand_new_user)).to eq(false)
+        expect(ap.get_access_request(brand_new_user)).to eq(nil)
+      end
       
-      put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
+      it 'unauthorized when is not logged in PUT#deny' do
+        put :deny, assessment_id: assessment.id, id: 1
+        assert_response :unauthorized
+      end
 
-      assert_response :success
-      expect(assessment.facilitator?(brand_new_user)).to eq(false)
-      expect(ap.get_access_request(brand_new_user)).to eq(nil)
+      it 'forbid the deny request when no permissions to update PUT#deny' do
+        sign_in @facilitator
+        
+        put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
+
+        assert_response :forbidden
+      end
     end
-    
-    it 'unauthorized when is not logged int' do
-      put :deny, assessment_id: assessment.id, id: 1
-      assert_response :unauthorized
-    end
 
-    it 'forbid the deny request when no permissions to update' do
-      sign_in @facilitator
-      
-      put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
+    context 'PUT#accept' do
 
-      assert_response :forbidden
+      it 'PUT#accept' do
+        sign_in @facilitator2
+
+        put :accept, assessment_id: assessment.id, id:ra.id, email: brand_new_user.email
+
+        assert_response :success
+        expect(assessment.facilitator?(brand_new_user)).to eq(true)
+      end
+
+      it 'security: responds with 401 auth error PUT#accept' do
+        put :accept, assessment_id: assessment.id, id: 1
+        assert_response :unauthorized
+      end
+
+      it 'forbid the deny request when no permissions to update PUT#accept' do
+        sign_in @facilitator
+        
+        put :accept, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
+
+        assert_response :forbidden
+      end
+
     end
 
   end

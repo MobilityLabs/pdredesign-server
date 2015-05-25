@@ -79,8 +79,8 @@ class Assessment < ActiveRecord::Base
 
   def all_users
     users = []
-    [:facilitators, :viewers, :network_partners].each { |user_type| users << send(user_type) }
-    participants.map{ |participant| users << participant.user }
+    [:facilitators, :viewers, :network_partners].each { |user_type| users.push(send(user_type)) }
+    participants.map{ |participant| users.push(participant.user) }
     users.flatten.compact
   end
 

@@ -77,6 +77,13 @@ class Assessment < ActiveRecord::Base
     :assessment
   end
 
+  def all_users
+    users = []
+    [:facilitators, :viewers, :network_partners].each { |user_type| users << send(user_type) }
+    participants.map{ |participant| users << participant.user }
+    users.flatten.compact
+  end
+
   def owner?(comp_user)
     user.id == comp_user.id
   end

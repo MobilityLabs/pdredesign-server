@@ -1,10 +1,14 @@
 class V1::AssessmentsPermissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :assessment, only: [:index, :show, :update, :accept, :deny, :current_level]
+  before_action :assessment, only: [:index, :all_users, :show, :update, :accept, :deny, :current_level]
   before_action :access_request, only: [:show, :deny, :accept]
 
   def index
     @access_requested = assessment_permission.requested
+  end
+
+  def all_users
+    @users = @assessment.all_users
   end
 
   def show;end

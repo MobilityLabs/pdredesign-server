@@ -10,12 +10,12 @@ describe V1::AssessmentsPermissionsController do
 
   let(:assessment) { @assessment_with_participants }
 
-  describe '#index' do
-    context 'respond to GET#index' do
-      before do
+  describe '#index and GET#all_users' do
+    before do
+      Application.request_access_to_assessment(assessment: assessment, user: Application.create_user, roles: ["facilitator"])
+    end
 
-        Application.request_access_to_assessment(assessment: assessment, user: Application.create_user, roles: ["facilitator"])
-      end
+    context 'respond to GET#index' do
 
       it 'responds successfully to GET#show' do
         sign_in @facilitator2
@@ -29,6 +29,29 @@ describe V1::AssessmentsPermissionsController do
         get :index, assessment_id: assessment.id
         assert_response :unauthorized
       end
+    end
+
+    context 'respond to GET#all_users' do
+
+      it 'responds successfully to GET#all_users' do
+        assessment.viewers << @facilitator
+
+        sign_in @facilitator2
+
+        get :all_users, assessment_id: assessment.id
+        
+        assert_response :success
+        expect(response.body).to match(@facilitator.email)
+        expect(response.body).to match(@facilitator2.email)
+        expect(response.body).to match(/permission_level/)
+        expect(response.body).to match(/possible_permission_levels/)
+      end
+
+      it 'security: responds with 401 auth error' do
+        get :all_users, assessment_id: assessment.id
+        assert_response :unauthorized
+      end
+
     end
   end
 

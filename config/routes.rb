@@ -49,6 +49,7 @@ PdrServer::Application.routes.draw do
           put :deny
         end
         collection do
+          get :all_users
           get :current_level
         end
       end

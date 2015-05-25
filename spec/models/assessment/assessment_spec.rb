@@ -416,6 +416,18 @@ describe Assessment do
       end
     end
 
+    describe '#all_users' do
+      before { create_magic_assessments }
+      let(:assessment) { @assessment_with_participants }
+      
+      it 'returns all the users involved in the assessment (participants, viewers, network_partners, facilitators)' do
+        au = assessment.all_users
+        expect(au).to include(assessment.participants.first.user)
+        expect(au).to include(assessment.facilitators.first)
+      end
+    end
+
   end
 
 end
+  

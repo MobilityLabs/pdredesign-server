@@ -28,6 +28,7 @@ Authority.configure do |config|
     :edit           => 'update',
     :update         => 'update',
     :destroy        => 'delete',
+    :all_users      => 'read',    #Custom action used to listed all the users related to an assessment
     :current_level  => 'read',    #Custom action for checking the current_user permissions in an assessment
     :accept         => 'update',  #Custom action for accept permissions requested for an assessment
     :deny           => 'update'   #Custom action for deny permissions requested for an assessment

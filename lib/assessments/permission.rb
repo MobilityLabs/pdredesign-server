@@ -81,7 +81,7 @@ module Assessments
     end
 
     def grant_facilitator(assessment, user)
-      assessment.facilitators << user   
+      assessment.facilitators << user
     end
 
     def grant_viewer(assessment, user)

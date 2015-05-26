@@ -40,7 +40,7 @@ class V1::AssessmentsPermissionsController < ApplicationController
 
   def update_permission(permission)
     user = User.find_by(email: permission["email"])
-    assessment_permission.add_level(user, permission["level"])
+    assessment_permission.update_level(user, permission["level"])
   end
 
   def assessment_permission

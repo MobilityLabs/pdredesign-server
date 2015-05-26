@@ -93,13 +93,15 @@ describe V1::AssessmentsPermissionsController do
       let(:brand_new_user) { Application.create_user }      
 
       it 'responds successfully to PUT#update' do
-        ra = Application.request_access_to_assessment(assessment: assessment, user: brand_new_user, roles: ["facilitator"])
+        assessment.facilitators << @facilitator
+        
         sign_in @facilitator2
 
-        put :update, assessment_id: assessment.id, id: ra.id, 
-          permissions: [ { level: "facilitator", email: brand_new_user.email }]
+        put :update, assessment_id: assessment.id, id: @facilitator.id,
+          permissions: [ { level: "viewer", email: @facilitator.email }]
 
-        expect(assessment.facilitator?(brand_new_user)).to eq(true)
+        expect(assessment.facilitator?(@facilitator)).to eq(false)
+        expect(assessment.viewer?(@facilitator)).to eq(true)
         assert_response :success
       end
 

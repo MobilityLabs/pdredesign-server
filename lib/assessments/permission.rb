@@ -45,6 +45,11 @@ module Assessments
       return true 
     end
 
+    def update_level(user, level)
+      revoke_level(user)
+      add_level(user, level)
+    end
+
     def accept_permission_requested(user)
       ar = get_access_request(user)
       grant_access(ar)
@@ -54,6 +59,21 @@ module Assessments
     def deny(user)
       ar = get_access_request(user)
       ar.destroy
+    end
+
+    def revoke_level(user)
+      case get_level(user)
+        when :facilitator
+          assessment.facilitators.delete(user)
+        when :viewer
+          assessment.viewers.destroy(user)
+        when :network_partner
+          assessment.network_partners.destroy(user)
+        when :participant
+          #TODO: should be deleted from participants list?
+        assessment.reload
+      end
+
     end
 
     def self.available_permissions

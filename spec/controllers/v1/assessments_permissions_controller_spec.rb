@@ -90,7 +90,7 @@ describe V1::AssessmentsPermissionsController do
 
   describe '#update' do
     context 'respond to PUT#update' do
-      let(:brand_new_user) { Application.create_user }      
+      let(:brand_new_user) { Application.create_user }
 
       it 'responds successfully to PUT#update' do
         assessment.facilitators << @facilitator
@@ -103,6 +103,18 @@ describe V1::AssessmentsPermissionsController do
         expect(assessment.facilitator?(@facilitator)).to eq(false)
         expect(assessment.viewer?(@facilitator)).to eq(true)
         assert_response :success
+      end
+
+      it 'security: current_user should not be updated' do
+        assessment.facilitators << @facilitator
+
+        sign_in @facilitator
+
+        put :update, assessment_id: assessment.id, id: @facilitator.id,
+          permissions: [ { level: "viewer", email: @facilitator.email }]
+
+        expect(assessment.facilitator?(@facilitator)).to eq(true)
+        expect(assessment.viewer?(@facilitator)).to eq(false)
       end
 
       it 'security: responds with 401 auth error' do

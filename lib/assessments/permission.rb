@@ -46,8 +46,10 @@ module Assessments
     end
 
     def update_level(user, level)
-      revoke_level(user)
-      add_level(user, level)
+      unless assessment.owner?(user)
+        revoke_level(user)
+        add_level(user, level)
+      end
     end
 
     def accept_permission_requested(user)

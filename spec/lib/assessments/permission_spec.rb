@@ -84,12 +84,20 @@ describe Assessments::Permission do
 
     it 'should update the permission level' do
       assessment.facilitators << @facilitator
-
       @assessment_permission.update_level(@facilitator, 'viewer')
+
       expect(assessment.facilitator?(@facilitator)).to eq(false)
       expect(@assessment_permission.get_level(@facilitator)).to eq(:viewer)
     end
 
+    it 'owner shold not be updated' do
+      owner = assessment.user
+      
+      @assessment_permission.update_level(assessment.user, 'viewer')
+
+      expect(assessment.owner?(owner)).to eq(true)
+      expect(assessment.viewer?(owner)).to eq(false)
+    end
   end
 
   context 'deny permission request' do

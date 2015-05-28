@@ -16,13 +16,13 @@ describe V1::AssessmentsPermissionsController do
     end
 
     context 'respond to GET#index' do
-
-      it 'responds successfully to GET#show' do
+      
+      it 'responds successfully to GET#index' do
         sign_in @facilitator2
 
         get :index, assessment_id: assessment.id
         assert_response :success 
-        expect(response.body).to match(/requested_permission_level/)
+        expect(response.body).to      match(/requested_permission_level/)
       end
 
       it 'security: responds with 401 auth error' do
@@ -35,14 +35,14 @@ describe V1::AssessmentsPermissionsController do
 
       it 'responds successfully to GET#all_users' do
         assessment.viewers << @facilitator
+        assessment.viewers << @facilitator3
 
-        sign_in @facilitator2
+        sign_in @facilitator
 
         get :all_users, assessment_id: assessment.id
         
         assert_response :success
-        expect(response.body).to match(@facilitator.email)
-        expect(response.body).to match(@facilitator2.email)
+        expect(response.body).not_to match(@facilitator.email)
         expect(response.body).to match(/permission_level/)
         expect(response.body).to match(/possible_permission_levels/)
       end

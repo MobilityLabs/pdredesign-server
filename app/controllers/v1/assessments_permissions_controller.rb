@@ -8,7 +8,7 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def all_users
-    @users = @assessment.all_users
+    @users = all_users_list
   end
 
   def show;end
@@ -61,5 +61,9 @@ class V1::AssessmentsPermissionsController < ApplicationController
   def assessment
     @assessment = Assessment.find(params[:assessment_id])
     authorize_action_for @assessment
+  end
+
+  def all_users_list
+    @assessment.all_users.delete_if{ |u| current_user == u }
   end
 end

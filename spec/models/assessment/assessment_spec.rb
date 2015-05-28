@@ -421,9 +421,12 @@ describe Assessment do
       let(:assessment) { @assessment_with_participants }
       
       it 'returns all the users involved in the assessment (participants, viewers, network_partners, facilitators)' do
+        assessment.facilitators << @facilitator
+
         au = assessment.all_users
         expect(au).to include(assessment.participants.first.user)
-        expect(au).to include(assessment.facilitators.first)
+        expect(au).to include(@facilitator)
+        expect(au).not_to include(assessment.user) #not to include owner
       end
     end
 

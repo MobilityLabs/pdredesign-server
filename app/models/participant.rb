@@ -20,6 +20,12 @@ class Participant < ActiveRecord::Base
 
   has_one    :response, as: :responder, dependent: :destroy
 
+  after_save :flush_assessment_cache
+  
+  def flush_assessment_cache
+    assessment.flush_cached_version if assessment
+  end
+
   def remove_invitation
     UserInvitation
       .where(email: user.email, assessment: assessment)

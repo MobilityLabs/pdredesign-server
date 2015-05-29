@@ -238,7 +238,7 @@ class Assessment < ActiveRecord::Base
 
   def flush_cached_version
     # Caching is based at :updated_at attribute so when it changes will discard the cached version and do the caching agin.
-    self.touch
+    self.touch if persisted?
   end
 
   def set_assigned_at

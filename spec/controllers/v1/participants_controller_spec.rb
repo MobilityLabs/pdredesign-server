@@ -56,6 +56,9 @@ describe V1::ParticipantsController do
       sign_in @facilitator
 
       other = Assessment.find_by_name("Assessment 1")
+
+      expect_flush_cached_assessment
+
       post :create, assessment_id: other.id, user_id: @user.id 
 
       assert_response :success

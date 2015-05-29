@@ -82,7 +82,9 @@ describe V1::ConsensusController do
 
       it "submits consensus and the assessment chached version should be flushed" do
         sign_in @facilitator2
-        expect{put :update, assessment_id: assessment.id, id: assessment.consensus.id, submit: true; assessment.reload}.to change{assessment.updated_at}
+        expect_flush_cached_assessment
+
+        put :update, assessment_id: assessment.id, id: assessment.consensus.id, submit: true; assessment.reload
       end
     end
   end
@@ -106,6 +108,8 @@ describe V1::ConsensusController do
     it 'can create a new consensus' do
       sign_in @facilitator2
 
+      expect_flush_cached_assessment
+      
       post :create, assessment_id: assessment.id
       assert_response :success
 

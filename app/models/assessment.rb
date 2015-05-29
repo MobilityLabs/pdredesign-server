@@ -84,7 +84,7 @@ class Assessment < ActiveRecord::Base
     #inlcude participants
     participants.map{ |participant| users.push(participant.user) }
 
-    users.flatten.compact.delete_if{|u| owner?(u)}
+    users.flatten.compact.uniq.delete_if{|u| owner?(u)}
   end
 
   def owner?(comp_user)

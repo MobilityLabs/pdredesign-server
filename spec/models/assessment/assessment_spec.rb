@@ -428,6 +428,13 @@ describe Assessment do
         expect(au).to include(@facilitator)
         expect(au).not_to include(assessment.user) #not to include owner
       end
+
+      it 'results inside of all_users method should not be repeated' do
+        participant = assessment.participants.first.user
+        assessment.facilitators << participant
+
+        expect(assessment.all_users).to include_only_one_of(participant)
+      end
     end
 
   end

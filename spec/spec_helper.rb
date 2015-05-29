@@ -22,6 +22,14 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+RSpec::Matchers.define :include_only_one_of do |expected|
+  match do |array|
+    elements = 0
+	array.each{ |elm| elements += 1 if elm == expected }
+	elements == 1
+  end
+end
+
 Authority.configure do |config|
   config.logger = Logger.new('/dev/null')
 end

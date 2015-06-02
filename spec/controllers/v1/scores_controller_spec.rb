@@ -16,8 +16,11 @@ describe V1::ScoresController do
   let(:assessment) { @assessment_with_participants }
 
   context '#create' do
-    it 'can create a score' do 
+    it 'can create a score, and flush cached assessment version' do 
       question = Question.first
+
+      expect_flush_cached_assessment
+
       post :create, assessment_id: assessment.id, 
                     response_id: 99,
                     question_id: question.id,

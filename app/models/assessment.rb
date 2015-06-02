@@ -81,8 +81,9 @@ class Assessment < ActiveRecord::Base
     users = []
 
     [:facilitators, :viewers, :network_partners].each { |user_type| users.push(send(user_type)) }
+    
     #inlcude participants
-    participants.map{ |participant| users.push(participant.user) }
+    participants.map{ |participant| users.push(participant.user) unless users.include?(participant.user) }
 
     users.flatten.compact.uniq.delete_if{|u| owner?(u)}
   end

@@ -9,7 +9,7 @@ module Invitation
       user = create_or_update_user
       update_user_id(user)
       create_participant
-
+      set_permission
     end
 
     private
@@ -66,6 +66,13 @@ module Invitation
 
     def generate_password
       SecureRandom.hex[0..9]
+    end
+
+    def set_permission
+      if invite.role
+        ap = Assessments::Permission.new(invite.assessment)
+        ap.add_level(invite.user, invite.role)
+      end
     end
 
   end

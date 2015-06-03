@@ -115,7 +115,10 @@ module Assessments
     end
 
     def grant_participant(assessment, user)
-      Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
+      Participant.find_or_create_by(
+        assessment_id: assessment.id,
+        user_id:       user.id,
+        invited_at: Time.now)
     end
 
     def notify_user_for_access_granted(assessment, user, role)

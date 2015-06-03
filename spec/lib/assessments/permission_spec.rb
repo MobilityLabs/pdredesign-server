@@ -9,7 +9,7 @@ describe Assessments::Permission do
   let(:user) { Application.create_user }
 
   it 'available permissions' do
-    expect(subject.available_permissions).to eq([:facilitator, :viewer, :network_partner, :participant])
+    expect(subject.available_permissions).to eq([:facilitator, :viewer, :participant])
   end
 
   context 'request access to assessment' do
@@ -39,7 +39,7 @@ describe Assessments::Permission do
     it 'return the possible permissions level for a user' do
       @assessment_permission = Assessments::Permission.new(assessment)
 
-      expect(@assessment_permission.possible_roles_permissions(user)).to eq([:facilitator, :viewer, :network_partner])
+      expect(@assessment_permission.possible_roles_permissions(user)).to eq([:facilitator, :viewer])
     end
 
   end

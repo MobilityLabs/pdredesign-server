@@ -1,5 +1,6 @@
 class V1::ScoresController < ApplicationController
   before_action :authenticate_user!
+  after_action  :flush_assessment_cache, only: [:create]
 
   def create
     authorize_action_for user_response
@@ -41,6 +42,10 @@ class V1::ScoresController < ApplicationController
 
   def assessment
     Assessment.find(params[:assessment_id])
+  end
+
+  def flush_assessment_cache
+    assessment.flush_cached_version
   end
 
 end

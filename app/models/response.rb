@@ -29,7 +29,7 @@ class Response < ActiveRecord::Base
 	accepts_nested_attributes_for :scores
 	accepts_nested_attributes_for :feedbacks
 
-  after_update :flush_cached_assessment
+  after_save :flush_cached_assessment, :unless => Proc.new{ responder.kind_of?(User) }
   
 
   before_save do |response| 
@@ -55,7 +55,9 @@ class Response < ActiveRecord::Base
     if is_consensus?
       responder.flush_cached_version
     else
-      responder.assessment.flush_cached_version
+      unless responder.nil?
+        responder.assessment.flush_cached_version if responder.assessment
+      end
     end
   end
 

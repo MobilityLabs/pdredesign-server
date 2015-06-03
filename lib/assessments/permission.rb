@@ -1,7 +1,7 @@
 module Assessments
   class Permission
 
-    PERMISSIONS = [:facilitator, :viewer, :network_partner, :participant]
+    PERMISSIONS = [:facilitator, :viewer, :participant]
 
     attr_reader :assessment
 
@@ -71,8 +71,6 @@ module Assessments
           assessment.viewers.destroy(user)
         when :network_partner
           assessment.network_partners.destroy(user)
-        when :participant
-          #TODO: should be deleted from participants list?
         assessment.reload
       end
 

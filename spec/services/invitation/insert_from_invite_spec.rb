@@ -10,7 +10,8 @@ describe Invitation::InsertFromInvite do
       first_name:    "john",
       last_name:     "doe",
       team_role:     "Finance",
-      email:         email)
+      email:         email,
+      role:          "facilitator")
   end
 
   def existing_user_invite
@@ -78,5 +79,12 @@ describe Invitation::InsertFromInvite do
     user = User.find_by(email: 'john_doe@gmail.com')
 
     expect(Participant.find_by(user_id: user.id)).not_to be_nil
+  end
+
+  it 'creates a participant and set the specified role' do
+    subject.new(create_valid_invite).execute
+    expect(
+      assessment.facilitator?(User.find_by(email: 'john_doe@gmail.com'))
+    ).to eq(true)
   end
 end

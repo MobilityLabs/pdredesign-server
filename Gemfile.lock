@@ -1,6 +1,6 @@
 GIT
   remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
-  revision: 68c9b733a018f7ea03d332c7e540a566edf79a7d
+  revision: 4172c846ae15af9a7ab9d2af927a9048f9c44e1d
   branch: permissions
   specs:
     pdr_client (1.0.0)

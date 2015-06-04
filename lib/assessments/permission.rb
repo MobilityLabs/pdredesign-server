@@ -47,8 +47,10 @@ module Assessments
 
     def update_level(user, level)
       unless assessment.owner?(user)
-        revoke_level(user)
-        add_level(user, level)
+        unless(get_level(user).to_s == level.to_s)
+          revoke_level(user)
+          add_level(user, level)
+        end
       end
     end
 

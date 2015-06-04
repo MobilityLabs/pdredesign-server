@@ -9,6 +9,6 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def assessments_url
-  	"#{ENV['BASE_URL']}/#/assessments/"
+  	"#{ENV['BASE_URL']}/#/assessments"
   end
 end

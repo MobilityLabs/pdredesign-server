@@ -90,6 +90,16 @@ describe Assessments::Permission do
       expect(@assessment_permission.get_level(@facilitator)).to eq(:viewer)
     end
 
+    it 'should update only when the new level is different' do
+      assessment.facilitators << @facilitator
+
+      expect(AccessGrantedNotificationWorker).not_to receive(:perform_async)
+
+      @assessment_permission.update_level(@facilitator, 'facilitator')
+
+      expect(assessment.facilitator?(@facilitator)).to eq(true)
+    end
+
     it 'owner shold not be updated' do
       owner = assessment.user
       

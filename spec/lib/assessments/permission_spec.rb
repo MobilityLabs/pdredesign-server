@@ -115,6 +115,16 @@ describe Assessments::Permission do
     end
   end
 
+  context 'participants' do
+    it 'do not send notification for permission granted when is participant' do
+      Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["participant"])
+      expect(AccessGrantedNotificationWorker).not_to receive(:perform_async)
+
+      assessment_permission = Assessments::Permission.new(assessment)
+      assessment_permission.accept_permission_requested(user)
+    end
+  end
+
   context 'notification emails' do
     before do
       @ra = Application.request_access_to_assessment(assessment: assessment, user: user, roles: ["facilitator"])

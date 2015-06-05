@@ -1,6 +1,6 @@
 GIT
   remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
-  revision: 4172c846ae15af9a7ab9d2af927a9048f9c44e1d
+  revision: cf799cc4c5c34033c9d5422595e90d8943ba96be
   branch: permissions
   specs:
     pdr_client (1.0.0)
@@ -362,7 +362,7 @@ GEM
       rails-assets-angular (>= 1.0.8)
     rails-assets-angular-ui-utils (0.2.3)
       rails-assets-angular (>= 1.0.2)
-    rails-assets-es5-shim (4.1.4)
+    rails-assets-es5-shim (4.1.5)
     rails-assets-highcharts (3.0.10)
     rails-assets-jquery (2.1.4)
     rails-assets-moment (2.10.3)

@@ -14,7 +14,9 @@ class V1::AssessmentsPermissionsController < ApplicationController
   def show;end
 
   def update
-    params[:permissions].each{ |permission| update_permission(permission) }
+    if params[:permissions]
+      params[:permissions].each{ |permission| update_permission(permission) }
+    end
 
     render nothing: true
   end

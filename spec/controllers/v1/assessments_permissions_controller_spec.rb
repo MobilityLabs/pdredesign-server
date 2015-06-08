@@ -16,12 +16,12 @@ describe V1::AssessmentsPermissionsController do
     end
 
     context 'respond to GET#index' do
-      
+
       it 'responds successfully to GET#index' do
         sign_in @facilitator2
 
         get :index, assessment_id: assessment.id
-        assert_response :success 
+        assert_response :success
         expect(response.body).to      match(/requested_permission_level/)
       end
 
@@ -40,7 +40,7 @@ describe V1::AssessmentsPermissionsController do
         sign_in @facilitator
 
         get :all_users, assessment_id: assessment.id
-        
+
         assert_response :success
         expect(response.body).not_to match(@facilitator.email)
         expect(response.body).to match(/permission_level/)
@@ -94,7 +94,7 @@ describe V1::AssessmentsPermissionsController do
 
       it 'responds successfully to PUT#update' do
         assessment.facilitators << @facilitator
-        
+
         sign_in @facilitator2
 
         put :update, assessment_id: assessment.id, id: @facilitator.id,
@@ -115,6 +115,16 @@ describe V1::AssessmentsPermissionsController do
 
         expect(assessment.facilitator?(@facilitator)).to eq(true)
         expect(assessment.viewer?(@facilitator)).to eq(false)
+      end
+
+      it 'does not die with empty permissions' do
+        assessment.facilitators << @facilitator
+
+        sign_in @facilitator
+
+        put :update, assessment_id: assessment.id, id: @facilitator.id
+
+        assert_response :success
       end
 
       it 'security: responds with 401 auth error' do
@@ -141,14 +151,14 @@ describe V1::AssessmentsPermissionsController do
       it 'deny the permission request ' do
         ap = Assessments::Permission.new(assessment)
         sign_in @facilitator2
-        
+
         put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
 
         assert_response :success
         expect(assessment.facilitator?(brand_new_user)).to eq(false)
         expect(ap.get_access_request(brand_new_user)).to eq(nil)
       end
-      
+
       it 'unauthorized when is not logged in PUT#deny' do
         put :deny, assessment_id: assessment.id, id: 1
         assert_response :unauthorized
@@ -156,7 +166,7 @@ describe V1::AssessmentsPermissionsController do
 
       it 'forbid the deny request when no permissions to update PUT#deny' do
         sign_in @facilitator
-        
+
         put :deny, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
 
         assert_response :forbidden
@@ -181,7 +191,7 @@ describe V1::AssessmentsPermissionsController do
 
       it 'forbid the deny request when no permissions to update PUT#accept' do
         sign_in @facilitator
-        
+
         put :accept, assessment_id: assessment.id, id: ra.id, email: brand_new_user.email
 
         assert_response :forbidden

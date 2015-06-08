@@ -1,3 +1,5 @@
 machine:
+  ruby:
+    version: 2.2.2
   environment:
     CODECLIMATE_REPO_TOKEN: "a07166e58ace09def735a2952caf25cd4387c3c86e63e8cc93cbe8336540af65"

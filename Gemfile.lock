@@ -551,3 +551,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   yajl-ruby
   zurb-ink-rails (~> 1.0.5)
+
+BUNDLED WITH
+   1.10.2

@@ -55,9 +55,9 @@ describe V1::AccessController do
       it 'grants a user permission with :participant' do
         expect(assessment.participant?(@user)).to eq(true)
       end
-    
+
       it 'sets participant param invited_at to not be nil ' do
-        participant = Participant.find_by_user_id(@user.id)       
+        participant = Participant.find_by_user_id(@user.id)
         expect(participant.invited_at).not_to eq(nil)
       end
     end

@@ -7,7 +7,6 @@ class V1::AccessController < ApplicationController
     status(401) and return unless allowed?(@record)
 
     grant_access(@record)
-    render nothing: true
   end
 
   private

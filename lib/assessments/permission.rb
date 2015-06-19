@@ -42,7 +42,7 @@ module Assessments
           return false
       end
       notify_user_for_access_granted(assessment, user, level)
-      return true 
+      return true
     end
 
     def update_level(user, level)
@@ -85,7 +85,7 @@ module Assessments
 
     def self.request_access(request_options)
       roles = request_options[:roles].class == String ? [request_options[:roles]] : request_options[:roles]
-      
+
       return AccessRequest.create({
         roles: roles, token: SecureRandom.hex[0..9],
         user: request_options[:user], assessment_id: request_options[:assessment_id]
@@ -107,7 +107,7 @@ module Assessments
     end
 
     def grant_viewer(assessment, user)
-      assessment.viewers << user   
+      assessment.viewers << user
     end
 
     def grant_network_partner(assessment, user)

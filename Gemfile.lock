@@ -1,6 +1,6 @@
 GIT
   remote: https://cf91ac52033be9b3a1d81b413955d22ab80c45e8:x-oauth-basic@github.com/MobilityLabs/pdr-client.git
-  revision: daafd3ed9926f09c5d0b55a0fb199ef015d0ed28
+  revision: 4f93f1ae924e08d9ed8699d2284e989afe6f2262
   branch: permissions
   specs:
     pdr_client (1.0.0)
@@ -92,7 +92,7 @@ GEM
     authority (3.0.0)
       activesupport (>= 3.0.0)
       rake (>= 0.8.7)
-    autoprefixer-rails (5.2.0.1)
+    autoprefixer-rails (5.2.1)
       execjs
       json
     aws-s3 (0.6.3)

@@ -7,42 +7,22 @@ class V1::AccessController < ApplicationController
     status(401) and return unless allowed?(@record)
 
     grant_access(@record)
-    send_granted_notification(@record)
-    render nothing: true
   end
 
   private
   def grant_access(record)
     assessment = record.assessment
-    record.roles.each do |role|
-      send("grant_#{role}", assessment, record.user)
-    end
+    permission = Assessments::Permission.new(assessment)
 
-    record.destroy
+    permission.accept_permission_requested(record.user)
   end
 
-  def grant_facilitator(assessment, user)
-    assessment.facilitators << user   
-  end
-
-  def grant_viewer(assessment, user)
-    assessment.viewers << user   
-  end
-
-  def grant_participant(assessment, user)
-    Participant.create!(assessment: assessment, user: user, invited_at: Time.now)
-  end
-
-  #TODO: extract to authorizer
   def allowed?(record)
-    record.assessment.facilitator?(current_user) 
+    auth = AssessmentAuthorizer.new(record.assessment)
+    auth.updatable_by?(current_user)
   end
 
   def find_access_request
     AccessRequest.find_by(token: params[:token])
-  end
-
-  def send_granted_notification(record)
-    AccessGrantedNotificationWorker.perform_async(record.assessment.id, record.user.id)
   end
 end

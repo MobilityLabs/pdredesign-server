@@ -1,11 +1,11 @@
 class AccessGrantedNotificationWorker
   include ::Sidekiq::Worker
 
-  def perform(assessment_id, user_id)
+  def perform(assessment_id, user_id, role)
     asessment = find_assessment(assessment_id)
     user      = find_user(user_id)
 
-    AccessGrantedMailer.notify(asessment, user).deliver_now
+    AccessGrantedMailer.notify(asessment, user, role).deliver_now
   end
 
   private

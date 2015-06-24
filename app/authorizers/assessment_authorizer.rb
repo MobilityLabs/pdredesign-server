@@ -19,6 +19,10 @@ class AssessmentAuthorizer < ApplicationAuthorizer
     share_districts?(user)
   end
 
+  def current_level_by?(user)
+    true
+  end
+
   private
   def can_read_assessment?(user)
     participant?(user) || facilitator?(user)     ||

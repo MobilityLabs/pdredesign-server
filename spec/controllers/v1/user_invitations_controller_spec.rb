@@ -83,6 +83,20 @@ describe V1::UserInvitationsController do
         assert_response :success
       end
 
+      it 'allows a user to be a facilitator' do
+        post :create,
+          assessment_id: assessment.id,
+          first_name:    "john",
+          last_name:     "doe",
+          email:         "john_doe@gmail.com",
+          role:          "facilitator"
+
+        expect(
+          assessment.facilitator?(
+            User.find_by(email: 'john_doe@gmail.com'))
+        ).to eq(true)
+      end
+
     end
 
     context 'worker' do

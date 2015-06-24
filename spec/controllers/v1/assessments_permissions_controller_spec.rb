@@ -42,9 +42,29 @@ describe V1::AssessmentsPermissionsController do
         get :all_users, assessment_id: assessment.id
 
         assert_response :success
-        expect(response.body).not_to match(@facilitator.email)
         expect(response.body).to match(/permission_level/)
         expect(response.body).to match(/possible_permission_levels/)
+      end
+
+      it 'responds with the owner of the assessment' do
+        assessment.viewers << @facilitator
+        sign_in @facilitator
+
+        get :all_users, assessment_id: assessment.id
+
+        assert_response :success
+        expect(response.body).to match(assessment.user.email)
+      end
+
+      it 'responds with the current user in the list of users' do
+        assessment.viewers << @facilitator
+
+        sign_in @facilitator
+
+        get :all_users, assessment_id: assessment.id
+
+        assert_response :success
+        expect(response.body).to match(@facilitator.email)
       end
 
       it 'security: responds with 401 auth error' do

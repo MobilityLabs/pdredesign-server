@@ -66,6 +66,8 @@ class V1::AssessmentsPermissionsController < ApplicationController
   end
 
   def all_users_list
-    @assessment.all_users.delete_if{ |u| current_user == u }
+    @assessment.all_users.tap do |users|
+      users << @assessment.user
+    end
   end
 end

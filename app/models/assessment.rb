@@ -2,7 +2,7 @@
 #
 # Table name: assessments
 #
-#  id              :integer          not null, primary key
+
 #  name            :string(255)
 #  due_date        :datetime
 #  meeting_date    :datetime
@@ -81,7 +81,7 @@ class Assessment < ActiveRecord::Base
     users = []
 
     [:facilitators, :viewers, :network_partners].each { |user_type| users.push(send(user_type)) }
-    
+
     #inlcude participants
     participants.map{ |participant| users.push(participant.user) unless users.include?(participant.user) }
 

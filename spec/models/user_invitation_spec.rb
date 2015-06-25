@@ -70,4 +70,13 @@ describe UserInvitation do
     expect(record.token).to eq('expected_token')
   end
 
+  it 'should accept the role field' do
+    record = subject.create!(
+      assessment_id: 1,
+      token: 'expected_token',
+      email: 'some@user.com',
+      role:  'facilitator')
+    expect(record.role).to eq('facilitator')
+  end
+
 end

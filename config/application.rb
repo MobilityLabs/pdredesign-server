@@ -28,5 +28,9 @@ module PdrServer
     config.assets.initialize_on_precompile = false
 
     config.active_record.raise_in_transactional_callbacks = true
+    config.angular_templates.module_name    = 'templates'
+    config.angular_templates.inside_paths   = [Rails.root.join('app', 'assets', 'javascripts', 'client', 'views')]
+    config.angular_templates.markups        = %w(erb)
+    config.angular_templates.htmlcompressor = false
   end
 end

@@ -22,6 +22,8 @@ class UserInvitation < ActiveRecord::Base
   belongs_to :assessment
   belongs_to :user
 
+  attr_accessor :role
+
   def email=(value)
     self[:email] = (value && value.downcase)
   end

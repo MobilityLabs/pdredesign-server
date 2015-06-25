@@ -35,7 +35,6 @@ describe V1::ParticipantsController do
       participants = assigns(:participants)
       expect(participants.count).to eq(2) 
     end
-
   end
 
   context '#create' do

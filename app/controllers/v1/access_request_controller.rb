@@ -2,9 +2,11 @@ class V1::AccessRequestController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @request           = AccessRequest.new(request_params)
-    @request[:user_id] = current_user.id
-    @request[:token]   = hash
+
+    @request = Assessments::Permission.request_access(
+      user: current_user, 
+      assessment_id: request_params[:assessment_id],
+      roles: request_params[:roles])
 
     if(@request.save)
       queue_job
@@ -16,10 +18,6 @@ class V1::AccessRequestController < ApplicationController
   end
 
   private
-  def hash
-    SecureRandom.hex[0..9]
-  end
-
   def queue_job
     AccessRequestNotificationWorker.perform_async(@request.id)
   end

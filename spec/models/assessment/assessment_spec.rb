@@ -416,6 +416,28 @@ describe Assessment do
       end
     end
 
+    describe '#all_users' do
+      before { create_magic_assessments }
+      let(:assessment) { @assessment_with_participants }
+      
+      it 'returns all the users involved in the assessment (participants, viewers, network_partners, facilitators)' do
+        assessment.facilitators << @facilitator
+
+        au = assessment.all_users
+        expect(au).to include(assessment.participants.first.user)
+        expect(au).to include(@facilitator)
+        expect(au).not_to include(assessment.user) #not to include owner
+      end
+
+      it 'results inside of all_users method should not be repeated' do
+        participant = assessment.participants.first.user
+        assessment.facilitators << participant
+
+        expect(assessment.all_users).to include_only_one_of(participant)
+      end
+    end
+
   end
 
 end
+  

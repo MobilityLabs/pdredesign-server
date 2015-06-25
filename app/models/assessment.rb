@@ -2,7 +2,7 @@
 #
 # Table name: assessments
 #
-#  id              :integer          not null, primary key
+
 #  name            :string(255)
 #  due_date        :datetime
 #  meeting_date    :datetime
@@ -75,6 +75,17 @@ class Assessment < ActiveRecord::Base
     return :draft     if assigned_at.nil?
     return :consensus if response.present?
     :assessment
+  end
+
+  def all_users
+    users = []
+
+    [:facilitators, :viewers, :network_partners].each { |user_type| users.push(send(user_type)) }
+
+    #inlcude participants
+    participants.map{ |participant| users.push(participant.user) unless users.include?(participant.user) }
+
+    users.flatten.compact.uniq.delete_if{|u| owner?(u)}
   end
 
   def owner?(comp_user)

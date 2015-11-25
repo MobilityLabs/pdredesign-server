@@ -1,19 +1,30 @@
-[![Code Climate](https://codeclimate.com/repos/537fae616956806e630030c0/badges/44ece20df58646f706f7/gpa.png)](https://codeclimate.com/repos/537fae616956806e630030c0/feed)
-[![Code Climate](https://codeclimate.com/repos/537fae616956806e630030c0/badges/44ece20df58646f706f7/coverage.png)](https://codeclimate.com/repos/537fae616956806e630030c0/feed)
-[![Circle CI](https://circleci.com/gh/MobilityLabs/pdr-server/tree/master.png?circle-token=14a66f787d47b7a42850cbaf6e4fc873b31e4715)](https://circleci.com/gh/MobilityLabs/pdr-server)
+# Welcome to PDredesign
+PDredesign is a digital toolkit for school districts dedicated to improving professional development for educators. The toolkit, including collaborative assessments and inventories, is freely available on PDredesign.org and can be used by any school district to transform existing professional development systems to better support teachers in the classroom. The PDredesign tools were co-designed by district leaders through a collaborative process facilitated by Alvarez & Marsal. Mobility Labs is bringing the PDredesign Toolkit online to enable any district to leverage the tools. PDredesign was developed with support from the Bill & Melinda Gates Foundation.
 
-
-#PDR Server
+## pdr_server
 `pdr_server` is the API for the PD Redesign server. It also
-consumes the `pdc_client` gem.  Which is an Angular client.
+consumes the [`pdc_client` gem](https://github.com/MobilityLabs/pdr-client).  Which is an Angular client.
 
-##Deploy
+## Getting Started
+  - Run `bundle install` to install dependencies
+  - Run `rake db:create` to create database.
+  - Import an existing database run `psql "pdr_dev" < db/data/pdr_dev.sql`
+  - Run `rake db:migrate` to migrate the database
+  - Start `rails` with `rails server`
+  - Start `redis` with `redis-server /usr/local/etc/redis.conf` (OS X, `brew install redis`)
+  - Start `sidekiq` with the `sidekiq` command
+
+### Foreman
+Alternatively, foreman can be used to start everything by running `foreman start`.  Note that 
+redis server needs to start independently since its more a platform dependency
+
+### Deploy
 - run `bundle install` to ensure the latest `pdr_client` is being refrenced
 - run `RAILS_ENV=production S3_KEY=i S3_SECRET=i bundle exec rake assets:precompile ROLLBAR_ENV=production ROLLBAR_TOKEN=xxxxx` to precompile assets
 - Commit newly created assets to the repo and push to heroku
 - push to heroku `git push heroku`.
 
-##Specs
+### Specs
 Specs are implemented with RSpec(3.x) and the `expect` syntax.
 Specs can be run via `spring rspec` to run the test 
 suite.
@@ -24,21 +35,15 @@ suite.
 
 This should be a one time database setup for the testing env
 
-##Getting Started
-  - Run `bundle install` to install dependencies
-  - Run `rake db:create` to create database.
-  - Import an existing database run `psql "pdr_dev" < db/data/pdr_dev.sql`
-  - Run `rake db:migrate` to migrate the database
-  - Start `rails` with `rails server`
-  - Start `redis` with `redis-server /usr/local/etc/redis.conf` (OS X, `brew install redis`)
-  - Start `sidekiq` with the `sidekiq` command
-
-
-###Foreman
-Alternatively, foreman can be used to start everything by running `foreman start`.  Note that 
-redis server needs to start independently since its more a platform dependency
-
-
-##Rake Tasks
+### Rake Tasks
 The `rake db:create_default_toolkit` - task creates the default toolkits.
 The `rake db:create_default_key_questions` - task creates the default key questions.
+
+## Contributing
+We encourage you to contribute to the development of PDredesign. Please look at our Contributing guide for guidelines on how to proceed.
+
+## Code Status
+[![Circle CI](https://circleci.com/gh/MobilityLabs/pdr-server/tree/master.png?circle-token=14a66f787d47b7a42850cbaf6e4fc873b31e4715)](https://circleci.com/gh/MobilityLabs/pdr-server)
+
+## License
+PDredesign is released under the [MIT License](http://opensource.org/licenses/MIT).

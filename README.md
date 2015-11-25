@@ -3,7 +3,7 @@ PDredesign is a digital toolkit for school districts dedicated to improving prof
 
 ## pdredesign-server
 `pdredesign-server` is the API for the [PDredesign website](http://pdredesign.org). It also
-consumes the [`pdc_client` gem](https://github.com/MobilityLabs/pdr-client).  Which is an Angular client.
+consumes the [`pdredesign-client` gem](https://github.com/MobilityLabs/pdredesign-client).  Which is an Angular client.
 
 ## Getting Started
   - Run `bundle install` to install dependencies

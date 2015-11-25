@@ -1,8 +1,8 @@
 # Welcome to PDredesign
 PDredesign is a digital toolkit for school districts dedicated to improving professional development for educators. The toolkit, including collaborative assessments and inventories, is freely available on PDredesign.org and can be used by any school district to transform existing professional development systems to better support teachers in the classroom. The PDredesign tools were co-designed by district leaders through a collaborative process facilitated by Alvarez & Marsal. Mobility Labs is bringing the PDredesign Toolkit online to enable any district to leverage the tools. PDredesign was developed with support from the Bill & Melinda Gates Foundation.
 
-## pdr_server
-`pdr_server` is the API for the PD Redesign server. It also
+## pdredesign-server
+`pdredesign-server` is the API for the [PDredesign website](http://pdredesign.org). It also
 consumes the [`pdc_client` gem](https://github.com/MobilityLabs/pdr-client).  Which is an Angular client.
 
 ## Getting Started
@@ -43,7 +43,7 @@ The `rake db:create_default_key_questions` - task creates the default key questi
 We encourage you to contribute to the development of PDredesign. Please look at our Contributing guide for guidelines on how to proceed.
 
 ## Code Status
-[![Circle CI](https://circleci.com/gh/MobilityLabs/pdr-server/tree/master.png?circle-token=14a66f787d47b7a42850cbaf6e4fc873b31e4715)](https://circleci.com/gh/MobilityLabs/pdr-server)
+[![Circle CI](https://circleci.com/gh/MobilityLabs/pdredesign-server/tree/master.png?circle-token=14a66f787d47b7a42850cbaf6e4fc873b31e4715)](https://circleci.com/gh/MobilityLabs/pdredesign-server)
 
 ## License
 PDredesign is released under the [MIT License](http://opensource.org/licenses/MIT).

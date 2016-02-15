@@ -98,7 +98,7 @@ GEM
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     descriptive-statistics (2.1.2)
-    devise (3.4.1)
+    devise (3.5.6)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -530,7 +530,7 @@ DEPENDENCIES
   dalli
   database_cleaner (~> 1.5.1)
   descriptive-statistics
-  devise (~> 3.4.1)
+  devise (~> 3.5.6)
   devise_masquerade
   dotenv-rails
   factory_girl_rails (~> 4.6.0)

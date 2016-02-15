@@ -3,7 +3,7 @@ ruby '2.2.3'
 
 gem 'rails', '~> 4.2.5.1'
 gem 'jbuilder', '~> 2.4.1'
-gem 'devise', '~> 3.4.1'
+gem 'devise', '~> 3.5.6'
 gem 'bcrypt', '~> 3.1.10'
 gem 'zurb-ink-rails', '~> 1.0.5'
 gem 'sass-rails', '~> 5.0.3'

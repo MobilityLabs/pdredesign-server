@@ -66,7 +66,7 @@ group :development, :test do
   gem 'annotate'
   gem 'letter_opener'
   gem 'letter_opener_web'
-  gem "jasmine", '2.4.0'
+  gem 'jasmine', '2.4.0'
   gem 'rails-assets-angular-mocks', '1.2.28'
   gem 'pry', '0.10.1'
   gem 'rake', '10.5.0'

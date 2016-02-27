@@ -16,6 +16,7 @@
 #  mandrill_id     :string(255)
 #  mandrill_html   :text
 #  report_takeaway :text
+#  share_token     :string
 #
 
 #  name            :string(255)

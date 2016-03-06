@@ -3,73 +3,10 @@
 
 
 .sidebar-container
-  .sidebar
-    border: 1px solid $border-color
-    border-radius: .3em
-    background: #fff
-    padding-bottom: 1em
-    margin-bottom: 1em
-    .modal
-      z-index: 2000
-      margin-top: 4em
-
-    #overview
-      .modal-body
-        padding-left: 2em
-      .modal-dialog
-        width: 60%
-      .sidebar-answers
-        padding: .9em
-
-    .facilitation-guide
-      margin-top: 3em
-    .why-pd
-      .title
-        font-style: italic
-        color: #999999
-        margin: .5em 0
-      i
-        color: #999
-    .user
-      padding-top: 1em
+  .content
+    .title:first-child
+      margin-top: 0
+    .title
       margin: 1em 0
-      #name
-        color: $primary-color
-        font-size: 1.0em
-        font-style: italic
-        margin-bottom: 0
-      #role
-        font-size: .8em
-        color: #acacac
-      .avatar
-        img
-          width: 3em
-          border-radius: 2em
-
-    .no-padding
-      padding: 0
-    ul.links
-      list-style: none
-      padding: 0
-      li
-        a
-          display: block
-          padding-left: 1em
-          background-color: #eaf0f2
-          width: 100%
-          color: #4a5e67
-          font-size: 1.1em
-          &:hover
-            background-color: #4a5e67
-            color: #fff
-            text-decoration: none
-
-    h3.heading
-      color: #62686d
-      font-weight: normal !important
-    .input
-      padding: .3em
-    .checkbox
-      font-size: 1.0em
-      position: inherit
-      display: block
+    .title + p
+      margin: -0.75em 0 1.5em

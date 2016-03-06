@@ -1,11 +1,16 @@
-<user-header></user-header>
+<div class="row secondary">
+  <div class="col-md-12">
+    <h1>Settings</h1>
+    <p>Edit your settings here.</p>
+  </div>
+</div>
 
 <div class="settings">
   <form ng-submit="updateUser(user)">
     <div class="row">
       <div id="form-top" class="col-md-12">
         <ng-include src="'client/views/shared/errors.html'"></ng-include>
-        <h3>Account Settings</h3>
+        <h2>Account Settings</h2>
         <div class="row">
           <div class="flush col-md-5">
             <label for="user_first_name">First name</label>
@@ -82,7 +87,7 @@
             </organization-section>
           </div>
 
-          <input ng-click="scrollTop()" class="btn btn-success" name="commit" type="submit" value="Update ">
+          <input ng-click="scrollTop()" class="btn btn-primary" name="commit" type="submit" value="Update ">
         </div>
       </div>
     </div>

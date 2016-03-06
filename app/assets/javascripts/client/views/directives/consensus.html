@@ -1,50 +1,46 @@
 <div class="categories">
   <div class="category" ng-repeat="category in categories">
     <div class="row">
-      <div class="row">
-        <div class="col-sm-12 col-md-12">
-          <p class="category-label">{{category.name}}</p>
-        </div>
-        <div class="row question-container question-{{question.id}}" ng-repeat="question in category.questions">
-
-          <div class="col-md-12 col-sm-12 question-row" ng-click="toggleAnswers(question)">
-            <div class="col-md-1 col-sm-1 question">
-              <p class="question-id scored-{{question.score.value}}" ng-show="question.loading">
-                <i class="fa fa-spinner fa-spin"></i>
-              </p>
-              <p class="question-id scored-{{question.score.value}}" ng-hide="question.loading">
-                <a href="#question-{{question.id}}"></a>
-                {{question.number}}
-              </p>
+      <div class="col-sm-12 col-md-12">
+        <p class="category-label">{{category.name}}</p>
+      </div>
+      <div class="row question-container question-{{question.id}}" ng-repeat="question in category.questions">
+        <div class="col-md-12 col-sm-12 question-row" ng-click="toggleAnswers(question)">
+          <div class="col-md-1 col-sm-1 question">
+            <p class="question-id scored-{{question.score.value}}" ng-show="question.loading">
+              <i class="fa fa-spinner fa-spin"></i>
+            </p>
+            <p class="question-id scored-{{question.score.value}}" ng-hide="question.loading">
+              <a href="#question-{{question.id}}"></a>
+              {{question.number}}
+            </p>
+          </div>
+          <div class="row question-content">
+            <div class="col-md-11">
+              <p class="question">{{question.headline}}</p>
             </div>
-            <div class="row question-content">
-              <div class="col-md-11">
-                <p class="question">{{question.headline}}</p>
-              </div>
-              <div class="col-md-11">
-                <p class="content">{{question.content}}</p>
-              </div>
+            <div class="col-md-11">
+              <p class="content">{{question.content}}</p>
             </div>
           </div>
-          <div class="col-md-12 col-sm-12 answers" ng-show="question.answersVisible">
-            <div class="answer" ng-repeat="answer in question.answers">
-              <div class="col-md-1 col-sm-1"></div>
-              <div class="col-md-11 col-sm-11 answer-row value-color-{{answer.value}}" ng-class="{scored{{answer.value}}: question.score.value == answer.value}">
-                <div class="answer-info-row">
-                  <div class="col-md-1 col-sm-1 scored-{{answer.value}} answer-value">
-                    <span>{{answer.value}}</span>
-                  </div>
-                  <div class="col-md-3 col-sm-3 answer-title title-{{answer.value}}">
-                    {{answerTitle(answer.value)}}
-                  </div>
-                  <div class="col-md-8 col-sm-8 answer-description">
-                    {{answer.content}}
-                  </div>
+        </div>
+        <div class="col-md-12 col-sm-12 answers" ng-show="question.answersVisible">
+          <div class="answer" ng-repeat="answer in question.answers">
+            <div class="col-md-1 col-sm-1"></div>
+            <div class="col-md-11 col-sm-11 answer-row value-color-{{answer.value}}" ng-class="{scored{{answer.value}}: question.score.value == answer.value}">
+              <div class="answer-info-row">
+                <div class="col-md-1 col-sm-1 scored-{{answer.value}} answer-value">
+                  <span>{{answer.value}}</span>
+                </div>
+                <div class="col-md-3 col-sm-3 answer-title title-{{answer.value}}">
+                  {{answerTitle(answer.value)}}
+                </div>
+                <div class="col-md-8 col-sm-8 answer-description">
+                  {{answer.content}}
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

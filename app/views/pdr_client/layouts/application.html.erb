@@ -23,11 +23,15 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-9 main-content" ng-hide="showFullWidth">
-          <%= yield %>
+        <div class="col-xs-12 col-md-9" ng-hide="showFullWidth">
+          <div class="main-content">
+            <%= yield %>
+          </div>
         </div>
-        <div class="col-xs-12 col-sm-3 pull-right">
-          <%= render 'pdr_client/layouts/partials/sidebar' %>
+        <div class="col-xs-12 col-md-3">
+          <div class="response-sidebar">
+            <%= render 'pdr_client/layouts/partials/sidebar' %>
+          </div>
         </div>
       </div>
     </div>

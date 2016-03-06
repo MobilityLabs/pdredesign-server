@@ -1,0 +1,25 @@
+<div class="row score-evidence" ng-show="visible === 'true'">
+  <div ng-hide="question.score.editMode">
+    <textarea class="col-xs-12" ng-model="question.score.evidence"
+              placeholder="{{ placeholder }}">
+    </textarea>
+    <div class="save-holder">
+      <button ng-disabled="responseAnswerForm.invalidEvidence(question)"
+              class='btn btn-primary pull-right'
+              ng-click="responseAnswerForm.saveEvidence(question)">
+        <i class='fa fa-save'></i> Save
+      </button>
+    </div>
+  </div>
+  <div ng-show="question.score.editMode">
+    <div class="evidence-read">
+      <p ng-bind-html="question.score.evidence"></p>
+      <div class="edit-holder">
+        <button class='btn btn-primary pull-right edit-button'
+                ng-click="responseAnswerForm.editAnswer(question)">
+          <i class='fa fa-save'></i>Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

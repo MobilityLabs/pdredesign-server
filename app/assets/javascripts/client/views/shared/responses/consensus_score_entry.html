@@ -5,16 +5,16 @@
     <div class="row">
       <div class="col-md-offset-1 col-md-11 secondary">
         <h4>Notes</h4>
-          <alert class="alert" ng-show="question.isAlert" type="danger"> <p>Add evidence before saving.</p></alert>
+        <alert class="alert" ng-show="question.isAlert" type="danger"><p>Add evidence before saving.</p></alert>
         <div ng-show="isReadOnly" ng-bind-html="question.score.evidence">
         </div>
 
         <div ng-hide="isReadOnly">
           <textarea
-            class="col-md-12 col-sm-12"
-            ng-hide="isReadOnly"
-            ng-model="question.score.evidence"
-            placeholder="Write notes from the discussion, including evidence to support the consensus score and any follow up items.">
+              class="col-md-12 col-sm-12"
+              ng-hide="isReadOnly"
+              ng-model="question.score.evidence"
+              placeholder="Write notes from the discussion, including evidence to support the consensus score and any follow up items.">
           </textarea>
         </div>
       </div>
@@ -25,20 +25,18 @@
 
           <div class="row">
             <div class="answer col-md-3"
-              ng-repeat="answer in question.answers">
+                 ng-repeat="answer in question.answers">
 
-                <p
+              <p
                   ng-class="{'inactive': answer.value != question.score.value}"
                   class="scored-{{$index+1}}"
-                  ng-click="assignAnswerToQuestion(answer, question)">
-                  {{$index+1}}
-                </p>
+                  ng-click="responseAnswerGroup.assignAnswerToQuestion(answer, question)">
+                {{$index+1}}
+              </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
   </div>
 </div>

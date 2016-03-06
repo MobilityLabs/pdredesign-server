@@ -1,36 +1,27 @@
-<div id='response-sidebar'>
-  <div class='punchcard'>
-    <div class="col-xs-12">
-      <h1>{{responseTitle()}}</h1>
-      <h3 class="sidebar-title">
-        Saved Answers
-        <span class='score-count'>
-          ({{answeredQuestions()}}/{{questions.length}})
-        </span>
-      </h3>
-    </div>
-    <div class='col-xs-12 card'>
-      <span>
-        <a href="" ng-click="scrollTo($index+1)" ng-repeat="question in questions" >
-          <span class="fa-stack fa-md">
-            <i class="fa fa-circle fa-stack-2x scored-{{questionScoreValue(question)}}"></i>
-            <i class="fa fa-text fa-stack-1x fa-inverse">{{$index+1}}</i>
-          </span>
-        </a>
+<div class='punchcard'>
+  <div>
+    <h2>{{responseTitle()}}</h2>
+    <p class="h3">
+      Saved Answers
+      <span class='score-count'>
+        ({{answeredQuestions()}}/{{questions.length}})
       </span>
-    </div>
-    <div class='col-xs-12 flush'>
-      <button
-        ng-show="canSubmit()"
-        class="submit btn btn-primary btn-block btn-lg"
-        data-toggle="modal"
-        data-target="#assessmentReview"
-        ng-click="submitResponseModal()">
-          <span ng-show='isResponseCompleted()'>Update {{responseTitle()}}</span>
-          <span ng-hide='isResponseCompleted()'>Submit {{responseTitle()}}</span>
-      </button>
-    </div>
+    </p>
   </div>
-
-  <ng-include src="'client/views/sidebar/minimal.html'"></ng-include>
+  <div class='card'>
+    <a href="" ng-click="scrollTo($index+1)" ng-repeat="question in questions" >
+      <span class="scored-{{questionScoreValue(question)}}">
+        {{$index+1}}
+      </span>
+    </a>
+  </div>
+  <button
+    ng-show="canSubmit()"
+    class="submit btn btn-primary btn-block"
+    data-toggle="modal"
+    data-target="#assessmentReview"
+    ng-click="submitResponseModal()">
+      <span ng-show='isResponseCompleted()'>Update {{responseTitle()}}</span>
+      <span ng-hide='isResponseCompleted()'>Submit {{responseTitle()}}</span>
+  </button>
 </div>

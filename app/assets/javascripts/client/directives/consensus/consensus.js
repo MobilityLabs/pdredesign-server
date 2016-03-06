@@ -5,9 +5,9 @@ PDRClient.directive('consensus', [
       replace: true,
       scope: {
         assessmentId:  '@',
-        responseId:    '@',
+        responseId:    '@'
       },
-      templateUrl: 'client/views/directives/response_questions.html',
+      templateUrl: 'client/views/directives/consensus/consensus_questions.html',
       controller: [
         '$scope',
         '$http',
@@ -18,7 +18,8 @@ PDRClient.directive('consensus', [
         'Consensus',
         'Score',
         'ResponseHelper',
-        function($scope, $http, $timeout, $stateParams, $location, SessionService, Consensus, Score, ResponseHelper) {
+        'ConsensusStateService',
+        function($scope, $http, $timeout, $stateParams, $location, SessionService, Consensus, Score, ResponseHelper, ConsensusStateService) {
 
           $scope.isConsensus        = true;
           $scope.isReadOnly         = true;
@@ -32,13 +33,16 @@ PDRClient.directive('consensus', [
           $scope.toggleCategoryAnswers = function(category) {
             category.toggled = !category.toggled;
             angular.forEach(category.questions, function(question, key) {
-              $scope.toggleAnswers(question);
+              ResponseHelper.toggleCategoryAnswers(question);
             });
+          };
+
+          $scope.toggleAnswers = function(question, $event) {
+            ResponseHelper.toggleAnswers(question, $event);
           };
 
           $scope.questionColor          = ResponseHelper.questionColor;
           $scope.answerCount            = ResponseHelper.answerCount;
-          $scope.toggleAnswers          = ResponseHelper.toggleAnswers;
           $scope.saveEvidence           = ResponseHelper.saveEvidence;
           $scope.editAnswer             = ResponseHelper.editAnswer;
           $scope.answerTitle            = ResponseHelper.answerTitle;
@@ -60,44 +64,6 @@ PDRClient.directive('consensus', [
           $scope.viewModes = [{label: "Category"}, {label: "Variance"}];
           $scope.viewMode  = $scope.viewModes[0];
 
-          $scope.sortByCategory = function() {
-            return $scope.data;
-          };
-
-          $scope.sortByVariance = function(categories) {
-            var tmpObject = {};
-            var keys      = [];
-
-            angular.forEach(categories, function(category, _key) {
-              angular.forEach(category.questions, function(question, key) {
-                if(typeof tmpObject[question.variance] == 'undefined')
-                  tmpObject[question.variance] = {"name": question.variance, "questions": []};
-                keys.push(question.variance);
-                tmpObject[question.variance]["questions"].push(question);
-              });
-            });
-
-            keys
-              .sort()
-              .reverse();
-
-            var sorted    = {};
-            angular.forEach(keys, function(key) { sorted[key] = tmpObject[key]; });
-
-            return sorted;
-          };
-
-          $scope.changeViewMode = function(mode) {
-            switch(mode.toLowerCase()) {
-              case 'variance':
-                $scope.categories = $scope.sortByVariance($scope.data);
-                break;
-              case 'category':
-                $scope.categories = $scope.sortByCategory();
-                break;
-            }
-          };
-
           $scope.redirectToReport = function(assessmentId) {
             $location.path("/assessments/" + assessmentId + "/report");
           };
@@ -118,6 +84,7 @@ PDRClient.directive('consensus', [
                     team_role: $scope.teamRole})
               .$promise
               .then(function(data) {
+                $scope.updateConsensusState(data);
                 $scope.scores     = data.scores;
                 $scope.data       = data.categories;
                 $scope.categories = data.categories;
@@ -126,6 +93,10 @@ PDRClient.directive('consensus', [
                 $scope.participantCount = data.participant_count;
                 return true;
               });
+          };
+
+          $scope.updateConsensusState = function(data) {
+            ConsensusStateService.addConsensusData(data);
           };
 
           $scope.updateTeamRole = function(teamRole) {

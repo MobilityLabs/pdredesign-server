@@ -8,38 +8,17 @@
         <span class="icon-bar"></span>
       </button>
       <a class='navbar-brand logo' href="#">
-        <%= image_tag 'pdlogo.png' %>
+        <%= image_tag 'pdlogo-v3.png' %>
       </a>
     </div>
     
     <div class="collapse navbar-collapse" id="pdredesign-navbar">
       <ul class='nav navbar-nav'>
-        <li ng-class="activeClassFor('home')">
-          <a href='#/home'>Home</a>
-        </li>
         <li ng-class="activeClassFor('current_state')" class="cursor">
-          <a class='data-toggle' data-toggle='dropdown'>Current State</a>
-          <ul class='dropdown-menu'>
-            <li>
-              <a href='#/assessments'>Readiness Assessment</a>
-            </li>
-          </ul>
-
+          <a href='#/assessments'>Readiness Assessment</a>
         </li>
         <li class='disabled'>
-          <a href='#'>Future State</a>
-        </li>
-        <li class='disabled'>
-          <a href='#'>Planning</a>
-        </li>
-        <li class='disabled'>
-          <a href='#'>Procurement</a>
-        </li>
-        <li class='disabled'>
-          <a href='#'>Implementation</a>
-        </li>
-        <li class='disabled'>
-          <a href='#'>Rollout</a>
+          <a href='#'>Data & Tech Audit</a>
         </li>
       </ul>
       <ul class='nav navbar-nav navbar-right user-menu cursor'>

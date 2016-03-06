@@ -15,8 +15,17 @@ PDRClient.service('ResponseHelper',
       return count;
     };
 
-    this.toggleAnswers = function(question) {
+    this.toggleCategoryAnswers = function(question) {
       question.answersVisible = !question.answersVisible;
+    };
+
+    this.toggleAnswers = function(question, $event) {
+      var target = $event.target;
+      if (target.id === 'question-' + question.id
+          || target.classList.contains('question-headline')
+          || target.classList.contains('content')) {
+        question.answersVisible = !question.answersVisible;
+      }
     };
 
     this.answerTitle = function(value) {

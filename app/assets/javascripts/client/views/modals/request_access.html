@@ -11,15 +11,6 @@
       </i>
     </span>
 
-    <div ng-show="isNetworkPartner()" class="btn-group">
-      <span class="btn btn-primary" ng-model="accessLevel" btn-radio="'facilitator'">
-        <i class="fa fa-bullhorn"></i><span>Organizer</span>
-      </span>
-      <span class="btn btn-primary" ng-model="accessLevel" btn-radio="'viewer'">
-        <i class="fa fa-eye"></i><span>Observer</span>
-      </span>
-    </div>
-
     <div ng-show="!isNetworkPartner()" class="btn-group">
       <span class="btn btn-primary" ng-model="accessLevel" btn-radio="'facilitator'">
         <i class="fa fa-bullhorn"></i><span>Facilitator</span>

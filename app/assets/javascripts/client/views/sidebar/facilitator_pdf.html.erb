@@ -1,11 +1,10 @@
 <div class="padding facilitation-guide">
-  <p class="title">
-  <i class="fa fa-star"></i> For Facilitators
-  </p>
-
+  <h3 class="title">
+ 	For Facilitators
+  </h3>
   <p>
-  For detailed instructions and question guides,
-  <%= ActionController::Base.helpers.link_to('download the Facilitation Guide PDF', 'assets/PDRedesign RA Facilitation Guide.pdf', target: '_blank') %>
+  	For detailed instructions and question guides,
+  	<%= ActionController::Base.helpers.link_to('download the Facilitation Guide PDF', 'assets/PDRedesign RA Facilitation Guide.pdf', target: '_blank') %>
   </p>
   <ng-include src="'client/views/sidebar/facilitator_video.html'" ng-hide="role == member"></ng-include>
 </div>

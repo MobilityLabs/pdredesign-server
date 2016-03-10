@@ -1,0 +1,31 @@
+<div class="assessment-priority" class="col-md-9">
+  <div class="header row">
+    <div class="priority col-md-7 col-sm-7">
+      <table class="table table-diagnostic" ng-hide="loading">
+        <thead>
+          <tr>
+            <td class="category-header">Priority</td>
+            <td>PD Category</td>
+            <td>Consensus Score</td>
+            <td>Diagnostic Min</td>
+            <td>Diagnostic Suggested</td>
+          </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="category in categories"
+          class="category scored-{{scoredAverage(category)}}"
+          id="{{category.id}}">
+          <td class="centered">{{$index + 1}}</td>
+          <td>{{category.name}}</td>
+          <td>{{roundedAverage(category.average)}}</td>
+          <td>{{category.diagnostic_min}}</td>
+          <td ng-show="category.diagnostic_suggested">Yes</td>
+          <td ng-hide="category.diagnostic_suggested">No</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <shared-assessment-chart data-token="{{token}}">></shared-assessment-chart>
+  </div>
+</div>
+

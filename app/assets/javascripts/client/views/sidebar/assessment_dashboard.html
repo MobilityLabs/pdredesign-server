@@ -48,12 +48,14 @@
           ng-class="{ active: $state.includes('assessment_report') }"
           href="#/assessments/{{assessment.id}}/report">Report
         </a>
+        <a ng-click="showShareReport()" href="">Share Report</a>
       </span>
+
+      <a ng-if="noMeetingDate() || preMeetingDate()" ng-click="addLearningQuestion()">Add/Review Learning Questions</a>
     </div>
   </div>
 
   <div class="content">
     <ng-include src="'client/views/sidebar/why_pd_redesign.html'"></ng-include>
   </div>
-
 </div>

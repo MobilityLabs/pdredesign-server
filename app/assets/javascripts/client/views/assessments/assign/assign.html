@@ -1,173 +1,199 @@
+
 <div class="assign-assessment">
   <div class='row row-messages'>
     <div class='col-md-12'>
       <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-   </div>
+    </div>
   </div>
-
-    <div class='row row-wizard'>
-        <div class='col-md-2'>
-          <p class='wizard-step'>Step <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-text fa-stack-1x">1</i></span></p>
-          <p class='wizard-instruction'> This is the name others will see for this assessment.</p>
-        </div>
-        <div class='col-md-10'>
-          <h1>
-            {{assessment.name}}
-          </h1>
-          <p class='byline'>
-            organized by: {{assessment.facilitator.full_name}} on {{formattedDate(assessment.created_at)}}
-          </p>
-
-          <div class='row row--0-settings'>
-            <div class='col-md-3 col-sm-3'>
-              <div class='control-group'>
-                <label for="assessment_name">Assessment Name</label>
-                <input class="form-control" ng-model="assessment.name" type="text">
-              </div>
-            </div>
-
-            <div class='col-md-3 col-sm-3'>
-              <label for="district">District</label>
-              <select
-                required
-                class="form-control"
-                ng-model="district"
-                ng-options="district.text for district in user.districts">
-              </select>
-            </div>
-
-            <div class='col-md-3 col-sm-3'>
-              <div class="control-group">
-                <label for="assessment_Due Date">Due date</label>
-                <div class="input-group date datetime">
-                  <input
-                    class="form-control"
-                    ng-model="due_date"
-                    data-defaultDate="{{due_date}}"
-                    data-format="dd/MM/yyyy"
-                    id="due-date"
-                    name="due-date">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                </div>
-              </div>
-            </div>
-
-            <div class='col-md-2 col-sm-2 update-holder'>
-              <div class='control-group'>
-                <label>&nbsp;</label>
-                 <div class='btn btn-primary form-control' ng-click="save(assessment)">
-                  <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
-                  Update
-                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="row secondary">
+    <div class="col-md-12">
+      <h1>Facilitate a new Assessment</h1>
+      <p>Edit your assessment settings, add &amp; manage participants, draft a email message, and send invititations.</p>
     </div>
-
-    <div class='row row-wizard'>
+  </div>
+  <div class='row row-wizard'>
       <div class='col-md-2'>
-        <p class='wizard-step'>Step <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-text fa-stack-1x">2</i></span></p>
-        <p class='wizard-instruction'>
-          These are the individuals from the district who will receive an invite to participate in the assessment.</p>
+        <p class='wizard-step'>Step 1</p>
+        <p class='wizard-instruction'> This is the name and details others will see for this assessment.</p>
       </div>
       <div class='col-md-10'>
-        <h2>Participants</h2>
-        <p ng-if="isNetworkPartner()" class='section-subheader'>Recommend the Readiness Assessment to district staff. We recommend inviting 1-2 representatives from different roles and functions involved with PD, including: Teaching & Learning, Human Resources, Curriculum & Instruction, Data & Accountability, Finance, IT, teachers, and principals. You may add participants later on from the dashboard.</p>
+        <h1>
+          {{assessment.name}}
+        </h1>
+        <p class='byline'>
+          organized by: {{assessment.facilitator.full_name}} on {{formattedDate(assessment.created_at)}}
+        </p>
 
-        <p ng-if="!isNetworkPartner()" class='section-subheader'>Invite a team of colleagues from your district to participate in the assessment. We recommend inviting 1-2 representatives from different roles and functions involved with PD, including: Teaching & Learning, Human Resources, Curriculum & Instruction, Data & Accountability, Finance, IT, teachers, and principals. You may add participants later on from the dashboard.</p>
+        <div class='row row--0-settings'>
+          <div class='col-md-3 col-sm-3'>
+            <div class='control-group'>
+              <label for="assessment_name">Assessment Name</label>
+              <input class="form-control" ng-model="assessment.name" type="text">
+            </div>
+          </div>
 
-        <div class='row row-participant-headers'>
-          <div class='col-md-1 col-sm-1'>&nbsp;</div>
-          <div class='col-md-2 col-sm-2'>Name</div>
-          <div class='col-md-4 col-sm-4'>Email Address</div>
-          <div class='col-md-1 col-sm-3'>Team Role</div>
-        </div>
+          <div class='col-md-3 col-sm-3'>
+            <label for="district">District</label>
+            <select
+              required
+              class="form-control"
+              ng-model="district"
+              ng-options="district.text for district in user.districts">
+            </select>
+          </div>
 
-        <div ng-repeat="user in participants">
-          <div class='row row-participant'>
-            <div class='col-md-1 col-sm-1 '>
-              <avatar data-avatar="{{user.avatar}}" data-width="57"></avatar>
+          <div class='col-md-3 col-sm-3'>
+            <div class="control-group">
+              <label for="assessment_Due Date">Due date</label>
+              <div class="input-group date datetime">
+                <input
+                  class="form-control"
+                  ng-model="due_date"
+                  data-defaultDate="{{due_date}}"
+                  data-format="dd/MM/yyyy"
+                  id="due-date"
+                  name="due-date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+              </div>
+            </div>
+          </div>
 
-            </div>
-            <div class='col-md-2 col-sm-2'>
-              <p class='name'>{{ user.full_name}}</p>
-            </div>
-            <div class='col-md-4 col-sm-4'>
-              <p class='info'>{{ user.email }}</p>
-            </div>
-            <div class='col-md-2 col-sm-3'>
-              <p class='info'>{{ user.team_role || "N/A" }}</p>
-            </div>
-            <div class='col-md-1 col-sm-1 text-center'>
-              <div class="btn btn-primary remove_user_button" ng-click="removeParticipant(user)">Remove</div>
+          <div class='col-md-3 col-sm-3 update-holder'>
+            <div class='control-group'>
+              <label>&nbsp;</label>
+               <div class='btn btn-primary form-control' ng-click="save(assessment)">
+                <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+                Update
+               </div>
             </div>
           </div>
         </div>
-
-        <manage-participants data-assessment-id="{{assessment.id}}"></manage-participants>
-        <invite-user data-assessment-id="{{assessment.id}}"></invite-user>
-
       </div>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 2</p>
+      <p class='wizard-instruction'>
+        These are the individuals from the district who will receive an invite to participate in the assessment.</p>
     </div>
-    <div class='row row-wizard'>
-      <div class='col-md-2'>
-        <p class='wizard-step'>Step <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-text fa-stack-1x">3</i></span></p>
-        <p class='wizard-instruction'> Each participant will receive an email invite. You can customize the email message here.</p>
+    <div class='col-md-10'>
+      <h2>Participants</h2>
+      <p ng-if="isNetworkPartner()" class='section-subheader'>Recommend the Readiness Assessment to district staff. We recommend inviting 1-2 representatives from different roles and functions involved with PD, including: Teaching & Learning, Human Resources, Curriculum & Instruction, Data & Accountability, Finance, IT, teachers, and principals. You may add participants later on from the dashboard.</p>
+
+      <p ng-if="!isNetworkPartner()" class='section-subheader'>Invite a team of colleagues from your district to participate in the assessment. We recommend inviting 1-2 representatives from different roles and functions involved with PD, including: Teaching & Learning, Human Resources, Curriculum & Instruction, Data & Accountability, Finance, IT, teachers, and principals. You may add participants later on from the dashboard.</p>
+
+      <div class='row row-participant-headers'>
+        <div class='col-md-1 col-sm-1'>&nbsp;</div>
+        <div class='col-md-2 col-sm-2'>Name</div>
+        <div class='col-md-4 col-sm-4'>Email Address</div>
+        <div class='col-md-1 col-sm-3'>Team Role</div>
       </div>
-      <div class='col-md-10'>
-        <h2>Invite Message</h2>
-        <p class='section-subheader'>You can customize the message to all participants. This is the initial invite they'll receive. You can send additional reminders later.</p>
 
-        <div class='row'>
-          <div class='col-md-12 col-sm-12 message'>
-
-            <div class='row'>
-              <div class='col-md-12 col-sm-12'>
-                <h3>Hello (Participant Name),</h3>
-
-                <div class='media'>
-                 <avatar
-                    data-imgclass="pull-left media-object img-circle"
-                    data-width="57"
-                    data-has-tooltip="true"
-                    data-name="{{assessment.facilitator.full_name}}"
-                    data-role="{{assessment.facilitator.team_role}}">
-                 </avatar>
-
-                  <div class='media-body'>
-                    <p class='media-heading'>
-                      <span class='name'>{{assessment.user_name}}</span>
-                      <b>{{user.full_name}}</b> has invited you to participate in {{assessment.name}} for {{assessment.district_name}}.
-                    </p>
-                    <customalert  ng-show='alertError' data-message="{{messageError}}" data-type='error'>
-
-                    </customalert>
-                  </div>
-                </div>
-
-                <div class='form-group'>
-                  <textarea placeholder="Add a note (optional)" redactor ng-model="assessment.message"></textarea>
-                </div>
-
-                <h3>Please complete this assessment by {{formattedDate(assessment.due_date)}}.</h3>
-                <p>
-                  PDredesign is a community of educators and designers committed to continuously improving professional development systems to better support teachers. Alongside leaders from classrooms, schools, charters, districts, and partner organizations across the country, we are building an open digital toolkit and community of practice to support districts to redesign systems that meet the needs of educators and students.
-                </p>
-                <button class="btn btn-primary" name="commit" type="submit" id='assign_assessment' ng-click='assignAndSave(assessment)'>
-                  <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
-                  <i class='fa fa-envelope-o'></i> Send
-                </button>
-                <button class="btn right" name="commit" type="submit" ng-click='save(assessment)'>
-                  <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
-                  <i class='fa fa-save'></i> Save
-                </button>
-             </div>
-            </div>
+      <div ng-repeat="user in participants">
+        <div class='row row-participant'>
+          <div class='col-md-1 col-sm-1 '>
+            <avatar data-avatar="{{user.avatar}}" data-width="57"></avatar>
 
           </div>
+          <div class='col-md-2 col-sm-2'>
+            <p class='name'>{{ user.full_name}}</p>
+          </div>
+          <div class='col-md-4 col-sm-4'>
+            <p class='info'>{{ user.email }}</p>
+          </div>
+          <div class='col-md-2 col-sm-3'>
+            <p class='info'>{{ user.team_role || "N/A" }}</p>
+          </div>
+          <div class='col-md-1 col-sm-1 text-center'>
+            <div class="btn btn-primary remove_user_button" ng-click="removeParticipant(user)">Remove</div>
+          </div>
         </div>
-
       </div>
+
+      <manage-participants data-assessment-id="{{assessment.id}}"></manage-participants>
+      <invite-user data-assessment-id="{{assessment.id}}"></invite-user>
+
     </div>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 3</p>
+      <p class='wizard-instruction'> Each participant will receive an email invite. You can customize the email message here.</p>
+    </div>
+    <div class='col-md-10'>
+      <h2>Invite Message</h2>
+      <p class='section-subheader'>You can customize the message to all participants. This is the initial invite they'll receive. You can send additional reminders later.</p>
+
+      <div class='row'>
+        <div class='col-md-12 col-sm-12 message'>
+
+          <div class='row'>
+            <div class='col-md-12 col-sm-12'>
+              <h3>Hello (Participant Name),</h3>
+
+              <div class='media'>
+               <avatar
+                  data-imgclass="pull-left media-object img-circle"
+                  data-width="57"
+                  data-has-tooltip="true"
+                  data-name="{{assessment.facilitator.full_name}}"
+                  data-role="{{assessment.facilitator.team_role}}">
+               </avatar>
+
+                <div class='media-body'>
+                  <p class='media-heading'>
+                    <span class='name'>{{assessment.user_name}}</span>
+                    <b>{{user.full_name}}</b> has invited you to participate in {{assessment.name}} for {{assessment.district_name}}.
+                  </p>
+                  <customalert  ng-show='alertError' data-message="{{messageError}}" data-type='error'>
+
+                  </customalert>
+                </div>
+              </div>
+
+              <div class='form-group'>
+                <textarea placeholder="Add a note (optional)" redactor ng-model="assessment.message"></textarea>
+              </div>
+
+              <h3>Please complete this assessment by {{formattedDate(assessment.due_date)}}.</h3>
+              <p>
+                PDredesign is a community of educators and designers committed to continuously improving professional development systems to better support teachers. Alongside leaders from classrooms, schools, charters, districts, and partner organizations across the country, we are building an open digital toolkit and community of practice to support districts to redesign systems that meet the needs of educators and students.
+              </p>
+              <button class="btn right" name="commit" type="submit" ng-click='save(assessment)'>
+                <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+                <i class='fa fa-save'></i> Save
+              </button>
+           </div>
+          </div>
+        </div>
+              <button class="btn btn-primary send-btn btn-lg pull-right" name="commit" type="submit" id='assign_assessment' ng-click='assignAndSave(assessment)'>
+                <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+                <i class='fa fa-envelope-o'></i> Send Invitation
+              </button>
+      </div>
+
+    </div>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 4</p>
+      <p class='wizard-instruction'>Learning Questions help your team focus on key aspects of the technology implementation.</p>
+    </div>
+    <learning-question modal="false"></learning-question>
+  </div>
+  <br />
+  <div class="row row-wizard">
+    <div class="col-md-10 col-md-offset-2">
+      <button class="btn btn-primary" name="commit" type="submit" id='assign_assessment'
+              ng-click='assignAndSave(assessment)'>
+        <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+        <i class='fa fa-envelope-o'></i> Send
+      </button>
+
+      <button class="btn" name="commit" type="submit" ng-click='save(assessment)'>
+        <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+        <i class='fa fa-save'></i> Save
+      </button>
+    </div>
+  </div>
 </div>

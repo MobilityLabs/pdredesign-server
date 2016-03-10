@@ -1,0 +1,17 @@
+<div class="learning-question-form">
+  <form class="input-group"
+        ng-submit="learningQuestionForm.createLearningQuestion(learningQuestionForm.newEntity)">
+    <input name="learningQuestionForm" id="learning-question" class="form-control" ng-class="{'error-input': learningQuestionForm.$invalid}" type="text"
+           placeholder="Enter your Learning Question here."
+           ng-model="learningQuestionForm.newEntity.body"/>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="submit">
+        <i class="fa fa-plus"></i>
+      </button>
+    </span>
+  </form>
+  <div class="error-form"
+       ng-show="learningQuestionForm.$invalid">
+    {{ learningQuestionForm.error }}
+  </div>
+</div>

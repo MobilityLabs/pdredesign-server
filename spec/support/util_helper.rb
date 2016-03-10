@@ -3,7 +3,7 @@ def create_struct
 
   responder = Participant.create!(user: @user)
   rubric    = @rubric
-  response  = Response.create!(
+  response  = Response.find_or_create_by!(
     responder_type: 'Assessment',
     responder: responder,
     rubric: rubric,

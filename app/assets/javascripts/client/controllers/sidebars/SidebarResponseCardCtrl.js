@@ -134,5 +134,15 @@ PDRClient.controller('SidebarResponseCardCtrl', [
       $rootScope.$broadcast('submit_consensus');
     };
 
+    $scope.addLearningQuestion = function () {
+      $scope.modal = $modal.open({
+        template: '<learning-question-modal reminder="false" />',
+        scope: $scope
+      });
+    };
+
+    $scope.$on('close-learning-question-modal', function() {
+      $scope.modal.close('cancel');
+    });
   }
 ]);

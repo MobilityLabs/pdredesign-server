@@ -1,0 +1,20 @@
+<div class="answers" ng-show="question.answersVisible">
+  <div class="answer" ng-repeat="answer in question.answers"
+       ng-click="responseAnswerGroup.assignAnswerToQuestion(answer, question)">
+    <response-answer question="question" answer="answer" is-consensus="{{isConsensus}}" />
+  </div>
+  <skip-question
+      editable="!isConsensus"
+      question="question"
+      response-id="{{responseAnswerGroup.responseId}}"
+      assessment-id="{{responseAnswerGroup.assessmentId}}">
+  </skip-question>
+  <ng-include
+      ng-show="isConsensus"
+      src="'client/views/shared/responses/evidence.html'">
+  </ng-include>
+  <ng-include
+      ng-show="isConsensus"
+      src="'client/views/shared/responses/consensus_score_entry.html'">
+  </ng-include>
+</div>

@@ -1,61 +1,36 @@
-@media (max-width: 768px)
-  body
-    #response-sidebar
-      position: relative !important
-      height: 41em
-      width: 100%
-
-
-#response-sidebar
-  border: 1px solid $border-color
-  border-radius: .3em
-  background: #fff
-  padding-bottom: 1em
-  margin-bottom: 1em
-  position: fixed
-  width: 18.2em
+.response-sidebar
+  @extend .main-content
+  h2
+    margin-top: 0
   .submit
     border-radius: 0
   .affix
     top: 0
 
   .punchcard
-    height: 4em
-    background-color: #4D5E66
-    color: #fff
     h1
       margin: 0
 
-    .card, .sidebar-title
+    .sidebar-title
       padding: .3em
 
     .card
-      .fa-stack
-        margin: 0.125em
-      .fa-circle
-        color: $unscored
-        font-size: 2.1em
-      .fa-text
-        font-family: $heading-font-family
-        font-weight: bold
-        font-size: 1.125em
-      .fa
-        &.scored-1
-          color: $scored1
-          background-color: transparent
-        &.scored-2
-          color: $scored2
-          background-color: transparent
-        &.scored-3
-          color: $scored3
-          background-color: transparent
-        &.scored-4
-          color: $scored4
-          background-color: transparent
-        &.scored-skipped
-          color: $skipped
-          background-color: transparent
-
+      padding: 1em 0
+      span
+        height: $circle-size/1.5
+        width: $circle-size/1.5
+        line-height: $circle-size/1.6
+        color: $font-color
+        margin: .125em
+        border: 1px solid $unscored
+        display: inline-block
+        text-align: center
+        border-radius: 100px
+      a
+        &:hover
+          text-decoration: none
+          span
+            box-shadow: inset 0px 0px 0px 1px $unscored
     .btn
       border-radius: 0em
       margin: 0em
@@ -64,14 +39,7 @@
         font-size: 1.3em
   .sidebar-title
     font-weight: bold
-    color: #4b616f
+    color: $unscored
     .score-count
-      color: #4b616f
+      color: $unscored
       font-weight: lighter
-  .why-pd
-    .title
-      font-style: italic
-      color: #999999
-      margin: .5em 0
-    i
-      color: #999

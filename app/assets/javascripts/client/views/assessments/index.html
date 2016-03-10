@@ -1,17 +1,21 @@
-<div class="row secondary user-header">
-    <div class="col-md-12">
-      <h1>Hi {{user.first_name}}</h1>
-      <p>This is your Readiness Assessment dashboard. Create a new assessment or check the status of an existing one to proceed.</p>
-    </div>
-  </div>
+<div class="row secondary">
   <div class="col-md-12">
-    <div ng-show="isNetworkPartner()">
+    <h1>Readiness Assessment List</h1>
+    <p>Hi {{user.first_name}}. This is your Readiness Assessment List. Create a new assessment or check the status of an existing one to proceed.</p>
+  </div>
+</div>
+<div class="row tertiary">
+  <div class="col-md-12">
+    <start-assessment></start-assessment>
+    <div class="row">
       <div id="assessments-filter">
-        <div class="col-md-4">
-          <district-filter
-            districts="districts"
-            selected-district="selectedDistrict">
-          </district-filter>
+        <div ng-show="isNetworkPartner()">
+          <div class="col-md-4">
+            <district-filter
+              districts="districts"
+              selected-district="selectedDistrict">
+            </district-filter>
+          </div>
         </div>
         <div class="col-md-4">
           <permission-filter
@@ -28,7 +32,9 @@
         </div>
       </div>
     </div>
-    <!-- <start-assessment></start-assessment> -->
-    <div ng-include src="'client/views/assessments/assessment-list.html'" scope="this"></div>
   </div>
+</div>
+<div>
+  <!-- <start-assessment></start-assessment> -->
+  <div ng-include src="'client/views/assessments/assessment-list.html'" scope="this"></div>
 </div>

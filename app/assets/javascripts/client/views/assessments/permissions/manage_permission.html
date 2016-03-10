@@ -60,7 +60,7 @@
             <p class="info">
               <fieldset>
                 <label class="level_label">Current Permission Level: </label>
-                <select class="permission-level" name="level">
+                <select class="permission-level" name="level" ng-disabled="user.role === 'network_partner'">
                   <option value={{user.current_permission_level.role}}>
                     {{user.current_permission_level.human}}
                   </option>

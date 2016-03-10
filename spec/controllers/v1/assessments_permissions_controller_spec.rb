@@ -111,6 +111,29 @@ describe V1::AssessmentsPermissionsController do
   end
 
   describe '#update' do
+    context 'changing network partner to participant' do
+      let(:network_partner) { FactoryGirl.create(:user, :with_network_partner_role) }
+
+      before(:each) do
+        assessment.facilitators << @facilitator
+        sign_in @facilitator
+        put :update, assessment_id: assessment.id, id: @facilitator.id,
+          permissions: [ { level: "participant", email: network_partner.email }]
+      end
+
+      it do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'overrides the role to be facilitator' do
+        expect(assessment.facilitator?(network_partner)).to be true
+      end
+
+      it 'does not changes the role to be participant' do
+        expect(assessment.participant?(network_partner)).to be false
+      end
+    end
+
     context 'respond to PUT#update' do
       let(:brand_new_user) { FactoryGirl.create(:user) }
 

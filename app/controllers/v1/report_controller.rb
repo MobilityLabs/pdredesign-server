@@ -1,12 +1,12 @@
 class V1::ReportController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_assessment!, only: :show
 
   delegate :axis_questions, to: :report
   delegate :average, to: :report
 
   def show
     @assessment = assessment
-    authorize_action_for @assessment
     @response   = @assessment.response
     @axes       = report.axes
     update_participant
@@ -53,5 +53,9 @@ class V1::ReportController < ApplicationController
 
   def consensus
     Response.find_by(responder_type: 'Assessment', id: params[:consensu_id])
+  end
+
+  def authorize_assessment!
+    authorize_action_for assessment
   end
 end

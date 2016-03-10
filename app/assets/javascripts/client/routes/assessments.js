@@ -49,6 +49,20 @@ PDRClient.config(['$stateProvider', '$urlRouterProvider',
        }
      }
    })
+   .state('shared_assessment_report', {
+     url: '/assessments/shared/:token/report',
+     authenticate: false,
+     views: {
+       '': {
+         controller: 'AssessmentSharedReportCtrl',
+         templateUrl: 'client/views/assessments/shared_report.html'
+       },
+       'sidebar': {
+         controller: 'SharedSidebarCtrl',
+         templateUrl: 'client/views/sidebar/shared_assessment_dashboard.html'
+       }
+     }
+   })
    .state('assessment_assign', {
      url: '/assessments/:id/assign',
      authenticate: true,

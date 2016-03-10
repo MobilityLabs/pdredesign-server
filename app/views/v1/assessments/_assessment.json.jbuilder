@@ -11,6 +11,7 @@ json.rubric_id         assessment.rubric_id
 json.report_takeaway   assessment.report_takeaway
 json.message           assessment.message || default_assessment_message
 json.owner             (assessment.user.id == current_user.id)
+json.share_token       assessment.share_token
 
 if assessment.consensus
   json.consensus do

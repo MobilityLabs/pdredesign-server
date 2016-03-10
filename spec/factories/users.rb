@@ -36,8 +36,12 @@ FactoryGirl.define do
   end
 
   trait :with_district do
-    after(:create) do |user|
-      user.districts << FactoryGirl.create(:district)
+    transient do
+      districts 1
+    end
+
+    after(:create) do |user, evaluator|
+      user.districts = FactoryGirl.create_list(:district, evaluator.districts)
     end
   end
 

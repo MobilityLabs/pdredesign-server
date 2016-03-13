@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe V1::ProspectiveUsersController do
   before :each do
-    request.env["HTTP_ACCEPT"] = 'application/json'
+    request.env['HTTP_ACCEPT'] = 'application/json'
   end
   render_views
 
@@ -23,8 +23,7 @@ describe V1::ProspectiveUsersController do
     it 'returns errors on invalid response' do
       post :create, { email: '!@#!@#some_email@google.com', ip_address: '000.000.000.00' }
       expect(response.status).to eq(422)
-      expect(json["errors"]["email"].first).to eq("is invalid")
+      expect(json['errors'].first).to eq('Email is invalid')
     end
-
   end
 end

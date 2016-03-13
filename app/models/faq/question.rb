@@ -13,7 +13,7 @@
 #
 
 class Faq::Question < ActiveRecord::Base
-  belongs_to :category, class: Faq::Category
+  belongs_to :category, class_name: 'Faq::Category'
 
   validates :content, presence: true
   validates :answer,  presence: true

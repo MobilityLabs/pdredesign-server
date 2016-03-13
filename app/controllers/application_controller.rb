@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   include RenderStatus
   include ExtractIds
 
+  protect_from_forgery with: :null_session
+
   layout nil
   respond_to :json
 

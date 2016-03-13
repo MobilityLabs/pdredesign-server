@@ -1,2 +1,2 @@
 json.subcategory_title 'testing'
-json.array! @tool
+json.array! [@tool]

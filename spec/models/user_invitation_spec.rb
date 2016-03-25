@@ -3,11 +3,11 @@
 # Table name: user_invitations
 #
 #  id            :integer          not null, primary key
-#  first_name    :string
-#  last_name     :string
-#  email         :string
-#  team_role     :string
-#  token         :string
+#  first_name    :string(255)
+#  last_name     :string(255)
+#  email         :string(255)
+#  team_role     :string(255)
+#  token         :string(255)
 #  assessment_id :integer
 #  user_id       :integer
 #

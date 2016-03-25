@@ -61,7 +61,7 @@
             <div class="answer" ng-repeat="answer in question.answers" ng-click="assignAnswerToQuestion(answer, question)">
               <div class="left-score col-md-1">
                 <ng-include
-                  ng-show="isConsensus"
+                  ng-if="isConsensus"
                   src="'client/views/shared/responses/score_count.html'">
                 </ng-include>
               </div>
@@ -101,10 +101,7 @@
               assessment-id="{{assessmentId}}">
             </skip-question>
 
-            <ng-include
-              ng-show="isConsensus"
-              src="'client/views/shared/responses/evidence.html'" >
-            </ng-include>
+            <evidence question-id="{{ question.id }}" ng-if="isConsensus"></evidence>
 
             <ng-include
               ng-show="isConsensus"

@@ -44,7 +44,7 @@ describe('Directive: responseQuestions', function() {
 
   describe('#ResponseGET', function() {
     it('gets data on callback and sets categories', function() {
-      $httpBackend.whenGET('/v1/assessments/1/responses/1').respond({categories: [1,2,3]});
+      $httpBackend.whenGET('/v1/assessments/1/responses/1/slim').respond({categories: [1,2,3]});
       $timeout.flush();
       $httpBackend.flush();
       expect(isolatedScope.categories).toEqual([1,2,3]);

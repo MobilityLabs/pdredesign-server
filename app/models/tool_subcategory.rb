@@ -3,7 +3,7 @@
 # Table name: tool_subcategories
 #
 #  id               :integer          not null, primary key
-#  title            :string
+#  title            :string(255)
 #  display_order    :integer
 #  tool_category_id :integer
 #

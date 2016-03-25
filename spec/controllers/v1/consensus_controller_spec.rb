@@ -109,7 +109,7 @@ describe V1::ConsensusController do
       sign_in @facilitator2
 
       expect_flush_cached_assessment
-      
+
       post :create, assessment_id: assessment.id
       assert_response :success
 
@@ -133,7 +133,102 @@ describe V1::ConsensusController do
       assert_response :success
 
     end
+  end
 
+  describe 'GET #evidence' do
+    before(:each) do
+      sign_out @user
+    end
+
+    context 'when unauthenticated' do
+      before(:each) do
+        get :evidence, assessment_id: 1, question_id: 1
+      end
+
+      it 'requires authentication' do
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'when there is no evidence' do
+
+      let(:user) {
+        FactoryGirl.create(:user)
+      }
+
+      let(:assessment) {
+        FactoryGirl.create(:assessment, :with_response, user: user)
+      }
+
+      before(:each) do
+        sign_in user
+        get :evidence, assessment_id: assessment.id, question_id: 1
+      end
+
+      it 'returns an empty JSON array' do
+        expect(json.size).to eq 0
+      end
+    end
+
+    context 'when there is evidence' do
+
+      let(:user) {
+        FactoryGirl.create(:user)
+      }
+
+      let!(:participants) {
+        FactoryGirl.create_list(:participant, 1, assessment: assessment)
+      }
+
+      let(:assessment) {
+        FactoryGirl.create(:assessment, :with_response, user: user)
+      }
+
+      let!(:preexisting_response) {
+        FactoryGirl.create(:response, responder_type: 'Participant', responder: participants.first)
+      }
+
+      let(:score) {
+        FactoryGirl.create(:score, response: preexisting_response)
+      }
+
+      before(:each) do
+        sign_in user
+        get :evidence, assessment_id: assessment.id, question_id: score.question_id
+      end
+
+      it 'send back a non-empty JSON array' do
+        expect(json.size).not_to eq 0
+      end
+
+      it 'sends back the score ID' do
+        expect(json[0]['id']).to eq score.id
+      end
+
+      it 'sends back the score value' do
+        expect(json[0]['value']).to eq score.value
+      end
+
+      it 'sends back the score evidence' do
+        expect(json[0]['evidence']).to eq score.evidence
+      end
+
+      it 'sends back the score response_id' do
+        expect(json[0]['response_id']).to eq score.response_id
+      end
+
+      it 'sends back the score question_id' do
+        expect(json[0]['question_id']).to eq score.question_id
+      end
+
+      it 'sends back the score created_at date' do
+        expect(json[0]['created_at']).to eq score.created_at.iso8601(3)
+      end
+
+      it 'sends back a participant' do
+        expect(json[0]['participant']).to_not be_nil
+      end
+    end
   end
 end
 

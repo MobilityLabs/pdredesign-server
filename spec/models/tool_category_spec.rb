@@ -3,7 +3,7 @@
 # Table name: tool_categories
 #
 #  id            :integer          not null, primary key
-#  title         :string
+#  title         :string(255)
 #  display_order :integer
 #  tool_phase_id :integer
 #

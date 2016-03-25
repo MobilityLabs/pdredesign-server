@@ -1,19 +1,17 @@
 <div class="evidence-discussion">
   <h3>Individual Evidence</h3>
   <div class="evidence-container">
-    <div class="evidence" ng-repeat="score in scores | scoreFilter:question.id">
+    <div class="evidence" ng-repeat="score in evidence.responses">
       <div class="row">
-        <div class="col-md-1 score {{scoreClass(score.value)}}">
-          <span class="ng-binding">{{scoreValue(score.value)}}</span>
+        <div class="col-md-1 score {{evidence.scoreClass(score.value)}}">
+          <span class="ng-binding">{{evidence.scoreValue(score.value)}}</span>
         </div>
         <div class="col-md-11" ng-bind-html="score.evidence"></div>
       </div>
 
       <div class="row">
         <div class="col-md-1">
-          <avatar
-          data-width="100%"
-          data-avatar="{{score.participant.avatar}}"
+          <avatar width="100%" avatar="{{score.participant.avatar}}"
           />
         </div>
 
@@ -22,7 +20,6 @@
           on: {{score.participant.updated_at | amDateFormat:'MMMM Do, YYYY'}}
         </div>
       </div>
-
     </div>
   </div>
 </div>

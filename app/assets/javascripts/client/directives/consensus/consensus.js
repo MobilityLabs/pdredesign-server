@@ -38,11 +38,15 @@ PDRClient.directive('consensus', [
 
           $scope.questionColor          = ResponseHelper.questionColor;
           $scope.answerCount            = ResponseHelper.answerCount;
-          $scope.toggleAnswers          = ResponseHelper.toggleAnswers;
           $scope.saveEvidence           = ResponseHelper.saveEvidence;
           $scope.editAnswer             = ResponseHelper.editAnswer;
           $scope.answerTitle            = ResponseHelper.answerTitle;
           $scope.percentageByResponse   = ResponseHelper.percentageByResponse;
+
+          $scope.toggleAnswers = function(question) {
+            $scope.$broadcast('question-toggled', question.id);
+            ResponseHelper.toggleAnswers(question);
+          };
 
           $scope.assignAnswerToQuestion = function (answer, question) {
             switch(true) {
@@ -138,18 +142,6 @@ PDRClient.directive('consensus', [
               .then(function(){
                 $scope.loading = false;
               });
-          };
-
-          $scope.scoreValue = function(score) {
-            if(!score || score <= 0)
-              return "S";
-            return "" + score;
-          };
-
-          $scope.scoreClass = function(score) {
-            if(!score || score <= 0)
-              return "skipped";
-            return "scored-" + score;
           };
 
           $timeout(function(){ $scope.updateConsensus(); });

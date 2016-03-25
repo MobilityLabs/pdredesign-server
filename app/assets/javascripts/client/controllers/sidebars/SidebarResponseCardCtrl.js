@@ -1,42 +1,51 @@
-PDRClient.controller('SidebarResponseCardCtrl', [
-  '$modal',
-  '$scope',
-  '$rootScope',
-  '$stateParams',
-  '$location',
-  '$anchorScroll',
-  '$timeout',
-  'SessionService',
-  'Score',
-  'Consensus',
-  'Response',
-  'ResponseHelper',
-  'Assessment',
-  function($modal, $scope, $rootScope, $stateParams, $location,
-           $anchorScroll, $timeout, SessionService, Score,
-           Consensus, Response, ResponseHelper, Assessment) {
+(function() {
+  'use strict';
 
-    $scope.skipped      = ResponseHelper.skipped;
+  angular.module('PDRClient')
+      .controller('SidebarResponseCardCtrl', SidebarResponseCardCtrl);
+
+  SidebarResponseCardCtrl.$inject = [
+    '$modal',
+    '$scope',
+    '$rootScope',
+    '$stateParams',
+    '$location',
+    '$anchorScroll',
+    '$timeout',
+    'Score',
+    'Consensus',
+    'Response',
+    'ResponseHelper',
+    'Assessment'
+  ];
+
+  function SidebarResponseCardCtrl($modal, $scope, $rootScope, $stateParams, $location,
+                                   $anchorScroll, $timeout, Score,
+                                   Consensus, Response, ResponseHelper, Assessment) {
+
+    $scope.skipped = ResponseHelper.skipped;
     $scope.assessmentId = $stateParams.assessment_id;
-    $scope.responseId   = $stateParams.response_id;
-    $scope.questions    = [];
-    $scope.assessment   = {};
+    $scope.responseId = $stateParams.response_id;
+    $scope.questions = [];
+    $scope.assessment = {};
 
-    $timeout(function(){
+    $timeout(function() {
       $scope.assessment = Assessment.get({id: $scope.assessmentId});
       $scope.subject()
-        .get({assessment_id: $scope.assessmentId, id: $scope.responseId})
-        .$promise
-        .then(function(data){
-          $scope.isReadOnly = data.is_completed || false;
-      });
+          .get({assessment_id: $scope.assessmentId, id: $scope.responseId})
+          .$promise
+          .then(function(data) {
+            $scope.isReadOnly = data.is_completed || false;
+          });
 
       $scope.updateScores();
     });
 
     $scope.questionScoreValue = function(question) {
-      if(!question || !question.score) return null;
-      if(question.score.value == null && question.score.evidence != null) {
+      if (!question || !question.score) {
+        return null;
+      }
+      if (question.score.value == null && question.score.evidence != null) {
         return 'skipped';
       }
       return question.score.value;
@@ -45,25 +54,25 @@ PDRClient.controller('SidebarResponseCardCtrl', [
     $scope.updateScores = function() {
       Score.query({
         assessment_id: $scope.assessmentId,
-        response_id:   $scope.responseId
+        response_id: $scope.responseId
       }).$promise
-      .then(function(questions) {
-        $scope.questions = questions;
-      });
+          .then(function(questions) {
+            $scope.questions = questions;
+          });
     };
 
-    $rootScope.$on('response_updated', function(){
+    $rootScope.$on('response_updated', function() {
       $scope.updateScores();
     });
 
     $scope.isAnswered = function(question) {
-      switch(true) {
+      switch (true) {
         case !question.score:
         case !question.score.evidence == null:
           return false;
         case $scope.skipped(question):
-        case question.score.skipped  == true:
-        case question.score.value    != null:
+        case question.score.skipped == true:
+        case question.score.value != null:
           return true;
         default:
           return false;
@@ -73,7 +82,9 @@ PDRClient.controller('SidebarResponseCardCtrl', [
     $scope.answeredQuestions = function() {
       var count = 0;
       angular.forEach($scope.questions, function(question) {
-        if($scope.isAnswered(question)) count++;
+        if ($scope.isAnswered(question)) {
+          count++;
+        }
       });
 
       return count;
@@ -81,7 +92,7 @@ PDRClient.controller('SidebarResponseCardCtrl', [
 
     $scope.unansweredQuestions = function() {
       window.questions = $scope.questions;
-      window.scope     = $scope;
+      window.scope = $scope;
       return $scope.questions.length - $scope.answeredQuestions();
     };
 
@@ -90,17 +101,23 @@ PDRClient.controller('SidebarResponseCardCtrl', [
       $anchorScroll();
     };
 
-    $scope.responseTitle = function(){
-      if($scope.isResponse()) return "Response";
-      if(!$scope.isResponse()) return "Consensus";
+    $scope.responseTitle = function() {
+      if ($scope.isResponse()) {
+        return "Response";
+      }
+      if (!$scope.isResponse()) {
+        return "Consensus";
+      }
     };
 
-    $scope.isResponse = function(){
+    $scope.isResponse = function() {
       return $location.url().indexOf("responses") > -1;
     };
 
     $scope.canSubmit = function() {
-      if($scope.isResponse()) return true;
+      if ($scope.isResponse()) {
+        return true;
+      }
       return !$scope.isReadOnly;
     };
 
@@ -109,18 +126,20 @@ PDRClient.controller('SidebarResponseCardCtrl', [
     };
 
     $scope.subject = function() {
-      if($scope.isResponse()) return Response;
+      if ($scope.isResponse()) {
+        return Response;
+      }
       return Consensus;
     };
 
     $scope.submitResponseModal = function() {
-     $scope.modalInstance =  $modal.open({
+      $scope.modalInstance = $modal.open({
         templateUrl: 'client/views/modals/response_submit_modal.html',
         scope: $scope
       });
     };
 
-    $scope.cancel = function () {
+    $scope.cancel = function() {
       $scope.modalInstance.dismiss('cancel');
     };
 
@@ -135,4 +154,4 @@ PDRClient.controller('SidebarResponseCardCtrl', [
     };
 
   }
-]);
+})();

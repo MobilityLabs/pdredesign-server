@@ -8,7 +8,7 @@
 #  roles         :string           default([]), is an Array
 #  created_at    :datetime
 #  updated_at    :datetime
-#  token         :string
+#  token         :string(255)
 #
 
 class AccessRequest < ActiveRecord::Base

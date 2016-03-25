@@ -3,9 +3,9 @@
 # Table name: tools
 #
 #  id                  :integer          not null, primary key
-#  title               :string
+#  title               :string(255)
 #  description         :text
-#  url                 :string
+#  url                 :string(255)
 #  is_default          :boolean
 #  display_order       :integer
 #  tool_subcategory_id :integer

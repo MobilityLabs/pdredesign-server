@@ -44,21 +44,6 @@ describe('Directive: consensus', function() {
     });
   });
 
-  it('returns a scores string representation', function() {
-    expect(isolatedScope.scoreValue('1')).toEqual('1');
-    expect(isolatedScope.scoreValue(1)).toEqual('1');
-    expect(isolatedScope.scoreValue('2')).toEqual('2');
-    expect(isolatedScope.scoreValue(null)).toEqual('S');
-    expect(isolatedScope.scoreValue(0)).toEqual('S');
-  });
-
-  it('returns a score class', function() {
-    expect(isolatedScope.scoreClass('1')).toEqual('scored-1');
-    expect(isolatedScope.scoreClass('2')).toEqual('scored-2');
-    expect(isolatedScope.scoreClass(null)).toEqual('skipped');
-    expect(isolatedScope.scoreClass(0)).toEqual('skipped');
-  });
-
   it('isConsensus will be true by default ', function() {
     expect(isolatedScope.isConsensus).toEqual(true);
   });

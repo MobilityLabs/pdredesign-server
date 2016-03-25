@@ -1,27 +1,32 @@
-PDRClient.controller('ConsensusShowCtrl', [
+(function() {
+  'use strict';
+
+  angular.module('PDRClient')
+      .controller('ConsensusShowCtrl', ConsensusShowCtrl);
+
+  ConsensusShowCtrl.$inject = [
     '$scope',
-    '$http',
-    '$timeout',
     'SessionService',
     'Assessment',
-    'Consensus',
     'ConsensusHelper',
     '$stateParams',
-    'consensus',
-    function($scope, $http, $timeout, SessionService, Assessment, Consensus, ConsensusHelper, $stateParams, consensus) {
-      $scope.user = SessionService.getCurrentUser();
+    'consensus'
+  ];
 
-      $scope.assessmentId = $stateParams.assessment_id;
-      $scope.responseId   = $stateParams.response_id;
-      $scope.assessment   = Assessment.get({id: $scope.assessmentId});
-      $scope.consensus    = consensus
-      
-      $scope.exportToPDF  = function(){
-        ConsensusHelper.consensuToPDF($scope.assessmentId, $scope.responseId);
-      };
+  function ConsensusShowCtrl($scope, SessionService, Assessment, ConsensusHelper, $stateParams, consensus) {
+    $scope.user = SessionService.getCurrentUser();
 
-      $scope.exportToCSV  = function(){
-        ConsensusHelper.consensuToCSV($scope.assessment, $scope.responseId);
-      };
-    }
-]);
+    $scope.assessmentId = $stateParams.assessment_id;
+    $scope.responseId = $stateParams.response_id;
+    $scope.assessment = Assessment.get({id: $scope.assessmentId});
+    $scope.consensus = consensus;
+
+    $scope.exportToPDF = function() {
+      ConsensusHelper.consensuToPDF($scope.assessmentId, $scope.responseId);
+    };
+
+    $scope.exportToCSV = function() {
+      ConsensusHelper.consensuToCSV($scope.assessment, $scope.responseId);
+    };
+  }
+})();

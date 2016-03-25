@@ -1,6 +1,8 @@
 class V1::ConsensusController < V1::ResponsesController
   before_action :authenticate_user!
 
+  authority_actions evidence: 'read'
+
   def create
     @response = Response.find_or_initialize_by(
                   responder_type: 'Assessment',
@@ -36,6 +38,11 @@ class V1::ConsensusController < V1::ResponsesController
     end
   end
 
+  def evidence
+    @assessment = assessment
+    @answered_scores = @assessment.answered_scores.where(question_id: params[:question_id])
+    authorize_action_for @assessment
+  end
 
   private
   def consensus_params

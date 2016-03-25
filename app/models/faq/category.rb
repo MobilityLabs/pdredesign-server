@@ -3,7 +3,7 @@
 # Table name: faq_categories
 #
 #  id         :integer          not null, primary key
-#  heading    :string
+#  heading    :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #

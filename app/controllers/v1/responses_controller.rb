@@ -1,6 +1,8 @@
 class V1::ResponsesController < ApplicationController
   before_action :authenticate_user!
 
+  authority_actions show_slimmed: :read
+
   def create
     @response = response_by(responder_id: participant_from_user.id)
     authorize_action_for @response
@@ -11,6 +13,13 @@ class V1::ResponsesController < ApplicationController
   def show
     @response   = Response.find(params[:id])
     @rubric     = assessment.rubric
+    @categories = @response.categories
+    authorize_action_for @response
+  end
+
+  def show_slimmed
+    @response = Response.find(params[:response_id])
+    @rubric = assessment.rubric
     @categories = @response.categories
     authorize_action_for @response
   end

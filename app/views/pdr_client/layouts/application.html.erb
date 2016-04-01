@@ -1,43 +1,64 @@
 <!DOCTYPE html>
 <html ng-app="PDRClient">
-  <head>
-    <title>PDredesign</title>
-    <%= stylesheet_link_tag    "pdr_client", media: "all" %>
-    <%= javascript_include_tag "pdr_client" %>
-    <%= favicon_link_tag "favicon.png" %>
-    <%= csrf_meta_tags %>
-  </head>
-  <body>
-    <%= render 'pdr_client/layouts/partials/top_nav' %>
+<head>
+  <title>PDredesign</title>
+  <%= stylesheet_link_tag "pdr_client", media: "all" %>
+  <%= javascript_include_tag "pdr_client" %>
+  <%= favicon_link_tag "favicon.png" %>
+  <%= csrf_meta_tags %>
+  <% if ENV['ZENDESK_ENV'] == 'production' %>
+  <!-- Start of pdredesign Zendesk Widget script -->
+  <script>/*<![CDATA[*/
+  window.zEmbed || function(e, t) {
+    var n, o, d, i, s, a = [], r = document.createElement("iframe");
+    window.zEmbed = function() {
+      a.push(arguments)
+    }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document;
+    try {
+      o = s
+    } catch (c) {
+      n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s
+    }
+    o.open()._l = function() {
+      var o = this.createElement("script");
+      n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o)
+    }, o.write('<body onload="document._l();">'), o.close()
+  }("https://assets.zendesk.com/embeddable_framework/main.js", "pdredesign.zendesk.com");
+  /*]]>*/</script>
+  <!-- End of pdredesign Zendesk Widget script -->
+  <% end %>
+</head>
+<body>
+<%= render 'pdr_client/layouts/partials/top_nav' %>
 
-    <div class="home-container container-fluid" ng-if="showFluid">
-      <div class="row">
-        <div class="col-md-12 view" ui-view="full-width">
-        </div>
+<div class="home-container container-fluid" ng-if="showFluid">
+  <div class="row">
+    <div class="col-md-12 view" ui-view="full-width">
+    </div>
+  </div>
+</div>
+
+<div class="main-container container" ng-if="!showFluid">
+  <div class="row">
+    <div class="col-md-12 main-content" ui-view="full-width" ng-if="showFullWidth">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-9" ng-if="!showFullWidth">
+      <div class="main-content">
+        <%= yield %>
       </div>
     </div>
-
-    <div class="main-container container" ng-if="!showFluid">
-      <div class="row">
-        <div class="col-md-12 main-content" ui-view="full-width" ng-if="showFullWidth">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-9" ng-if="!showFullWidth">
-          <div class="main-content">
-            <%= yield %>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-3">
-          <div class="response-sidebar">
-            <%= render 'pdr_client/layouts/partials/sidebar' %>
-          </div>
-        </div>
+    <div class="col-xs-12 col-md-3">
+      <div class="response-sidebar">
+        <%= render 'pdr_client/layouts/partials/sidebar' %>
       </div>
     </div>
+  </div>
+</div>
 
-    <%= render 'pdr_client/layouts/partials/footer' %>
-    <%= render 'pdr_client/layouts/partials/loading' %>
-    <%= render 'pdr_client/layouts/partials/ga' %>
-  </body>
+<%= render 'pdr_client/layouts/partials/footer' %>
+<%= render 'pdr_client/layouts/partials/loading' %>
+<%= render 'pdr_client/layouts/partials/ga' %>
+</body>
 </html>

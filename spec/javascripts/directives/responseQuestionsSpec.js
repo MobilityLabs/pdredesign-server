@@ -28,20 +28,6 @@ describe('Directive: responseQuestions', function() {
 
   }));
 
-  it('isConsensus will be false by default ', function() {
-    expect(isolatedScope.isConsensus).toEqual(false);
-  });
-
-  it('save button is not disabled with evidence present', function() {
-    expect(isolatedScope.invalidEvidence(question1)).toEqual(false)
-  });
-
-  it('save button is disabled with no evidence', function() {
-    var score2 = {id: 1, evidence: "", value: 1, editMode: null};
-    var question2 = {id: 1, score: score2 };
-    expect(isolatedScope.invalidEvidence(question2)).toEqual(true)
-  });
-
   describe('#ResponseGET', function() {
     it('gets data on callback and sets categories', function() {
       $httpBackend.whenGET('/v1/assessments/1/responses/1/slim').respond({categories: [1,2,3]});

@@ -41,6 +41,7 @@ class V1::InventoriesController < ApplicationController
 
     saved = @inventory.update(inventory_params)
     if saved
+      @inventory.send_invites
       render nothing: true
     else
       render_error

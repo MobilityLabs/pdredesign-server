@@ -1,0 +1,35 @@
+<section class="current-participants">
+  <h4>Current Participants</h4>
+  <div ng-if="manageInventoryPermissions.list.length === 0">
+    <h5>No Participants</h5>
+  </div>
+  <div ng-if="manageInventoryPermissions.list.length > 0">
+    <form id="current_user_permissions">
+      <div class="row row-participant-add" ng-repeat="user in manageInventoryPermissions.list">
+        <img alt="" class="img-polaroid pull-left" ng-src="{{user.avatar}}" width="47" />
+        <div class='col-md-2 col-sm-2'>
+          <p class='name_label'>{{user.full_name}}</p>
+        </div>
+        <div class='col-md-4 col-sm-4'>
+          <p class='info important_label'>{{user.email }}</p>
+        </div>
+        <div class='col-md-5 col-sm-5 pull-right'>
+          <p class="info">
+            <fieldset>
+              <label class="level_label">Current Permission Level: </label>
+              <select class="permission-level" name="level" ng-disabled="user.role === 'network_partner'">
+                <option value={{user.current_permission_level.role}}>
+                  {{user.current_permission_level.human}}
+                </option>
+                <option ng-repeat="level in user.possible_permission_levels" value={{level.role}}>
+                  {{level.human}}
+                </option>
+              </select>
+              <input type="hidden" name="email" value={{user.email}} />
+            </fieldset>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

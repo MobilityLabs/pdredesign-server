@@ -37,5 +37,7 @@
 #
 
 FactoryGirl.define do
-  factory :district
+  factory :district do
+    name { Faker::Lorem.word }
+  end
 end

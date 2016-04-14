@@ -1,0 +1,27 @@
+<div class='modal-body'>
+  <div class='row row-participant-headers-modal edit_modal_table_head'>
+    <div class='col-sm-1' style="margin-left: 9px;">&nbsp;</div>
+    <div class='col-sm-4'>Name</div>
+    <div class='col-sm-4'>Email Address</div>
+  </div>
+  <div id="participantModalholder">
+    <div class="participantholder">
+      <div ng-repeat="user in addInventoryUsers.invitables">
+        <div ng-class="{addParticipantAnimation: user.hide === 'yes' }" class='row row-participant-add'>
+          <div class='col-sm-1'>
+            <img alt="" class="img-polaroid pull-right" ng-src="{{user.avatar}}" width="47">
+          </div>
+          <div class='col-sm-4'>
+            <p class='name'>{{user.full_name}}</p>
+          </div>
+          <div class='col-sm-4'>
+            <p class='info'>{{user.email }}</p>
+          </div>
+          <div class='col-sm-3 text-center'>
+            <div class="btn btn-primary pull-right add_to_assessment_button" ng-click="addInventoryUsers.addUser(user)">Add to Inventory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

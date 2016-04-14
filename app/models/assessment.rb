@@ -16,6 +16,7 @@
 #  mandrill_id     :string(255)
 #  mandrill_html   :text
 #  report_takeaway :text
+#  share_token     :string
 #
 
 #  name            :string(255)
@@ -79,6 +80,7 @@ class Assessment < ActiveRecord::Base
 	validate :validate_participants, if: "assigned_at.present?"
 
   before_save :set_assigned_at
+  before_save :ensure_share_token
 
 	def validate_participants
     return unless self.participants.empty?
@@ -284,4 +286,7 @@ class Assessment < ActiveRecord::Base
     includes(participants: :user).where(district_id: districts)
   end
 
+  def ensure_share_token
+    self.share_token ||= SecureRandom.hex(32)
+  end
 end

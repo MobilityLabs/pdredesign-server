@@ -35,3 +35,4 @@
 //= require angular-rails-templates
 //= require_tree ./client/views
 //= require_tree ./client
+//= require_tree ./third_party

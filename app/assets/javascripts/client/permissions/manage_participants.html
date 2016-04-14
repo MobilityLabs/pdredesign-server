@@ -1,0 +1,14 @@
+<div class="plus-button" ng-click="manageParticipants.showAddParticipants()">
+  <a href="">
+    <span class="fa-stack fa-2x">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-wrench fa-stack-1x fa-icon"></i>
+    </span>
+    <div class="heading">
+      Manage Permissions
+        <span class="label-as-badge label label-primary" ng-if="numberOfRequests > 0">
+          {{numberOfRequests}}
+        </span>
+    </div>
+  </a>
+</div>

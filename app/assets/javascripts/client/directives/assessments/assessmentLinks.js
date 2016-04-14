@@ -20,9 +20,10 @@ PDRClient.directive('assessmentLinks', [
           '$location',
           '$timeout',
           '$state',
+          '$q',
           'AccessRequest',
           'SessionService',
-          function($scope, $modal, $rootScope, $location, $timeout, $state, AccessRequest, SessionService) {
+          function($scope, $modal, $rootScope, $location, $timeout, $state, $q, AccessRequest, SessionService) {
             $scope.isNetworkPartner = SessionService.isNetworkPartner;
 
             $scope.linkIcon = function(type){
@@ -75,12 +76,16 @@ PDRClient.directive('assessmentLinks', [
             };
 
             $scope.requestAccess = function() {
-              $scope.modal = $modal.open({
-                templateUrl: 'client/views/modals/request_access.html',
-                scope: $scope,
-                windowClass: 'request-access-window',
-                opened: $scope.addRequestPopover()
-              });
+              if($scope.isNetworkPartner()) {
+                $scope.performAccessRequest('facilitator').then(function() {});
+              } else {
+                $scope.modal = $modal.open({
+                  templateUrl: 'client/views/modals/request_access.html',
+                  scope: $scope,
+                  windowClass: 'request-access-window',
+                  opened: $scope.addRequestPopover()
+                });
+              }
             };
 
             $scope.close = function() {
@@ -93,13 +98,21 @@ PDRClient.directive('assessmentLinks', [
             };
 
             $scope.submitAccessRequest = function(roles) {
+              $scope.performAccessRequest(roles).then(function() {
+                $scope.modal.dismiss('cancel');
+              })
+            };
+
+            $scope.performAccessRequest = function(role) {
+              var deferred = $q.defer();
               AccessRequest
-                .save({assessment_id: $scope.id}, {roles: [roles]})
-                .$promise
-                .then(function() {
-                  $scope.modal.dismiss('cancel');
-                  $state.go($state.$current, null, { reload: true });
-                });
+              .save({assessment_id: $scope.id}, {roles: [role]})
+              .$promise
+              .then(function() {
+                $state.go($state.$current, null, { reload: true });
+                deferred.resolve();
+              }, deferred.reject);
+              return deferred.promise;
             };
 
             $scope.gotoLocation   = function(location) {

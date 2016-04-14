@@ -191,23 +191,6 @@ describe V1::UserController do
       post_create_user
       assert_response 422
     end
-    
-    it 'redeems an already existing invite and updates the user' do 
-      create_magic_assessments
-      user.update(email: 'kim@gov.nk')
-      UserInvitation.create!(email: 'kim@gov.nk',
-                            assessment: @assessment_with_participants,
-                            first_name: 'Kim',
-                            last_name: 'Possible', 
-                            team_role: 'role;')
-
-      post_create_user(first_name: 'New')
-
-      assert_response :success
-      expect(UserInvitation.find_by(email: 'kim@gov.nk')).to eq(nil)
-      user = User.find_by_email('kim@gov.nk')
-      expect(user[:first_name]).to eq('New')
-    end 
   end
 
   context '#show' do

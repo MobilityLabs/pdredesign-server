@@ -1,0 +1,55 @@
+<div class="col-md-10">
+  <h2>Invite Message</h2>
+  <p class="section-subheader">You can customize the message to all participants. This is the initial invite they'll
+    receive. You can send additional reminders later.</p>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 message">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h3>Hello (Participant Name),</h3>
+
+          <div class="media">
+            <avatar
+                imgclass="pull-left media-object img-circle"
+                width="57"
+                has-tooltip="true"
+                name="{{model.facilitator.full_name}}"
+                role="{{model.facilitator.team_role}}">
+            </avatar>
+
+            <div class="media-body">
+              <p class="media-heading">
+                <span class="name">{{model.user_name}}</span>
+                <b>{{inviteMessage.user.full_name}}</b> has invited you to participate in {{model.name}} for
+                {{model.district_name}}.
+              </p>
+              <customalert ng-show='inviteMessage.alertError' message="A message is required to send!" type="error"></customalert>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea placeholder="Add a note (optional)" redactor ng-model="model.message"></textarea>
+          </div>
+
+          <h3>Please complete this assessment by {{inviteMessage.formattedDate(model.due_date)}}.</h3>
+          <p>
+            PDredesign is a community of educators and designers committed to continuously improving professional
+            development systems to better support teachers. Alongside leaders from classrooms, schools, charters,
+            districts, and partner organizations across the country, we are building an open digital toolkit and
+            community of practice to support districts to redesign systems that meet the needs of educators and
+            students.
+          </p>
+          <button class="btn right" name="commit" type="submit" ng-click='inviteMessage.save(model)'>
+            <i class="fa fa-spinner fa-spin" ng-show="saving"></i>
+            <i class="fa fa-save"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary send-btn btn-lg pull-right" name="commit" type="submit" id="assign_assessment"
+            ng-click='inviteMessage.assignAndSave(model)'>
+      <i class="fa fa-spinner fa-spin" ng-show="inviteMessage.saving"></i>
+      <i class="fa fa-envelope-o"></i> Send Invitation
+    </button>
+  </div>
+</div>

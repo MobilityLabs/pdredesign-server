@@ -9,7 +9,9 @@ PDRClient = angular.module("PDRClient", [
   'ng.shims.placeholder',
   'ui.utils',
   'ui.router',
-  'ui.bootstrap']);
+  'ui.bootstrap',
+  'xeditable'
+]);
 
 angular.module("PDRClient").run(function ($rootScope, $state, $stateParams) {
     $rootScope.$state       = $state;
@@ -59,3 +61,9 @@ angular.module("PDRClient").config(['$tooltipProvider', function($tooltipProvide
     'focus': 'blur',
   });
 }]);
+
+angular.module('PDRClient').run(function(editableOptions, editableThemes) {
+  editableOptions.theme = 'bs3';
+  editableThemes.bs3.submitTpl = '<button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i></button>';
+  editableThemes.bs3.cancelTpl = '<button type="button" class="btn btn-default" ng-click="$form.$cancel()"><i class="fa fa-ban"></i></button>'
+});

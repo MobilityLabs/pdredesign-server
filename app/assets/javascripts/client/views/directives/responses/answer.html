@@ -1,0 +1,27 @@
+<div class="answer-row value-color-{{answer.value}}"
+     ng-class="{'scored{{answer.value}}': question.score.value === answer.value}">
+  <div ng-if="isConsensus === 'true'">
+    <score-count question="question" answer="answer" />
+  </div>
+
+  <div class="answer-info-row value-color-{{answer.value}}">
+    <div class="scored-{{answer.value}} answer-value">
+      <span>{{answer.value}}</span>
+    </div>
+    <div class="answer-container">
+      <div class="answer-title title-{{answer.value}}">
+        {{responseAnswer.extractAnswerTitle(answer.value)}}
+      </div>
+      <div class="answer-description">
+        <p ng-bind-html="answer.content"></p>
+      </div>
+      <response-answer-form
+          question="question"
+          answer="answer"
+          blankable="false"
+          visible="{{ question.score.value === answer.value }}"
+          placeholder="Write evidence of why you believe this is the correct score for this question. Skip to next question if you're not sure."
+      ></response-answer-form>
+    </div>
+  </div>
+</div>

@@ -1,48 +1,26 @@
-<div class="col-md-11 answer-row value-color-skipped"
+<div class="answer answer-row value-color-skipped"
   ng-click="skipQuestion(question, question.score)"
-  ng-class="{skipped: skipped(question), 'col-md-offset-1': editable}">
-  <div class="answer-info-row">
-    <div class="col-md-1 skipped answer-value">
+  ng-class="{skipped: skipped(question), 'lorem': editable}">
+  <div class="answer-info-row value-color-skipped">
+    <div class="skipped answer-value">
       <span>S</span>
     </div>
-    <div class="col-md-3 answer-title title-{{answer.value}}">
-      Skip This Question
-    </div>
-    <div class="col-md-8 answer-description">
-      <p ng-show="question.score.value == null && editable">
-        Saved Evidence:
-        <p ng-show="question.score.value == null && editable"
-           ng-bind-html="question.score.evidence"></p>
-      </p>
-    </div>
-  </div>
-  <div class="row score-evidence" ng-show="skipped(question) && editable">
-    <div class="col-md-2"></div>
-    <div class="col-md-9">
-      <div ng-hide="question.score.editMode">
-        <textarea
-          class="col-md-12 col-sm-12"
-          ng-model="question.score.evidence"
-          placeholder="Write a note to explain why you skipped this question (optional).">
-        </textarea>
-        <div class="save-holder">
-          <button class='btn btn-primary'
-            ng-click="skipQuestionSaveEvidence(question.score)">
-            <i class='fa fa-save'></i>SAVE
-          </button>
+    <div class="answer-container">
+      <div class="answer-title">
+        Skip This Question
+      </div>
+      <div class="answer-description">
+        <div ng-if="question.score.value === null && editable">
+          <p>Saved Evidence:</p>
+          <p ng-bind-html="question.score.evidence"></p>
         </div>
       </div>
-      <div ng-show="question.score.editMode ">
-        <div class="evidence-read">
-          <div ng-bind-html="question.score.evidence"></div>
-          <div class="edit-holder">
-            <button class='btn btn-primary edit-button'
-              ng-click="editAnswer(question.score)">
-              <i class='fa fa-save'></i>Edit
-            </button>
-          </div>
-        </div>
-      </div>
+      <response-answer-form question="question"
+                            answer="answer"
+                            blankable="true"
+                            visible="{{ skipped(question) && editable }}"
+                            placeholder="Write a note to explain why you skipped this question (optional)." />
+
     </div>
   </div>
 </div>

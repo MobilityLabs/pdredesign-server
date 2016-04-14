@@ -86,13 +86,13 @@ module Assessments
       PERMISSIONS
     end
 
-    def self.request_access(request_options)
-      roles = request_options[:roles].class == String ? [request_options[:roles]] : request_options[:roles]
+    def self.request_access(user:, assessment_id:, roles:)
+      roles = roles.is_a?(String) ? [roles] : roles
 
       return AccessRequest.create(
           {
               roles: roles, token: SecureRandom.hex[0..9],
-              user: request_options[:user], assessment_id: request_options[:assessment_id]
+              user: user, assessment_id: assessment_id
           })
     end
 

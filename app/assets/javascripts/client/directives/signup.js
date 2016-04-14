@@ -46,6 +46,11 @@ PDRClient.directive('signup', [
                     $scope.success = "User created";
                     $scope.login(user);
                   }, function(response) {
+                    if(response.data && response.data.base) {
+                      sessionStorage.setItem('invitation_message', response.data.base);
+                      $state.go('invite', {token: response.data.invitation_token});
+                      return;
+                    }
                     $scope.errors  = response.data.errors;
                   }
                 );

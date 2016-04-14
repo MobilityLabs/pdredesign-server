@@ -1,0 +1,12 @@
+<div id="add-learning-question-modal" class="learning-question-modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div ng-if="reminder === 'true'" class="alert alert-info alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+        You're seeing this because you have not yet entered any learning questions for this assessment.
+      </div>
+      <button ng-click="closeModal()" type="button" class="close"><i class="fa fa-times"></i></button>
+      <learning-question modal="true"></learning-question>
+    </div>
+  </div>
+</div>

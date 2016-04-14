@@ -2,15 +2,14 @@
   'use strict';
 
   angular.module('PDRClient')
-      .config(ResponsesRouteConfig);
+      .config(ResponsesConfig);
 
-  ResponsesRouteConfig.$inject = [
-    '$stateProvider'
+  ResponsesConfig.$inject = [
+      '$stateProvider'
   ];
 
-  function ResponsesRouteConfig($stateProvider) {
-    $stateProvider
-        .state('response_edit', {
+  function ResponsesConfig($stateProvider) {
+    $stateProvider.state('response_edit', {
           url: '/assessments/:assessment_id/responses/:response_id',
           authenticate: true,
           views: {

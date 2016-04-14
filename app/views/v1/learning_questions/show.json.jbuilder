@@ -1,0 +1,1 @@
+json.partial! 'v1/learning_questions/learning_question', learning_question: @learning_question

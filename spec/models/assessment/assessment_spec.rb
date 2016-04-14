@@ -128,6 +128,24 @@ describe Assessment do
     end
   end
 
+  describe '#share_token' do
+    before { create_magic_assessments }
+    let(:assessment) { @assessment_with_participants }
+    let!(:original_share_token) { assessment.share_token }
+    it do
+      expect(assessment.share_token).not_to be_empty
+    end
+
+    describe 'when saved again' do 
+      before do
+        assessment.save!
+      end
+      it do
+        expect(assessment.share_token).to eq original_share_token
+      end
+    end
+  end
+
   describe '#answered_scores' do
     let(:assessment) { @assessment_with_participants }
 

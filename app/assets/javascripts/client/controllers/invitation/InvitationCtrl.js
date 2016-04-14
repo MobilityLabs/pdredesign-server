@@ -13,6 +13,11 @@ PDRClient.controller('InvitationCtrl', [
       $scope.errors       = null;
       $scope.showalert    = false;
       $scope.alerts       = [];
+      var invitation_message = sessionStorage.getItem('invitation_message');
+      if(invitation_message) {
+        $scope.alerts.push({type: 'info', msg: invitation_message});
+        sessionStorage.removeItem('invitation_message');
+      }
 
       $scope.showError = function(msg) {
         $scope.alerts.push({type: 'danger', msg: msg});

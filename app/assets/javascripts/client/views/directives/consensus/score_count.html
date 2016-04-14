@@ -1,0 +1,9 @@
+<span class="score-count scored-{{answer.value}}"
+  ng-class="{'transparent': answer.value !== question.score.value}" >
+  <i class="fa fa-heart" ng-show="answer.value === question.mode && isReadOnly"></i>
+  <span class="value">
+    {{scoreCount.answerCount(scores, question.id, answer.value)}}
+  </span>
+
+  <span>/{{scoreCount.consensus.participantCount}}</span>
+</span>

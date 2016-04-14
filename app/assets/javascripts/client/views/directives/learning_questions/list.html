@@ -1,0 +1,21 @@
+<div ng-repeat="learningQuestion in learningQuestionListDisplay.learningQuestions">
+  <div id="learning-question-{{ learningQuestion.id }}" class="row">
+    <div class="col-lg-12 learning-question-container">
+      <button class="close" ng-hide="!learningQuestion.editable"
+              ng-click="learningQuestionListDisplay.deleteLearningQuestion(learningQuestion)">
+        <i class="fa fa-times"></i>
+      </button>
+      <button class="edit" ng-hide="!learningQuestion.editable" ng-click="$form.$show()"
+              ng-hide="$form.$visible"><i class="fa fa-pencil"></i></button>
+      <span class="learning-question editable-width"
+            editable-text="learningQuestion.body"
+            e-form="$form"
+            e-ng-disabled="!learningQuestion.editable"
+            onbeforesave="learningQuestionListDisplay.validate($data)"
+            onaftersave="learningQuestionListDisplay.updateLearningQuestion(learningQuestion)">
+        {{ learningQuestion.body }}
+      </span>
+    </div>
+  </div>
+  <br/>
+</div>

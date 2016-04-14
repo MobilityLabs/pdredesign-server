@@ -1,0 +1,53 @@
+<div class='col-md-10'>
+  <h2>Participants</h2>
+  <p ng-if="createParticipants.isNetworkPartner()" class='section-subheader'>Recommend the Readiness Assessment to
+    district staff. We
+    recommend inviting 1-2 representatives from different roles and functions involved with PD, including: Teaching
+    & Learning, Human Resources, Curriculum & Instruction, Data & Accountability, Finance, IT, teachers, and
+    principals. You may add participants later on from the dashboard.</p>
+
+  <p ng-if="!createParticipants.isNetworkPartner()" class='section-subheader'>Invite a team of colleagues from your
+    district to
+    participate in the assessment. We recommend inviting 1-2 representatives from different roles and functions
+    involved with PD, including: Teaching & Learning, Human Resources, Curriculum & Instruction, Data &
+    Accountability, Finance, IT, teachers, and principals. You may add participants later on from the dashboard.</p>
+
+  <div class='row row-participant-headers'>
+    <div class='col-md-1 col-sm-1'>&nbsp;</div>
+    <div class='col-md-2 col-sm-2'>Name</div>
+    <div class='col-md-4 col-sm-4'>Email Address</div>
+    <div class='col-md-1 col-sm-3'>Team Role</div>
+  </div>
+
+  <div ng-repeat="user in createParticipants.participants">
+    <div class='row row-participant'>
+      <div class='col-md-1 col-sm-1 '>
+        <avatar avatar="{{ user.avatar}}" width="57"></avatar>
+      </div>
+      <div class='col-md-2 col-sm-2'>
+        <p class='name'>{{ user.full_name }}</p>
+      </div>
+      <div class='col-md-4 col-sm-4'>
+        <p class='info'>{{ user.email }}</p>
+      </div>
+      <div class='col-md-2 col-sm-3'>
+        <p class='info'>{{ user.team_role || 'N/A' }}</p>
+      </div>
+      <div class='col-md-1 col-sm-1 text-center'>
+        <div class="btn btn-primary remove_user_button" ng-click="createParticipants.removeParticipant(user)">Remove
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <add-new-participants></add-new-participants>
+    </div>
+    <div class="col-lg-12">
+      <invite-user></invite-user>
+    </div>
+    <div class="col-lg-12">
+      <manage-participants></manage-participants>
+    </div>
+  </div>
+</div>

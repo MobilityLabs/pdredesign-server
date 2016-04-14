@@ -1,0 +1,19 @@
+<div class="request-access-modal">
+  <div class="modal-header">
+    <button ng-click="manageInventoryPermissionsLink.close()" type="button" class="close" aria-hidden="true">×</button>
+    <h2>Permissions</h2>
+  </div>
+  <div class="modal-body">
+    <manage-inventory-permissions inventory-id="inventoryId"></manage-inventory-permissions>
+  </div>
+  <div class='modal-footer'>
+    <button type="button" class="btn cancel_button" data-dismiss="modal" ng-click="manageInventoryPermissionsLink.close()">
+      <span>Done</span>
+      <button type="submit"
+              ng-click="manageInventoryPermissionsLink.save()"
+              class="btn btn-primary">
+        SAVE
+      </button>
+    </button>
+  </div>
+</div>

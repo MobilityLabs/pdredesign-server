@@ -7,7 +7,7 @@ PDRClient.directive('skipQuestion', [
         question: "=",
         editable: "=",
         responseId: "@",
-        assessmentId: "@",
+        assessmentId: "@"
       },
       templateUrl: 'client/views/shared/responses/skip_question.html',
       controller: [

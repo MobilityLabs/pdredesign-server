@@ -1,0 +1,63 @@
+<div>
+  <div class="modal-header">
+    <button class="close" ng-click="inventoryModal.close()">&times;</button>
+    <h4>Start Data &amp; Tech Audit</h4>
+  </div>
+  <div class="modal-body">
+    <p>Facilitate a Data &amp; Tech Landscape Analysis for your district by creating a new inventory. In this inventory,
+      you'll lead a team of participants in creating a list of products and data systems your district uses.</p>
+
+    <alert ng-repeat="alert in inventoryModal.alerts" type="{{alert.type}}" close="inventoryModal.closeAlert($index)">
+      {{alert.msg}}
+    </alert>
+
+    <form name="startInventoryForm">
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" type="text" ng-model="inventoryModal.inventory.name" placeholder="Name*" required>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-6">
+          <select
+              required
+              ng-hide="inventoryModal.noDistrict()"
+              class="form-control"
+              ng-model="inventoryModal.inventory.district"
+              ng-options="district.text for district in inventoryModal.user.districts">
+          </select>
+          <div ng-show="inventoryModal.noDistrict()" class="col-md-12">
+            <p>
+              You have not selected districts that you work with. Please update your profile
+              <a href="#/settings" ng-click="inventoryModal.close()">here</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group date datetime">
+            <input
+                id="deadline"
+                name="deadline"
+                required
+                ng-model="inventoryModal.inventory.deadline"
+                type="text"
+                placeholder="Deadline*"
+                class="form-control"
+                data-format="dd/MM/yyyy hh:mm:ss">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="inventoryModal.close()">Close</button>
+    <button type="submit"
+            ng-disabled="startInventoryForm.$invalid"
+            ng-click="inventoryModal.createInventory(inventoryModal.inventory)"
+            class="btn btn-primary">
+      Create
+    </button>
+  </div>
+</div>

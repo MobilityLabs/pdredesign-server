@@ -15,5 +15,10 @@
 FactoryGirl.define do
   factory :participant do
     association :user
+    trait :with_users do
+      after(:create) do |participant|
+        participant.user = FactoryGirl.create(:user, :with_district)
+      end
+    end
   end
 end

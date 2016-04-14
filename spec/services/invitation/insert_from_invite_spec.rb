@@ -22,6 +22,34 @@ describe Invitation::InsertFromInvite do
       email:         @user.email)
   end
 
+  describe '#execute' do
+    context 'inviting network partner as participant' do
+      let(:existing_user) { FactoryGirl.create(:user, :with_network_partner_role) }
+      let(:invitation) { FactoryGirl.create(:user_invitation, :as_participant, assessment_id: assessment.id ,email: existing_user.email) }
+
+      before(:each) do
+        subject.new(invitation).execute
+      end
+
+      it 'overrides the role to be facilitator' do
+        expect(assessment.facilitator?(existing_user)).to be true
+      end
+    end
+
+    context 'inviting non network partner as participant' do
+      let(:existing_user) { FactoryGirl.create(:user, :without_role) }
+      let(:invitation) { FactoryGirl.create(:user_invitation, :as_participant, assessment_id: assessment.id ,email: existing_user.email) }
+
+      before(:each) do
+        subject.new(invitation).execute
+      end
+
+      it do
+        expect(assessment.participant?(existing_user)).to be true
+      end
+    end
+  end
+
   it 'creates a user account' do
     subject.new(create_valid_invite).execute
     expect(User.find_by(email: 'john_doe@gmail.com')).not_to be_nil

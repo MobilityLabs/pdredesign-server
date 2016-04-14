@@ -1,0 +1,74 @@
+<div class="entry">
+  <div class="overview status-background-color disable-entry">
+    <div class="type">
+      {{entity.status}}
+    </div>
+
+    <div class="status" ng-switch on="entity.status">
+      <div ng-switch-when="consensus">
+        <span class="fa-stack fa-2x">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa {{entry.consensusReportIcon(entity)}} fa-stack-1x"></i>
+        </span>
+      </div>
+      <div ng-switch-when="assessment">
+        <span class="fa-stack fa-2x">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <span class="fa-stack-1x percent-complete">{{entry.roundNumber(entity.percent_completed)}}%</span>
+        </span>
+      </div>
+      <div ng-switch-default>
+        <span class="fa-stack fa-2x">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa {{entry.draftStatusIcon(entity)}} fa-stack-1x"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="entry-content">
+    <div class="entry-details">
+      <div class="disable-entry details"
+           ng-class="entry.activeAssessmentLink(entity)"
+           ng-click="entry.gotoLocation(entry.responseLink(entity))">
+        <h3 class='name'>{{entity.name}}
+          <i ng-hide="entity.has_access" class="fa fa-lock"></i>
+        </h3>
+        <small>Facilitated by: {{entity.facilitator.full_name}}</small>
+      </div>
+      <div class="links" ng-if="isAssessment === 'true'">
+        <div class="repeat" ng-repeat="link in entry.orderLinks(entity.links)">
+          <assessment-links
+              data-title="{{link.title}}"
+              data-active="{{link.active}}"
+              data-type="{{link.type}}"
+              data-id="{{entity.id}}"
+              data-consensus-id="{{entity.consensus.id}}"
+              data-role="{{role}}">
+          </assessment-links>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry-footer">
+      <div class="meta">
+        <div ng-show="entry.isNetworkPartner()" class="col-md-4 col-xs-3 district-name disable-entry">
+          {{entity.district_name}}
+        </div>
+        <span class="category">Participants</span>
+        <span class="stat">{{entity.participant_count}}</span>
+        <span class="category">Completed</span>
+        <span class="stat">{{entity.completed_responses}}</span>
+        <!-- <add-inventory-users-link inventory-id="entity.id"></add-inventory-users-link> -->
+        <!-- <manage-inventory-permissions-link inventory-id="entity.id"></manage-inventory-permissions-link> -->
+      </div>
+      <div class="meeting" ng-if="isAssessment === 'true'">
+        <span class='category'>Meeting</span>
+        <span class='stat'>{{entry.meetingTime(entity.meeting_date)}}</span>
+      </div>
+      <div class="meeting" ng-if="isAssessment === 'false'">
+        <span class='category'>Deadline</span>
+        <span class='stat'>{{entry.meetingTime(entity.deadline)}}</span>
+      </div>
+    </div>
+  </div>
+</div>

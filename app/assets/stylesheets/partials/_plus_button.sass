@@ -1,20 +1,13 @@
 .plus-button
+  display: inline-block
   a
-    color: $font-color
-  margin-top: 1em
-  box-shadow: 0 .2em 0 #d4d2c8
-  .col-md-1
-    background-color: $primary-color
-    text-align: center
-  .fa-plus
-    color: #f7f9fa
-  .heading
-    background-color: #f7f9fa
+    color: $secondary-color
     &:hover
-      background-color: #e5f1f5
-  .fa-plus, h1
-    margin: 0
-    line-height: 1.7em
-    font-weight: bold
-    font-size: 2.5em
-
+      text-decoration: none
+  margin: 1em 0
+  .fa-icon
+    color: $secondary-font-color
+  .heading
+    display: inline-block
+.tertiary .plus-button
+  margin-top: 0

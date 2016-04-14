@@ -7,12 +7,19 @@ class V1::UserController < ApplicationController
   end
 
   def create
-    @user                  = find_by_invite_or_initialize(user_params)
-    @user.role             = params[:role] || :member
-    @user.district_ids     = extract_ids_from_params(:district_ids)
-    @user.organization_ids = extract_ids_from_params(:organization_ids)
+    @user = User.create(user_params.merge(
+      role: params[:role] || :member,
+      district_ids: extract_ids_from_params(:district_ids),
+      organization_ids: extract_ids_from_params(:organization_ids)
+    ))
 
-    if @user.save
+    user_invitation = UserInvitation.find_by(email: user_params[:email])
+    if user_invitation.present?
+      @user.errors.add(:base, "It seems you have already been invited. Please continue your registration here.")
+      render json: @user.errors.to_h.merge(
+        invitation_token: user_invitation.token
+      ), status: :unprocessable_entity
+    elsif @user.save
       send_notification_email
       render status: 200, nothing: true
     else
@@ -61,25 +68,13 @@ class V1::UserController < ApplicationController
   end
 
   private
-  def find_by_invite_or_initialize(user_params)
-    user_invitation = UserInvitation.find_by(email: user_params[:email])
-    user            = User.new
-
-    if user_invitation
-      user = User.find_by(email: user_params[:email])
-      user_invitation.destroy
-    end
-
-    user.tap { |u| u.update_attributes(user_params) }
-  end
-
   def hash
     SecureRandom.hex[0..9]
   end
 
-  def render_errors(errors)
+  def render_errors(errors, error_code: 422)
     @errors = errors
-    render 'v1/shared/errors', status: 422
+    render 'v1/shared/errors', status: error_code
   end
 
   def reset_password(user, password)

@@ -39,7 +39,6 @@ describe User do
       expect(user[:email]).to eq('someemail@stuff.com')
     end
   end
-
   describe '#avatar' do
     let(:user) { FactoryGirl.create(:user) }
     it 'returns a default user avatar' do
@@ -119,6 +118,53 @@ describe User do
     context 'with both a first and last name' do
       it 'returns a full name' do
         expect(user.name).to eq('John Doe')
+      end
+    end
+  end
+
+  describe '#ensure_district' do
+    let(:district) { FactoryGirl.create(:district) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    context 'ensuring a single district' do
+      before(:each) do
+        user.ensure_district(district: district)
+      end
+
+      it do
+        expect(user.districts).to include district
+      end
+    end
+
+    context 'ensuring same district twice' do
+      before(:each) do
+        user.ensure_district(district: district)
+        user.ensure_district(district: district)
+      end
+
+      it 'does not duplicate the district' do
+        expect(user.districts.where(id: district.id).count).to be 1
+      end
+    end
+
+    context 'ensuring different districts' do
+      let(:another_district) { FactoryGirl.create(:district) }
+
+      before(:each) do
+        user.ensure_district(district: district)
+        user.ensure_district(district: another_district)
+      end
+
+      it do
+        expect(user.districts).to have(2).items
+      end
+
+      it 'adds first district' do
+        expect(user.districts).to include district
+      end
+
+      it 'adds second district' do
+        expect(user.districts).to include another_district
       end
     end
   end

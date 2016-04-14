@@ -1,0 +1,60 @@
+<div class="assign-assessment">
+  <div class='row row-messages'>
+    <div class='col-md-12'>
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+  </div>
+  <div class="row secondary">
+    <div class="col-md-12">
+      <h1>Facilitate a new Assessment</h1>
+      <p>Edit your assessment settings, add &amp; manage participants, draft a email message, and send
+        invititations.</p>
+    </div>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 1</p>
+      <p class='wizard-instruction'> This is the name and details others will see for this assessment.</p>
+    </div>
+    <tool-details model="assessment"></tool-details>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 2</p>
+      <p class='wizard-instruction'>
+        These are the individuals from the district who will receive an invite to participate in the assessment.</p>
+    </div>
+    <create-participants model="assessment"></create-participants>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 3</p>
+      <p class='wizard-instruction'> Each participant will receive an email invite. You can customize the email message
+        here.</p>
+    </div>
+    <invite-message model="assessment" district="district"></invite-message>
+  </div>
+  <div class='row row-wizard'>
+    <div class='col-md-2'>
+      <p class='wizard-step'>Step 4</p>
+      <p class='wizard-instruction'>Learning Questions help your team focus on key aspects of the technology
+        implementation.</p>
+    </div>
+    <learning-question modal="false"></learning-question>
+  </div>
+  <br/>
+  <div class="row row-wizard">
+    <div class="col-md-10 col-md-offset-2">
+      <button class="btn btn-primary" name="commit" type="submit" id='assign_assessment'
+              ng-click='assignAndSave(assessment)'>
+        <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+        <i class='fa fa-envelope-o'></i> Send
+      </button>
+
+      <button class="btn" name="commit" type="submit" ng-click='save(assessment)'>
+        <i class='fa fa-spinner fa-spin' ng-show="saving"></i>
+        <i class='fa fa-save'></i> Save
+      </button>
+    </div>
+  </div>
+</div>

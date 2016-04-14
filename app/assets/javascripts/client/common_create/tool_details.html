@@ -1,0 +1,53 @@
+<div class="col-md-10">
+  <h1>
+    {{model.name}}
+  </h1>
+  <p class='byline'>
+    organized by: {{model.facilitator.full_name}} on {{toolDetails.formattedDate(model.created_at)}}
+  </p>
+
+  <div class="row">
+    <div class="col-md-3 col-sm-3">
+      <div class="control-group">
+        <label for="name">Assessment Name</label>
+        <input id="name" class="form-control" ng-model="model.name" type="text">
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3">
+      <label for="district">District</label>
+      <select
+          id="district"
+          required
+          class="form-control"
+          ng-model="toolDetails.district"
+          ng-options="district.text for district in toolDetails.user.districts">
+      </select>
+    </div>
+
+    <div class="col-md-3 col-sm-3">
+      <div class="control-group">
+        <label for="due-date">Due date</label>
+        <div class="input-group date datetime">
+          <input
+              class="form-control"
+              ng-model="toolDetails.date"
+              data-defaultDate="{{toolDetails.date}}"
+              id="due-date"
+              name="due-date">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 update-holder">
+      <div class="control-group">
+        <label>&nbsp;</label>
+        <div class="btn btn-primary form-control" ng-click="toolDetails.save(model)">
+          <i class="fa fa-spinner fa-spin" ng-show="toolDetails.saving"></i>
+          Update
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

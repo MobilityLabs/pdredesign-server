@@ -1,0 +1,1 @@
+json.partial! 'v1/inventories/inventory', inventory: @inventory

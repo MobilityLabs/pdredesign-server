@@ -65,10 +65,11 @@ module Invitation
     end
 
     def generate_password
-      SecureRandom.hex[0..9]
+      SecureRandom.hex(5)
     end
 
     def set_permission
+      invite.role = 'facilitator' if invite.user.network_partner?
       if invite.role
         ap = Assessments::Permission.new(invite.assessment)
         ap.add_level(invite.user, invite.role)

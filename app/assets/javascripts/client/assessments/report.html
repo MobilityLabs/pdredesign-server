@@ -1,0 +1,152 @@
+<div class='report'>
+  <div class='row-bg row-header'>
+      <div class='row'>
+        <div class="col-md-12">
+          <h1 class="greeting">{{assessment.name}}</h1>
+          <h4 class="byline">organized by:
+            <a href="#">{{assessment.facilitator.full_name}} </a>
+            on {{assessment.created_at | amDateFormat:'MMMM Do, YYYY'}}
+          </h4>
+
+          <p id="report-header">
+            {{assessment.overview.text}}
+            <a ng-if="assessment.overview.link == 'view_consensus' " href="#/assessments/{{assessment.id}}/consensus/{{assessment.consensus.id}}">View Consensus</a>
+          </p>
+          <assessment-priority
+          data-editable="{{canEditPriorities()}}"
+          data-assessment-id="{{assessment.id}}"></assessment-priority>
+        </div>
+      </div>
+  </div>
+  <div class='row-bg row-body'>
+      <div class='row'>
+        <div class='col-md-12'>
+          <h2>Report Detail</h2>
+          <div class='axis col-md-4' ng-repeat='axis in report.axes'>
+            <h4>{{axis.name}}</h4>
+            <div class='question col-md-12' ng-repeat='question in axis.questions'>
+              <div class='col-md-7'>
+                {{question.headline}}
+              </div>
+              <div class='col-md-5'>
+                <div class='answer col-md-2' ng-repeat='answer in question.answers'>
+                  <i ng-class="{selected: answer.value == question.score.value}"
+                  class="fa fa-circle scored-{{answer.value}}"></i>
+                </div>
+              </div>
+            </div>
+            <div class='question col-md-12'>
+              <div class='average col-md-7'>
+                Average
+              </div>
+              <div class='average col-md-5'>
+                <div class='answer col-md-2' ng-repeat='answer in [1, 2, 3, 4]'>
+                  <i ng-class="{selected: axis.average == answer}"
+                    class="fa fa-circle scored-{{answer}}"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class='question col-md-12'>
+              <div class='col-md-7'></div>
+              <div class='col-md-5'>
+                <div class='answer col-md-2' ng-repeat='answer in [1, 2, 3, 4]'>
+                  {{answer}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <take-away assessment-id="{{id}}"></take-away>
+  </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div id="next-steps">
+          <h2>Next Steps</h2>
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="row row-step">
+                <div class="col-md-1 col-sm-1 col-xs-2">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="col-md-11 col-sm-11 col-xs-10">
+                  <h4 class="subject">Root Cause</h4>
+                  <p class="content">
+                  Engage in a "root cause" discussion to answer potential follow up questions like:
+                  </p><ul class="content">
+                    <li>Are there any common problems connecting low scored categories?</li>
+                    <li>Why is _____________ category weaker than others?</li>
+                    <li>Which category is most important to improve?</li>
+                  </ul>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="row row-step">
+                <div class="col-md-1 col-sm-1 col-xs-2">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="col-md-11 col-sm-11 col-xs-10">
+                  <h4 class="subject">Review</h4>
+                  <p class="content">Review this report with others in your organization to clarify, review, gather more evidence, etc. You can start by <a href="{{shareMailto}}" target="_blank">sharing this report</a> with specific colleagues.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="row row-step">
+                <div class="col-md-1 col-sm-1 col-xs-2">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="col-md-11 col-sm-11 col-xs-10">
+                  <h4 class="subject">Prioritize</h4>
+                  <p class="content">Prioritize your PD strategy based on the strengths and weaknesses identified in the Readiness Assessment. Clarify how your organization will build upon strengths and improve upon weaknesses.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="row row-step">
+                <div class="col-md-1 col-sm-1 col-xs-2">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="col-md-11 col-sm-11 col-xs-10">
+                  <h4 class="subject">Find Out More Information</h4>
+                  <p class="content">Identify areas where you need to learn more detailed information, or conduct a "deep dive diagnostic". For example, if your Data Infrastructure category scored low, perhaps doing a more exhaustive analysis of your Data Infrastructure will help prioritize your PD strategic plan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="row row-step">
+                <div class="col-md-1 col-sm-1 col-xs-2">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="col-md-11 col-sm-11 col-xs-10">
+                  <h4 class="subject">Future Vision</h4>
+                  <p class="content">This should include a roadmap of the first 100 days of PDredesign.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>

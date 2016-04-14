@@ -1,0 +1,29 @@
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+    <table class="twelve columns">
+      <tr>
+        <td class="left-text-pad">
+          <h2>Access Request</h2>
+          <br>
+          <p class="lead">
+            <b><%= @requestor_name %></b> is requesting <b><%= @role %></b> access on
+            <b><%= @inventory_name %></b>.
+          </p>
+          <br>
+          <br>
+          <p class="lead"> 
+            <center>
+              <a href="<%= @access_link %>" taget="_blank" class="button">Grant Access</a> 
+            </center>
+          </p>
+          <br>
+          <br>
+        </td>
+        <td class="expander"></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+

@@ -1,0 +1,90 @@
+<div class="modal-body">
+  <div id="permissions-modal">
+    <section class="permission-requests">
+      <h4>
+        Permission Requests
+        <permissions-info data-placement="right"></permissions-info>
+      </h4>
+      <div ng-if="manageParticipantsModal.access_requests.length === 0">
+        <h5>No Permission Requests</h5>
+      </div>
+
+      <div ng-if="manageParticipantsModal.access_requests.length > 0">
+        <div ng-repeat="requester in manageParticipantsModal.access_requests">
+
+          <div class="row row-participant-add">
+            <div class='col-sm-1'>
+              <img alt="" class="img-polaroid pull-left" ng-src="{{requester.avatar}}"/>
+            </div>
+            <div class='col-sm-2'>
+              <p class='name_label'>{{requester.full_name}}</p>
+            </div>
+            <div class='col-sm-3'>
+              <p class='info'>{{requester.email }}</p>
+            </div>
+            <div class='col-sm-3'>
+              <div class="pull-left permission_transition">
+                <span class="old_level">{{manageParticipantsModal.humanPermissionName(requester.current_permission_level.human)}}</span>
+                <i class="fa fa-arrow-right"></i>
+                <span class="new_level">{{requester.requested_permission_level[0].role}}</span>
+              </div>
+            </div>
+            <div class='col-sm-3'>
+              <div class="pull-right">
+                <button class="btn btn-xs cancel_button"
+                        ng-click="manageParticipantsModal.denyRequest({ id: requester.id, email: requester.email })">Cancel
+                </button>
+                <button class="btn btn-xs btn-primary"
+                        ng-click="manageParticipantsModal.acceptRequest({ id: requester.id, email: requester.email })">Approve
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="current-participants">
+      <h4>Current Participants</h4>
+      <div ng-if="manageParticipantsModal.assessment_users.length === 0">
+        <h5>No Participants</h5>
+      </div>
+
+      <div ng-if="manageParticipantsModal.assessment_users.length > 0">
+        <form id="current_user_permissions">
+          <div class="row row-participant-add" ng-repeat="user in manageParticipantsModal.assessment_users">
+            <img alt="" class="img-polaroid pull-left" ng-src="{{user.avatar}}" width="47"/>
+            <div class='col-md-2 col-sm-2'>
+              <p class='name_label'>{{user.full_name}}</p>
+            </div>
+            <div class='col-md-4 col-sm-4'>
+              <p class='info important_label'>{{user.email }}</p>
+            </div>
+            <div class='col-md-5 col-sm-5 pull-right'>
+              <fieldset>
+                <label for="permission-level" class="level_label">Current Permission Level: </label>
+                <select id="permission-level" class="permission-level" name="level" ng-disabled="user.role === 'network_partner'">
+                  <option value={{user.current_permission_level.role}}>
+                    {{user.current_permission_level.human}}
+                  </option>
+                  <option ng-repeat="level in user.possible_permission_levels" value={{level.role}}>
+                    {{level.human}}
+                  </option>
+                </select>
+
+                <input type="hidden" name="email" value={{user.email}}>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn cancel_button" data-dismiss="modal" ng-click="manageParticipantsModal.hideModal()">Close</button>
+    <button type="submit" ng-click="manageParticipantsModal.savePermissions()" class="btn btn-primary">
+      SAVE
+    </button>
+  </div>
+</div>
+

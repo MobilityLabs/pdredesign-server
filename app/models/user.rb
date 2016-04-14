@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :rubrics
   has_many :feedbacks
   has_many :tools
+  has_many :inventories
 
   has_and_belongs_to_many :organizations
   has_and_belongs_to_many :districts
@@ -72,5 +73,9 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
- 
+
+  def ensure_district(district:)
+    return if district_ids.include? district.id
+    districts << district
+  end
 end

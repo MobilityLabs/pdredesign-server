@@ -5,10 +5,12 @@ PDRClient.directive('districtSelect', ['UrlService', '$timeout',
       replace: false,
       scope: {
         preselected: '=',
-        districts:   '='
+        districts:   '=',
+        required:    '@'
       },
       templateUrl: 'client/views/directives/district_select.html',
       link: function(scope, elm, attrs) {
+        scope.multiple = attrs.multiple == "true" ? true : false;
         scope.prepopulated = false;
 
         scope.createSelectizeElement = function() {

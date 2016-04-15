@@ -19,6 +19,7 @@ describe Inventory do
   it { is_expected.to have_many(:access_requests) }
   it { is_expected.to have_many(:facilitators) }
   it { is_expected.to have_many(:participants) }
+  it { is_expected.to have_many(:invitations) }
   it { is_expected.to belong_to(:district) }
   it { is_expected.to belong_to(:owner) }
 
@@ -28,6 +29,25 @@ describe Inventory do
   it { is_expected.to validate_length_of(:name).is_at_least(1) }
   it { is_expected.to validate_length_of(:name).is_at_most(255) }
   it { is_expected.to validate_presence_of(:deadline) }
+
+  describe '#send_invites' do
+    let(:inventory) { FactoryGirl.create(:inventory, :with_members, members: 3) }
+    let(:uninvited_members) { inventory.members }
+    let!(:invitations) {
+      uninvited_members.map do |member|
+        FactoryGirl.create(:inventory_invitation, user: member.user, inventory: member.inventory)
+      end
+    }
+
+    before(:each) do
+      allow(InventoryInvitationNotificationWorker).to receive(:perform_async)
+      inventory.send_invites
+    end
+
+    it 'send invitations' do
+      expect(InventoryInvitationNotificationWorker).to have_received(:perform_async).at_least(uninvited_members.count).times
+    end
+  end
 
   context 'when saving a record in the past' do
     subject {

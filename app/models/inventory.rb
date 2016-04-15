@@ -35,6 +35,7 @@ class Inventory < ActiveRecord::Base
   has_many :members, class_name:'InventoryMember'
   has_many :participants, -> { where(role: 'participant') }, class_name:'InventoryMember'
   has_many :facilitators, -> { where(role: 'facilitator') }, class_name:'InventoryMember'
+  has_many :invitations, class_name:'InventoryInvitation'
 
   after_create :add_facilitator_owner
 
@@ -52,6 +53,16 @@ class Inventory < ActiveRecord::Base
 
   def member?(user:)
     self.members.where(user: user).exists?
+  end
+
+  def send_invites
+    InventoryInvitationNotificationWorker.perform_async(1)
+    members.where(invited_at: nil).each do |member|
+      invite = invitations.where(user_id: member.user_id).first
+      if invite
+        InventoryInvitationNotificationWorker.perform_async(invite.id)
+      end
+    end
   end
 
   private

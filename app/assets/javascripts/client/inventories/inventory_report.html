@@ -1,0 +1,11 @@
+<div class="row secondary user-header">
+  <div class="col-md-12">
+    <h1>{{inventoryReport.inventory.name}}</h1>
+      <p class="byline">Organized by: {{inventoryReport.inventory.facilitator.full_name}} on {{inventoryReport.inventory.created_at | amDateFormat:'MMMM Do, YYYY'}}</p>
+  </div>
+</div>
+<div class="row">
+  <inventory-product-entries read-only="true" inventory="inventoryReport.inventory"></inventory-product-entries>
+  <inventory-data-entries read-only="true" inventory="inventoryReport.inventory"></inventory-data-entries>
+</div>
+

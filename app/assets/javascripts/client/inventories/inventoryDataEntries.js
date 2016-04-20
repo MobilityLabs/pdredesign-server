@@ -7,7 +7,8 @@
     return {
       restrict: 'E',
       scope: {
-        inventory: '='
+        inventory: '=',
+        readOnly: '='
       },
       templateUrl: 'client/inventories/inventory_data_entries.html',
       controller: 'InventoryDataEntriesCtrl',

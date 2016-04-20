@@ -1,0 +1,28 @@
+<div>
+  <h4>Download Inventories</h4>
+  <form name="formDownload"  novalidate>
+    <div class="row">
+      <label>
+        <fake-checkbox ng-required='inventoryReportDownload.downloadOptions.productEntries || inventoryReportDownload.downloadOptions.dataEntries' model='inventoryReportDownload.downloadOptions.productEntries'></fake-checkbox>
+        Product Entries
+      </label>
+    </div>
+    <div class="row">
+      <label>
+        <fake-checkbox ng-required="inventoryReportDownload.downloadOptions.productEntries || inventoryReportDownload.downloadOptions.dataEntries" model='inventoryReportDownload.downloadOptions.dataEntries'></fake-checkbox>
+        Data Entries
+      </label>
+    </div>
+    <div class="form-group right">
+      <div
+        class="btn btn-primary pull-right"
+        ng-disabled="formDownload.$invalid"
+        ng-click="inventoryReportDownload.download()"
+        data-dismiss="modal">
+        Download
+      </div>
+    </div>
+    <div class='clearfix'>
+    </div>
+  </form>
+</div>

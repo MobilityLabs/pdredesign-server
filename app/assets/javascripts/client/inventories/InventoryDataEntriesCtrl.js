@@ -14,6 +14,7 @@
   function InventoryDataEntriesCtrl($scope, $q, DataEntry, DTOptionsBuilder, DTColumnBuilder) {
     var vm = this;
     vm.inventory = $scope.inventory;
+    vm.readOnly = $scope.readOnly;
     var options = DTOptionsBuilder.fromFnPromise(function() {
       var deferred = $q.defer();
       DataEntry.get({inventory_id: vm.inventory.id}).$promise.then(function(results) {

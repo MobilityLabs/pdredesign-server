@@ -7,7 +7,8 @@
     return {
       restrict: 'E',
       scope: {
-        model: '='
+        model: '=',
+        required: '='
       },
       replace: true,
       templateUrl: 'client/forms/fake_checkbox.html'

@@ -1,74 +1,63 @@
 <div class="login signup">
   <div class="row secondary">
-    <div class="container">
-      <div class="col-md-4">
-        <h1>Password Reset</h1>
-        <h2 class="subheading" >PD Readiness Assessment Tool</h2>
-      </div>
+    <div class="col-md-4">
+      <h1>Password Reset</h1>
+      <h2 class="subheading" >PD Readiness Assessment Tool</h2>
+    </div>
 
-      <div class="col-md-8 form">
-        <div class="row">
-          <div class="col-md-7 col-sm-6">
-            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-          </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-12">
+          <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         </div>
+      </div>
 
-        <form id="resetForm">
-        <div class="row">
-          <div class="col-md-7 col-sm-6">
-            <input
-              required
-              ng-model="password"
-              class="form-group form-control"
-              placeholder="Password"
-              type="password">
-            <input
-              required
-              ng-model="password_confirm"
-              class="form-group form-control"
-              placeholder="Password Confirm*"
-              type="password">
-
-            <input
-              type="button"
-              ng-disabled="resetForm.$invalid"
-              ng-click="resetPassword(password, password_confirm)"
-              class="btn btn-devise btn-danger pull-right"
-              name="commit"
-              value="Reset Password">
-          </div>
+      <form id="resetForm" class="form" ng-controller="ResetPasswordCtrl" ng-submit="resetPassword(password, password_confirm)">
+        <div class="form-group">
+          <input
+            required
+            ng-model="password"
+            class="form-control"
+            placeholder="Password"
+            type="password">
         </div>
-        </form>
-      </div>
+        <div class="form-group">  
+          <input
+            required
+            ng-model="password_confirm"
+            class="form-control"
+            placeholder="Password Confirm"
+            type="password">
+        </div>
+          <input
+            type="submit"
+            ng-disabled="resetForm.$invalid"
+            class="btn btn-devise btn-danger pull-right"
+            name="commit"
+            value="Reset Password">
+      </form>
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9 intro">
-        <%= image_tag 'sign-in-image.png' %>
-      </div>
+  <div class="row">
+    <div class="col-md-12 intro">
+      <%= image_tag 'sign-in-image.png' %>
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9 intro">
-        <h3>With this tool you will...</h3>
-        <p>
-          Engage in a candid, cross-functional discussion about innovative
-          Professional Development using a common language anchored to key
-          elements of a high-quality, multi-modal professional development system.
-          You'll gain a comprehensive understanding of the current state of multiple
-          aspects of PD in your district. You'll have the opportunity to contribute
-          to the PD strategy design at the district level to better support teachers
-          to improve student success in their classrooms.
-        </p>
-      </div>
+  <div class="row">
+    <div class="col-md-12 intro">
+      <h3>With this tool you will...</h3>
+      <p>
+        Engage in a candid, cross-functional discussion about innovative
+        Professional Development using a common language anchored to key
+        elements of a high-quality, multi-modal professional development system.
+        You'll gain a comprehensive understanding of the current state of multiple
+        aspects of PD in your district. You'll have the opportunity to contribute
+        to the PD strategy design at the district level to better support teachers
+        to improve student success in their classrooms.
+      </p>
     </div>
   </div>
-
-
 
 </div>
-

@@ -76,8 +76,6 @@
           return inventory_route_stem + '/assign';
         case 'dashboard':
           return inventory_route_stem + '/dashboard';
-        case 'inventory':
-          return inventory_route_stem + '/edit';
         case 'report':
           return inventory_route_stem + '/report';
         default:

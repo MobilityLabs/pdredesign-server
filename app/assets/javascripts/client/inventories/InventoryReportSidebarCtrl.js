@@ -54,6 +54,17 @@
       vm.downloadModal.dismiss();
     };
 
+    vm.displayLearningQuestions = function() {
+      vm.modal = $modal.open({
+        template: '<learning-question-modal context="inventory" reminder="false"></learning-question-modal>',
+        scope: $scope
+      });
+    };
+
+    $scope.$on('close-learning-question-modal', function() {
+      vm.modal.dismiss('cancel');
+    });
+
     $scope.$on('inventory-report-downloaded', function() {
       vm.closeDownloadReportModal();
     });

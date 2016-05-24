@@ -1,11 +1,17 @@
 <div class="row secondary user-header">
   <div class="col-md-12">
     <h1>{{inventoryReport.inventory.name}}</h1>
-      <p class="byline">Organized by: {{inventoryReport.inventory.facilitator.full_name}} on {{inventoryReport.inventory.created_at | amDateFormat:'MMMM Do, YYYY'}}</p>
+    <p>The Data &amp; Tech Inventory helps capture all the products and data systems that impact professional learning
+      across multiple departments, including learning management systems, student information systems, evaluation
+      systems, and more.</p>
+    <p>This is completed collaboratively by a small team of participants. Fill out what you know about your district's
+      data and tech products.
   </div>
 </div>
 <div class="row">
-  <inventory-product-entries read-only="true" shared="inventoryReport.shared" inventory="inventoryReport.inventory"></inventory-product-entries>
-  <inventory-data-entries read-only="true" shared="inventoryReport.shared" inventory="inventoryReport.inventory"></inventory-data-entries>
+  <inventory-product-entries shared="inventoryReport.shared"
+                             inventory="inventoryReport.inventory"></inventory-product-entries>
+  <inventory-data-entries shared="inventoryReport.shared"
+                          inventory="inventoryReport.inventory"></inventory-data-entries>
 </div>
 

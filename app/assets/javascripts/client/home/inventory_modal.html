@@ -38,12 +38,12 @@
             <input
                 id="deadline"
                 name="deadline"
-                required
-                ng-model="inventoryModal.inventory.deadline"
-                type="text"
-                placeholder="Deadline*"
                 class="form-control"
-                data-format="dd/MM/yyyy hh:mm:ss">
+                required
+                ng-model="inventoryModal.date"
+                data-defaultDate="inventoryModal.date"
+                type="text"
+                placeholder="Deadline*">
             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
           </div>
         </div>

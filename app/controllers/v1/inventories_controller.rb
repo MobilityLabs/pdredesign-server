@@ -15,15 +15,8 @@ class V1::InventoriesController < ApplicationController
     @inventory = Inventory.new
     authorize_action_for @inventory
     @inventory.name = inventory_params[:name]
-    unless inventory_params[:deadline].blank?
-      begin
-        @inventory.deadline = DateTime.strptime(inventory_params[:deadline], '%m/%d/%Y')
-      rescue
-        @inventory.errors.add(:deadline, 'must be in MM/DD/YYYY format')
-        return render_error
-      end
-    end
-    @inventory.district = District.find(inventory_params[:district][:id])
+    @inventory.deadline = inventory_params[:deadline]
+    @inventory.district = District.where(id: inventory_params[:district][:id]).first
     @inventory.owner = current_user
     if @inventory.save
       render template: 'v1/inventories/show'

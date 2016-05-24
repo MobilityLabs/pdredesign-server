@@ -2,16 +2,16 @@
   'use strict';
 
   angular.module('PDRClient')
-      .controller('AnalysisPriorityCtrl', AnalysisPriorityCtrl);
+      .controller('AnalysisPriorityTableCtrl', AnalysisPriorityTableCtrl);
 
-  AnalysisPriorityCtrl.$inject = [
+  AnalysisPriorityTableCtrl.$inject = [
     '$rootScope',
     '$filter',
     '$timeout',
     'AnalysisPriorityService'
   ];
 
-  function AnalysisPriorityCtrl($rootScope, $filter, $timeout, AnalysisPriorityService) {
+  function AnalysisPriorityTableCtrl($rootScope, $filter, $timeout, AnalysisPriorityService) {
     var vm = this;
 
     vm.convertToWholeDollars = function(amountInCents) {

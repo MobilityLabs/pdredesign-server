@@ -5,6 +5,7 @@
       .controller('AnalysisModalCtrl', AnalysisModalCtrl);
 
   AnalysisModalCtrl.$inject = [
+    '$scope',
     '$state',
     '$timeout',
     '$modal',
@@ -16,7 +17,7 @@
     'preSelectedInventory'
   ];
 
-  function AnalysisModalCtrl($state, $timeout, $modal, $modalInstance, RecommendationTextService, SessionService, Analysis, Inventory, preSelectedInventory) {
+  function AnalysisModalCtrl($scope, $state, $timeout, $modal, $modalInstance, RecommendationTextService, SessionService, Analysis, Inventory, preSelectedInventory) {
     var vm = this;
     vm.analysis = {};
     vm.alerts = [];
@@ -92,6 +93,8 @@
     };
 
     vm.save = function() {
+      var deadlineFromDOM = $('#analysis-deadline').val();
+      vm.analysis.deadline = moment(deadlineFromDOM, 'MM/DD/YYYY', true).toISOString();
       Analysis.create(null, vm.analysis)
           .$promise
           .then(function(productEntry) {
@@ -116,5 +119,15 @@
 
       vm.updateData();
     });
+
+    vm.defaultDate = function(model) {
+      if (typeof(model) !== 'undefined') {
+        return moment(model.due_date || model.deadline).format('MM/DD/YYYY');
+      }
+    };
+
+    $scope.$watch('vm.analysis', function(val) {
+      vm.date = vm.defaultDate(val);
+    }).bind(vm);
   }
 })();

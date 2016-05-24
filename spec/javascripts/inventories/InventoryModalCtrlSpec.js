@@ -5,6 +5,7 @@
     var $scope,
         $timeout,
         $location,
+        $q,
         SessionService,
         Inventory,
         $modalInstance,
@@ -23,12 +24,15 @@
         });
       });
 
-      inject(function(_$timeout_, _$location_, _$controller_, $injector) {
+      inject(function(_$timeout_, _$location_, _$controller_, _$rootScope_, _$q_, $injector) {
         $timeout = _$timeout_;
         $location = _$location_;
+        $scope = _$rootScope_.$new(true);
+        $q = _$q_;
         SessionService = $injector.get('SessionService');
         Inventory = $injector.get('Inventory');
         controller = _$controller_('InventoryModalCtrl', {
+          $scope: $scope,
           $modalInstance: $modalInstance,
           $timeout: $timeout,
           $location: $location,
@@ -73,88 +77,55 @@
     });
 
     describe('#createInventory', function() {
-      var $httpBackend;
-
-      beforeEach(function() {
-        inject(function(_$httpBackend_) {
-          $httpBackend = _$httpBackend_;
-        });
-      });
+      var $rootScope;
+      beforeEach(inject(function(_$rootScope_) {
+        $rootScope = _$rootScope_;
+      }));
 
       describe('when successfully creating an inventory', function() {
         beforeEach(function() {
-          $httpBackend.expect('POST', '/v1/inventories', {
-                inventory: {
-                  name: 'foo',
-                  deadline: '09/09/3999',
-                  district_id: 7
-                }
-              })
-              .respond({id: 17});
-        });
-
-        it('calls the close function', function() {
-          spyOn(controller, 'close');
-          controller.createInventory({
-            name: 'foo',
-            deadline: '09/09/3999',
-            district_id: 7
-          });
-          $httpBackend.flush();
-          expect(controller.close).toHaveBeenCalled();
-        });
-
-        it('uses $location to send the user to the right place', function() {
+          spyOn(Inventory, 'create').and.returnValue({$promise: $q.when({id: 17})});
           spyOn(controller, 'close');
           spyOn($location, 'url');
           controller.createInventory({
             name: 'foo',
-            deadline: '09/09/3999',
             district_id: 7
           });
-          $httpBackend.flush();
-          expect($location.url).toHaveBeenCalledWith('/inventories/17/assign');
+          $rootScope.$apply();
         });
 
-        afterEach(function() {
-          $httpBackend.verifyNoOutstandingExpectation();
-          $httpBackend.verifyNoOutstandingRequest();
+        it('calls the close function', function() {
+          expect(controller.close).toHaveBeenCalled();
+        });
+
+        it('uses $location to send the user to the right place', function() {
+          expect($location.url).toHaveBeenCalledWith('/inventories/17/assign');
         });
       });
 
       describe('when unsuccessfully creating an inventory', function() {
         beforeEach(function() {
-          $httpBackend.expect('POST', '/v1/inventories', {
-                inventory: {
-                  name: 'foo',
-                  deadline: '01/01/2001',
-                  district_id: 7
+          spyOn(Inventory, 'create').and.returnValue({
+            $promise: $q.reject({
+              data: {
+                errors: {
+                  denial: ['for test purposes'],
+                  another_reason: ['for test reasons']
                 }
-              })
-              .respond(400, {
-                    errors: {
-                      denial: ['for test purposes'],
-                      another_reason: ['for test reasons']
-                    }
-                  }
-              );
-        });
-
-        it('calls the error method with the correct arguments', function() {
+              }
+            })
+          });
           spyOn(controller, 'error');
           controller.createInventory({
             name: 'foo',
-            deadline: '01/01/2001',
             district_id: 7
           });
-          $httpBackend.flush();
-          expect(controller.error).toHaveBeenCalledWith('denial : for test purposes');
-          expect(controller.error).toHaveBeenCalledWith('another_reason : for test reasons');
+          $rootScope.$apply();
         });
 
-        afterEach(function() {
-          $httpBackend.verifyNoOutstandingExpectation();
-          $httpBackend.verifyNoOutstandingRequest();
+        it('calls the error method with the correct arguments', function() {
+          expect(controller.error).toHaveBeenCalledWith('denial : for test purposes');
+          expect(controller.error).toHaveBeenCalledWith('another_reason : for test reasons');
         });
       });
     });

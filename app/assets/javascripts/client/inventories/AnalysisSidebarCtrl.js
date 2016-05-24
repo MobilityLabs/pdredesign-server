@@ -15,10 +15,6 @@
     $scope.analysis = current_analysis;
     vm.currentAnalysis = current_analysis;
 
-    vm.goToAssign = current_analysis.assigned_at === null;
-    vm.goToConsensus = current_analysis.consensus && current_analysis.consensus.is_completed === false;
-    vm.goToReport = current_analysis.consensus && current_analysis.consensus.is_completed === true;
-
     vm.displayLearningQuestions = function() {
       vm.questionsModal = $modal.open({
         template: '<learning-question-modal context="analysis" reminder="false"></learning-question-modal>',

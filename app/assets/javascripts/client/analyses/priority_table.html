@@ -12,27 +12,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr data-table-dnd-tr ng-repeat="priorityData in analysisPriorityTable.priorityData">
+    <tr data-table-dnd-tr ng-repeat="priorityData in analysisPriority.priorityData">
       <td>
         <i class="fa fa-ellipsis-v"></i>
         {{ priorityData.priority }}
       </td>
       <td>
         <a target="_blank"
-           ng-href="{{ analysisPriorityTable.determineLink(priorityData.category) }}">
+           ng-href="{{ analysisPriority.determineLink(priorityData.category) }}">
           {{priorityData.category }}
         </a>
       </td>
       <td>{{ priorityData.score }}</td>
       <td>{{ priorityData.products }}</td>
       <td>{{ priorityData.data }}</td>
-      <td>{{ analysisPriorityTable.convertToWholeDollars(priorityData.total_yearly_cost_in_cents) }}</td>
+      <td>{{ analysisPriority.convertToWholeDollars(priorityData.total_yearly_cost_in_cents) }}</td>
       <td class="hidden">{{ priorityData.question_id }}</td>
     </tr>
     </tbody>
   </table>
   <div class="priority-table-footer">
     <span>*Click to view corresponding Edsurge resources</span>
-    <button class="btn btn-secondary" ng-click="analysisPriorityTable.savePriority()">Save priority</button>
+    <button class="btn btn-secondary" ng-click="analysisPriority.savePriority()">Save priority</button>
   </div>
 </div>

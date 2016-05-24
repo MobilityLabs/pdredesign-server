@@ -10,7 +10,6 @@ json.district_id analysis.inventory.district.id
 json.district_name analysis.inventory.district.name
 json.created_at analysis.created_at
 json.updated_at analysis.updated_at
-json.assigned_at analysis.assigned_at
 
 json.status analysis.status
 json.has_access analysis.member?(user: current_user) || analysis.owner == current_user if current_user

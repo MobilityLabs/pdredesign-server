@@ -44,6 +44,32 @@
           templateUrl: 'client/inventories/assign_inventory.html'
         }
       }
+    }).state('inventories_edit', {
+      url: '/inventories/:inventory_id/edit',
+      authenticate: true,
+      resolve: {
+        currentParticipant: ['$stateParams', 'Inventory', function($stateParams, Inventory) {
+          return Inventory.participantResponse({inventory_id: $stateParams.inventory_id})
+              .$promise;
+        }]
+      },
+      views: {
+        '': {
+          resolve: {
+            inventory: ['Inventory', '$stateParams', function(Inventory, $stateParams) {
+              return Inventory.get({inventory_id: $stateParams.inventory_id}).$promise;
+            }]
+          },
+          controller: 'InventoryEditCtrl',
+          controllerAs: 'inventoryEdit',
+          templateUrl: 'client/inventories/inventory_edit.html'
+        },
+        'sidebar': {
+          controller: 'InventoryEditSidebarCtrl',
+          controllerAs: 'inventoryEditSidebar',
+          templateUrl: 'client/inventories/edit_sidebar.html'
+        }
+      }
     }).state('inventory_dashboard', {
       url: '/inventories/:inventory_id/dashboard',
       authenticate: true,

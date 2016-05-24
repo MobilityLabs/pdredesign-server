@@ -2,9 +2,7 @@
   <analysis-schedule only-schedule="true" analysis="analysisSidebar.currentAnalysis"></analysis-schedule>
   <ul>
     <li>
-      <a ng-if="analysisSidebar.goToAssign" ui-sref="inventory_analysis_assign({inventory_id: analysisSidebar.currentAnalysis.inventory_id, id: analysisSidebar.currentAnalysis.id})" class="btn btn-primary">Go to Analysis</a>
-      <a ng-if="analysisSidebar.goToConsensus" ui-sref="inventory_analysis_consensus({inventory_id: analysisSidebar.currentAnalysis.inventory_id, analysis_id: analysisSidebar.currentAnalysis.id, id: analysisSidebar.currentAnalysis.consensus.id})" class="btn btn-primary">Go to Analysis</a>
-      <a ng-if="analysisSidebar.goToReport" ui-sref="inventory_analysis_report({inventory_id: analysisSidebar.currentAnalysis.inventory_id, id: analysisSidebar.currentAnalysis.id})" class="btn btn-primary">Go to Analysis</a>
+      <a ui-sref="inventory_analysis_assign({inventory_id: analysisSidebar.currentAnalysis.inventory_id, id: analysisSidebar.currentAnalysis.id})" class="btn btn-primary">Go to Analysis</a>
     </li>
     <li>
       <a ng-click="analysisSidebar.modifyCalendar()" class="btn btn-default">Modify calendar</a>

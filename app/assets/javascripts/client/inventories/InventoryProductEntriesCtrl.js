@@ -16,6 +16,7 @@
   function InventoryProductEntriesCtrl($scope, $q, $compile, $modal, ProductEntry, DTOptionsBuilder, DTColumnBuilder) {
     var vm = this;
     vm.inventory = $scope.inventory;
+    vm.readOnly = $scope.readOnly;
     vm.shared = $scope.shared;
     var inventoryId = vm.shared ? vm.inventory.share_token : vm.inventory.id;
 

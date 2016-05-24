@@ -57,6 +57,14 @@ class V1::AnalysesController < ApplicationController
   end
 
   def analysis_params
+    # converting from US format because that's what the frontend is sending us
+    params[:deadline] = begin
+      Date.strptime(params[:deadline], '%m/%d/%Y')
+    rescue
+      # because the frontend sends dates in different ways
+      Date.parse(params[:deadline])
+    end unless params[:deadline].nil? or params[:deadline].is_a? Date
+
     params.permit(
       :name,
       :deadline,

@@ -5,7 +5,6 @@
       .controller('InventoryModalCtrl', InventoryModalCtrl);
 
   InventoryModalCtrl.$inject = [
-    '$scope',
     '$modalInstance',
     '$timeout',
     '$location',
@@ -14,7 +13,7 @@
     'Inventory'
   ];
 
-  function InventoryModalCtrl($scope, $modalInstance, $timeout, $location, SessionService, RecommendationTextService, Inventory) {
+  function InventoryModalCtrl($modalInstance, $timeout, $location, SessionService, RecommendationTextService, Inventory) {
     var vm = this;
 
     vm.alerts = [];
@@ -46,8 +45,6 @@
     };
 
     vm.createInventory = function(model) {
-      var deadlineFromDOM = $('#deadline').val();
-      model.deadline = moment(deadlineFromDOM, 'MM/DD/YYYY', true).toISOString();
       Inventory.create({inventory: model})
           .$promise
           .then(function(response) {
@@ -61,12 +58,6 @@
           });
     };
 
-    vm.defaultDate = function(model) {
-      if (typeof(model) !== 'undefined') {
-        return moment(model.due_date || model.deadline).format('MM/DD/YYYY');
-      }
-    };
-
     $timeout(function() {
       vm.datetime = $('.datetime').datetimepicker({
         pickTime: false
@@ -76,9 +67,5 @@
         $('#deadline').trigger('change');
       });
     });
-
-    $scope.$watch('model', function(val) {
-      vm.date = vm.defaultDate(val);
-    }).bind(vm);
   }
 })();

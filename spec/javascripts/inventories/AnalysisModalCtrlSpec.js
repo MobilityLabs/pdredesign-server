@@ -3,8 +3,6 @@
 
   describe('Controller: AnalysisModal', function() {
     var subject,
-        $scope,
-        $q,
         $state,
         $timeout,
         $modalInstance,
@@ -30,67 +28,74 @@
         });
       });
 
-      inject(function(_$state_, _$timeout_, _$rootScope_, _$q_, $injector) {
+      inject(function(_$state_, _$timeout_, $injector) {
         $state = _$state_;
-        $scope = _$rootScope_.$new(true);
         $timeout = _$timeout_;
-        $q = _$q_;
         Analysis = $injector.get('Analysis');
         Inventory = $injector.get('Inventory');
       });
     });
 
     describe('with mock request', function() {
-      var $rootScope;
+      var $httpBackend;
 
       beforeEach(function() {
-        inject(function(_$rootScope_, _$controller_) {
-          $rootScope = _$rootScope_;
+        inject(function(_$httpBackend_, _$controller_) {
+          $httpBackend = _$httpBackend_;
           subject = _$controller_('AnalysisModalCtrl', {
-            $scope: $scope,
             Analysis: Analysis,
             Inventory: Inventory,
             $modalInstance: $modalInstance
           });
         });
       });
-      describe('when successful', function() {
-        beforeEach(function() {
-          spyOn(Analysis, 'create').and.returnValue({$promise: $q.when({})});
-          subject.analysis = {inventory_id: 42};
-          spyOn(subject, 'closeModal');
 
-          subject.save();
-          $rootScope.$apply();
-        });
+      it('creates an Analysis', function() {
+        $httpBackend
+            .expectPOST('/v1/inventories/42/analyses')
+            .respond({});
 
-        it('creates an Analysis', function() {
-          expect(Analysis.create).toHaveBeenCalledWith(null, {inventory_id: 42, deadline: 'Invalid date'});
-        });
-
-        it('closes the modal', function() {
-          expect(subject.closeModal).toHaveBeenCalled();
-        });
+        subject.analysis = {inventory_id: 42};
+        subject.save();
+        $httpBackend.flush();
       });
 
-      describe('when unsuccessful and generates errors', function() {
+      it('closes the modal', function() {
+        spyOn(subject, 'closeModal');
+        $httpBackend
+            .expectPOST('/v1/inventories/42/analyses')
+            .respond({});
+
+        subject.analysis = {inventory_id: 42}
+        subject.save();
+        $httpBackend.flush();
+        expect(subject.closeModal).toHaveBeenCalled();
+      });
+
+      describe('handles errors', function() {
         beforeEach(function() {
-          spyOn(Analysis, 'create').and.returnValue({
-            $promise: $q.reject({
-              data: {errors: {foo: 'bar', wat: 'woot'}}
-            })
+          inject(function(_$controller_) {
+            subject = _$controller_('AnalysisModalCtrl', {
+              Analysis: Analysis,
+              Inventory: Inventory,
+              $modalInstance: $modalInstance
+            });
           });
+
+          $httpBackend
+              .expectPOST('/v1/inventories/42/analyses')
+              .respond(422, {errors: {foo: 'bar', wat: 'woot'}});
+
           subject.analysis = {inventory_id: 42};
           subject.save();
-          
-          $rootScope.$apply();
+          $httpBackend.flush();
         });
 
         it('populates alerts', function() {
           expect(subject.alerts).toContain({type: 'danger', msg: 'foo : bar'});
         });
 
-        it('dismisses alerts', function() {
+        it('is dismisses alerts', function() {
           expect(subject.alerts.length).toBe(2);
           subject.closeAlert(0);
           expect(subject.alerts.length).toBe(1);

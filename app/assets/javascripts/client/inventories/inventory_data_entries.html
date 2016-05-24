@@ -1,7 +1,7 @@
 <div class="inventory-items-list">
   <div class="header">
     <h4 class="pull-left">Data</h4>
-     <inventory-data-entry inventory="inventoryDataEntries.inventory"></inventory-data-entry>
+     <inventory-data-entry inventory="inventoryDataEntries.inventory" ng-if="!inventoryDataEntries.readOnly"></inventory-data-entry>
   </div>
   <div class="row">
     <div class="list col-md-12 table-responsive">

@@ -33,7 +33,7 @@
 
     vm.goToAnalysis = function() {
       if (vm.inventory.analysis_count === 1) {
-        var analysisState = !vm.inventory.analysis.assigned_at ? 'inventory_analysis_assign' : 'inventory_analysis_dashboard';
+        var analysisState = !vm.inventory.analysis.assigned_at ? 'inventory_analysis_dashboard' : 'inventory_analysis_report';
         $state.go(analysisState, {
           inventory_id: vm.inventory.id,
           id: vm.inventory.analysis.id

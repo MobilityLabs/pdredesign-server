@@ -13,4 +13,3 @@
     return $resource(UrlService.url('inventories/:inventory_id/analyses/:id/analysis_priorities'));
   }
 })();
-

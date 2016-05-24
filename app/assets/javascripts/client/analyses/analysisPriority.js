@@ -2,17 +2,17 @@
   'use strict';
 
   angular.module('PDRClient')
-      .directive('analysisPriorityTable', analysisPriorityTable);
+      .directive('analysisPriority', analysisPriority);
 
-  function analysisPriorityTable() {
+  function analysisPriority() {
     return {
       restrict: 'E',
       replace: true,
       scope: {},
       transclude: true,
       templateUrl: 'client/analyses/priority_table.html',
-      controller: 'AnalysisPriorityTableCtrl',
-      controllerAs: 'analysisPriorityTable'
+      controller: 'AnalysisPriorityCtrl',
+      controllerAs: 'analysisPriority'
     }
   }
 })();

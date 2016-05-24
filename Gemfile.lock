@@ -341,9 +341,9 @@ GEM
       rails-assets-angular (~> 1.2.11)
     rails-assets-angular-mocks (1.2.28)
       rails-assets-angular (= 1.2.28)
-    rails-assets-angular-moment (1.0.0.beta.6)
-      rails-assets-angular (>= 1.2.0, < 1.6.0)
-      rails-assets-moment (>= 2.8.0, < 3.0.0)
+    rails-assets-angular-moment (0.10.1)
+      rails-assets-angular (>= 1.2.0, < 1.5.0)
+      rails-assets-moment (>= 2.8.0, < 2.11.0)
     rails-assets-angular-redactor (1.1.4)
       rails-assets-angular (>= 1.2.0)
       rails-assets-jquery (>= 2.0.0)
@@ -369,7 +369,8 @@ GEM
       rails-assets-jquery (>= 1.7.0)
     rails-assets-highcharts (3.0.10)
     rails-assets-jquery (2.1.4)
-    rails-assets-moment (2.13.0)
+    rails-assets-moment (2.10.3)
+    rails-assets-momentjs (2.10.3)
     rails-assets-rollbar (1.2.2)
     rails-assets-underscore (1.8.3)
     rails-deprecated_sanitizer (1.0.3)
@@ -549,7 +550,7 @@ DEPENDENCIES
   rails-assets-angular-datatables!
   rails-assets-angular-file-upload (~> 1.1.5)!
   rails-assets-angular-mocks (= 1.2.28)
-  rails-assets-angular-moment (= 1.0.0.beta.6)!
+  rails-assets-angular-moment (= 0.10.1)!
   rails-assets-angular-redactor (= 1.1.4)!
   rails-assets-angular-resource (= 1.2.28)!
   rails-assets-angular-route (= 1.2.28)!
@@ -562,7 +563,8 @@ DEPENDENCIES
   rails-assets-datatables-buttons (~> 1.0.0)!
   rails-assets-highcharts (= 3.0.10)!
   rails-assets-jquery (= 2.1.4)!
-  rails-assets-moment (= 2.13.0)!
+  rails-assets-moment (= 2.10.3)!
+  rails-assets-momentjs (= 2.10.3)!
   rails-assets-rollbar (= 1.2.2)!
   rails-assets-underscore (= 1.8.3)!
   rails_12factor

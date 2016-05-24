@@ -45,7 +45,7 @@ describe V1::AnalysesController do
       post :create,
            inventory_id: inventory.id,
            name: "name",
-           deadline: '2042-11-14T00:00:00Z'
+           deadline: "11/14/2042"
 
       expect(response).to have_http_status(:created)
       expect(json['id']).not_to be_nil
@@ -68,8 +68,8 @@ describe V1::AnalysesController do
       put :update,
           inventory_id: inventory.id,
           id: analysis.id,
-          name: 'name',
-          deadline: '2042-11-14T00:00:00Z'
+          name: "name",
+          deadline: "11/14/2042"
 
       expect(response).to have_http_status(:no_content)
     end

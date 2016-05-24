@@ -9,12 +9,16 @@ module Link
     def execute
       return nil if draft?
 
-      {dashboard: dashboard_link, report: report_link}
+      {inventory: inventory_link, dashboard: dashboard_link, report: report_link}
 
     end
 
     def dashboard_link
       {title: 'View Dashboard', active: true, type: :dashboard}
+    end
+
+    def inventory_link
+      {title: 'View Inventory', active: true, type: :inventory}
     end
 
     def report_link

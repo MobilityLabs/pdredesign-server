@@ -16,7 +16,7 @@ module Link
       if draft?
         {finish: finish_link}
       else
-        {dashboard: dashboard_link, report: report_link}
+        {inventory: inventory_link, dashboard: dashboard_link, report: report_link}
       end
     end
 
@@ -26,6 +26,14 @@ module Link
 
     def dashboard_link
       {title: 'View Dashboard', active: true, type: :dashboard}
+    end
+
+    def inventory_link
+      {title: 'View Inventory', active: true, type: :inventory}
+    end
+
+    def analysis_link
+      {title: 'Create Analysis', active: true, type: :inventory}
     end
 
     def report_link

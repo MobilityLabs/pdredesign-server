@@ -26,6 +26,10 @@ class V1::AnalysisConsensusController < ApplicationController
       @categories = fetch_response.categories
       @team_role = params[:team_role]
       @team_roles = fetch_response.responder.team_roles_for_participants
+      respond_to do |format|
+        format.json { render template: 'v1/analysis_consensus/show', status: 200 }
+        format.csv  { render csv: 'analysis_consensus', template: 'v1/analysis_consensus/show' }
+      end
     else
       render nothing: true, status: :not_found
     end

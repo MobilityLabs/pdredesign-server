@@ -13,8 +13,9 @@
 #
 
 class ProductQuestion < ActiveRecord::Base
-
   belongs_to :product_entry
+
+  acts_as_paranoid
 
   enum assignment_approach: {
       teacher_choice: 'Teacher Choice',

@@ -10,21 +10,35 @@
     '$modal',
     'DataEntry',
     'DTOptionsBuilder',
-    'DTColumnBuilder'
+    'DTColumnBuilder',
+    'SessionService'
   ];
 
-  function InventoryDataEntriesCtrl($scope, $q, $compile, $modal, DataEntry, DTOptionsBuilder, DTColumnBuilder) {
+  function InventoryDataEntriesCtrl($scope, $q, $compile, $modal, DataEntry, DTOptionsBuilder, DTColumnBuilder, SessionService) {
     var vm = this;
     vm.inventory = $scope.inventory;
-    vm.readOnly = $scope.readOnly;
     vm.shared = $scope.shared;
 
     var inventoryId = vm.shared ? vm.inventory.share_token : vm.inventory.id;
     var options = DTOptionsBuilder.fromFnPromise(function() {
       var deferred = $q.defer();
       DataEntry.get({inventory_id: inventoryId}).$promise.then(function(results) {
-        vm.dataEntries = results.data_entries;
-        deferred.resolve(results.data_entries);
+        var dataEntries = _.map(results.data_entries, function (dataEntry) {
+          if (dataEntry.deleted_at) {
+            dataEntry.deleted_at = moment(dataEntry.deleted_at).format("MMMM D, YYYY");
+          }
+          return dataEntry;
+        });
+
+        vm.deletedDataEntries = _.filter(dataEntries, function (dataEntry) {
+          return typeof dataEntry.deleted_at !== "undefined";
+        });
+
+        vm.dataEntries = _.filter(dataEntries, function (dataEntry) {
+          return typeof dataEntry.deleted_at === "undefined";
+        });
+
+        deferred.resolve(vm.dataEntries);
       }, deferred.reject);
       return deferred.promise;
     });
@@ -70,13 +84,45 @@
       });
     };
 
+    vm.deleteDataEntry = function (dataEntryId) {
+      DataEntry
+        .delete({
+          inventory_id: vm.inventory.id,
+          data_entry_id: dataEntryId
+        })
+        .$promise
+        .then(function () {
+          vm.dtOptions.reloadData(null, true);
+        });
+    };
+
+    vm.restoreDataEntry = function (dataEntryId) {
+      DataEntry
+        .restore({
+          inventory_id: vm.inventory.id,
+          data_entry_id: dataEntryId
+        }, {})
+        .$promise
+        .then(function () {
+          vm.dtOptions.reloadData(null, true);
+        });
+    };
+
+    vm.isOwnerOrFacilitator = function () {
+      return SessionService.getCurrentUser().id === vm.inventory.owner_id
+             || vm.inventory.is_facilitator;
+    }
+
     $scope.$on('close-inventory-data-entry-modal', function() {
       vm.modalInstance && vm.modalInstance.dismiss('cancel');
       vm.dtOptions.reloadData(null, true);
     });
 
-    function actionsHTML(data) {
-      return '<i class="fa fa-pencil" ng-click="inventoryDataEntries.showInventoryDataEntryModal(' + data.id + ')"></i>';
+    function actionsHTML (data) {
+      var editHTML = '<i class="fa fa-pencil" ng-click="inventoryDataEntries.showInventoryDataEntryModal(' + data.id + ')"></i>&nbsp;&nbsp;';
+      var deleteHTML = '<i class="fa fa-remove" ng-click="inventoryDataEntries.deleteDataEntry(' + data.id + ')"></i>';
+
+      return editHTML + deleteHTML;
     }
   }
 })();

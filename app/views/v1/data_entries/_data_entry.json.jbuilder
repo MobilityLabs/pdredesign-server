@@ -3,6 +3,7 @@ json.name data_entry.name
 json.created_at data_entry.created_at
 json.updated_at data_entry.updated_at
 json.inventory_id data_entry.inventory_id
+json.deleted_at data_entry.deleted_at if data_entry.deleted_at.present?
 json.general_data_question do
   json.partial! 'v1/data_entries/general_data_questions/general_data_question', general_data_question: data_entry.general_data_question
 end

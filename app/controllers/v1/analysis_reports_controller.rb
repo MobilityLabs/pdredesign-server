@@ -22,13 +22,14 @@ class V1::AnalysisReportsController < ApplicationController
   private
   def fetch_comparison_data
     GeneralInventoryQuestion.find_by_sql ["SELECT
+        pe.id,
         giq.product_name,
         giq.price_in_cents,
         uq.usage
       FROM general_inventory_questions giq
         INNER JOIN product_entries pe ON giq.product_entry_id = pe.id
         INNER JOIN usage_questions uq ON uq.product_entry_id = pe.id
-      WHERE pe.inventory_id IN (
+      WHERE pe.deleted_at IS NULL AND pe.inventory_id IN (
         SELECT DISTINCT product_entries.inventory_id
         FROM product_entries
           INNER JOIN general_inventory_questions ON general_inventory_questions.product_entry_id = product_entries.id

@@ -19,9 +19,9 @@
           <p class='instructions-content' ng-repeat='paragraph in instructionParagraphs()' bind-html-compile='paragraph'></p>
         </div>
       </div>
-      <div class="export-buttons" ng-if="context === 'assessment'">
+      <div class="export-buttons">
         <h2>Consensus Export Options</h2>
-        <button class="btn btn-success" ng-click="exportToPDF()">Export to PDF</button>
+        <button class="btn btn-success" ng-click="exportToPDF()" ng-if="context === 'assessment'">Export to PDF</button>
         <button class="btn btn-success" ng-click="exportToCSV()">Export to CSV</button>
       </div>
     </div>

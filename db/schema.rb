@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518220822) do
+ActiveRecord::Schema.define(version: 20160523182030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,17 +145,21 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "data_entry_id"
+    t.datetime "deleted_at"
   end
 
   add_index "data_access_questions", ["data_entry_id"], name: "index_data_access_questions_on_data_entry_id", using: :btree
+  add_index "data_access_questions", ["deleted_at"], name: "index_data_access_questions_on_deleted_at", using: :btree
 
   create_table "data_entries", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "inventory_id"
     t.text     "name"
+    t.datetime "deleted_at"
   end
 
+  add_index "data_entries", ["deleted_at"], name: "index_data_entries_on_deleted_at", using: :btree
   add_index "data_entries", ["inventory_id"], name: "index_data_entries_on_inventory_id", using: :btree
 
   create_table "data_entry_questions", force: :cascade do |t|
@@ -165,9 +169,11 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "data_entry_id"
+    t.datetime "deleted_at"
   end
 
   add_index "data_entry_questions", ["data_entry_id"], name: "index_data_entry_questions_on_data_entry_id", using: :btree
+  add_index "data_entry_questions", ["deleted_at"], name: "index_data_entry_questions_on_deleted_at", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",               default: 0, null: false
@@ -275,9 +281,11 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "data_entry_id"
+    t.datetime "deleted_at"
   end
 
   add_index "general_data_questions", ["data_entry_id"], name: "index_general_data_questions_on_data_entry_id", using: :btree
+  add_index "general_data_questions", ["deleted_at"], name: "index_general_data_questions_on_deleted_at", using: :btree
 
   create_table "general_inventory_questions", force: :cascade do |t|
     t.text     "product_name"
@@ -291,8 +299,10 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_entry_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "general_inventory_questions", ["deleted_at"], name: "index_general_inventory_questions_on_deleted_at", using: :btree
   add_index "general_inventory_questions", ["product_entry_id"], name: "index_general_inventory_questions_on_product_entry_id", using: :btree
 
   create_table "inventories", force: :cascade do |t|
@@ -304,6 +314,7 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.integer  "owner_id"
     t.text     "message"
     t.datetime "assigned_at"
+    t.integer  "total_participant_responses", default: 0, null: false
     t.string   "share_token"
   end
 
@@ -438,8 +449,10 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "inventory_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "product_entries", ["deleted_at"], name: "index_product_entries_on_deleted_at", using: :btree
   add_index "product_entries", ["inventory_id"], name: "index_product_entries_on_inventory_id", using: :btree
 
   create_table "product_questions", force: :cascade do |t|
@@ -450,8 +463,10 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_entry_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "product_questions", ["deleted_at"], name: "index_product_questions_on_deleted_at", using: :btree
   add_index "product_questions", ["product_entry_id"], name: "index_product_questions_on_product_entry_id", using: :btree
 
   create_table "prospective_users", force: :cascade do |t|
@@ -574,8 +589,10 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_entry_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "technical_questions", ["deleted_at"], name: "index_technical_questions_on_deleted_at", using: :btree
   add_index "technical_questions", ["product_entry_id"], name: "index_technical_questions_on_product_entry_id", using: :btree
 
   create_table "tool_categories", force: :cascade do |t|
@@ -615,8 +632,10 @@ ActiveRecord::Schema.define(version: 20160518220822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_entry_id"
+    t.datetime "deleted_at"
   end
 
+  add_index "usage_questions", ["deleted_at"], name: "index_usage_questions_on_deleted_at", using: :btree
   add_index "usage_questions", ["product_entry_id"], name: "index_usage_questions_on_product_entry_id", using: :btree
 
   create_table "user_invitations", force: :cascade do |t|

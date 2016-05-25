@@ -1,11 +1,27 @@
 <div class="inventory-items-list">
   <div class="header">
     <h4 class="pull-left">Product</h4>
-     <product-entry inventory="inventoryProductEntries.inventory" ng-if="!inventoryProductEntries.readOnly"></product-entry>
+    <product-entry inventory="inventoryProductEntries.inventory" ng-if="!inventoryProductEntries.readOnly"></product-entry>
+    <label ng-show="inventoryProductEntries.isOwnerOrFacilitator()">
+      <fake-checkbox model="vm.showDeletedProductEntries"></fake-checkbox>
+      Show deleted products
+    </label>
   </div>
   <div class="row">
     <div class="list col-md-12 table-responsive">
-        <table datatable="" dt-options="inventoryProductEntries.dtOptions" dt-columns="inventoryProductEntries.dtColumns" class="row-border hover"></table>
+      <table datatable="" dt-options="inventoryProductEntries.dtOptions" dt-columns="inventoryProductEntries.dtColumns" class="row-border hover"></table>
+      <div ng-show="vm.showDeletedProductEntries" class="deleted-entries">
+        <h4>Deleted Product Entries</h4>
+        <ul>
+          <li ng-repeat="deletedProductEntry in inventoryProductEntries.deletedProductEntries">
+            <div>
+              <span>{{deletedProductEntry.general_inventory_question.product_name}}</span>
+              <span>deleted {{deletedProductEntry.deleted_at}}</span>
+            </div>
+            <a href ng-click="inventoryProductEntries.restoreProductEntry(deletedProductEntry.id)">Move to main inventory</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ class V1::AnalysesController < ApplicationController
 
   def index
     @analyses = inventory.analyses
+
     render template: 'v1/analyses/index', status: 200
   end
 

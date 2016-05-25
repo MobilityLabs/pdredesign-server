@@ -13,8 +13,9 @@
 #
 
 class TechnicalQuestion < ActiveRecord::Base
-
   belongs_to :product_entry
+
+  acts_as_paranoid
 
   enum platform_option: {
       browser: 'Browser Based',

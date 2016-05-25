@@ -17,8 +17,9 @@
 #
 
 class GeneralInventoryQuestion < ActiveRecord::Base
-
   belongs_to :product_entry
+
+  acts_as_paranoid
 
   enum pricing_structure_option: {
     free: 'Free',
@@ -39,5 +40,4 @@ class GeneralInventoryQuestion < ActiveRecord::Base
   validates :product_name, presence: true
   validates :data_type, array_enum: { enum: GeneralInventoryQuestion.product_types }
   validates :price_in_cents, numericality: {only_integer: true, greater_than_or_equal_to: 0}, allow_blank: true
-
 end

@@ -10,21 +10,35 @@
     '$modal',
     'ProductEntry',
     'DTOptionsBuilder',
-    'DTColumnBuilder'
+    'DTColumnBuilder',
+    'SessionService'
   ];
 
-  function InventoryProductEntriesCtrl($scope, $q, $compile, $modal, ProductEntry, DTOptionsBuilder, DTColumnBuilder) {
+  function InventoryProductEntriesCtrl($scope, $q, $compile, $modal, ProductEntry, DTOptionsBuilder, DTColumnBuilder, SessionService) {
     var vm = this;
     vm.inventory = $scope.inventory;
-    vm.readOnly = $scope.readOnly;
     vm.shared = $scope.shared;
     var inventoryId = vm.shared ? vm.inventory.share_token : vm.inventory.id;
 
     var options = DTOptionsBuilder.fromFnPromise(function() {
       var deferred = $q.defer();
       ProductEntry.get({inventory_id: inventoryId}).$promise.then(function(results) {
-        vm.productEntries = results.product_entries;
-        deferred.resolve(results.product_entries);
+        var productEntries = _.map(results.product_entries, function (productEntry) {
+          if (productEntry.deleted_at) {
+            productEntry.deleted_at = moment(productEntry.deleted_at).format("MMMM D, YYYY");
+          }
+          return productEntry;
+        });
+
+        vm.deletedProductEntries = _.filter(productEntries, function (productEntry) {
+          return typeof productEntry.deleted_at !== "undefined";
+        });
+
+        vm.productEntries = _.filter(productEntries, function (productEntry) {
+          return typeof productEntry.deleted_at === "undefined";
+        });
+
+        deferred.resolve(vm.productEntries);
       }, deferred.reject);
       return deferred.promise;
     });
@@ -72,13 +86,45 @@
       });
     };
 
+    vm.deleteProductEntry = function (productEntryId) {
+      ProductEntry
+        .delete({
+          inventory_id: vm.inventory.id,
+          product_entry_id: productEntryId
+        })
+        .$promise
+        .then(function () {
+          vm.dtOptions.reloadData(null, true);
+        });
+    };
+
+    vm.restoreProductEntry = function (productEntryId) {
+      ProductEntry
+        .restore({
+          inventory_id: vm.inventory.id,
+          product_entry_id: productEntryId
+        }, {})
+        .$promise
+        .then(function () {
+          vm.dtOptions.reloadData(null, true);
+        });
+    };
+
+    vm.isOwnerOrFacilitator = function () {
+      return SessionService.getCurrentUser().id === vm.inventory.owner_id
+             || vm.inventory.is_facilitator;
+    }
+
     $scope.$on('close-product-entry-modal', function() {
       vm.modalInstance && vm.modalInstance.dismiss('cancel');
       vm.dtOptions.reloadData(null, true);
     });
 
     function actionsHTML (data) {
-      return '<i class="fa fa-pencil" ng-click="inventoryProductEntries.showProductEntryModal(' + data.id + ')"></i>';
+      var editHTML = '<i class="fa fa-pencil" ng-click="inventoryProductEntries.showProductEntryModal(' + data.id + ')"></i>&nbsp;&nbsp;';
+      var deleteHTML = '<i class="fa fa-remove" ng-click="inventoryProductEntries.deleteProductEntry(' + data.id + ')"></i>';
+
+      return editHTML + deleteHTML;
     }
   }
 })();

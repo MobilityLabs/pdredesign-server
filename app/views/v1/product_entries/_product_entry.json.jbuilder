@@ -2,6 +2,7 @@ json.id product_entry.id
 json.created_at product_entry.created_at
 json.updated_at product_entry.updated_at
 json.inventory_id product_entry.inventory_id
+json.deleted_at product_entry.deleted_at if product_entry.deleted_at.present?
 json.general_inventory_question do
   json.partial! 'v1/product_entries/general_inventory_questions/general_inventory_question', general_inventory_question: product_entry.general_inventory_question
 end

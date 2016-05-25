@@ -17,6 +17,8 @@ class DataAccessQuestion < ActiveRecord::Base
 
   belongs_to :data_entry
 
+  acts_as_paranoid
+
   enum data_accessed_by: {
       team: 'Team',
       central_office: 'Central Office',

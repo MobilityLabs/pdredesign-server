@@ -7,16 +7,18 @@
     '$stateParams',
     '$location',
     '$q',
+    '$http',
     'Consensus',
     'AnalysisConsensus',
     'AnalysisResponse',
     'Score',
     'AnalysisConsensusScore',
     'ProductEntry',
-    'DataEntry'
+    'DataEntry',
+    'UrlService'
   ];
 
-  function ConsensusService($stateParams, $location, $q, Consensus, AnalysisConsensus, AnalysisResponse, Score, AnalysisConsensusScore, ProductEntry, DataEntry) {
+  function ConsensusService($stateParams, $location, $q, $http, Consensus, AnalysisConsensus, AnalysisResponse, Score, AnalysisConsensusScore, ProductEntry, DataEntry, UrlService) {
     var service = this;
 
     service.setContext = function(context) {
@@ -149,5 +151,52 @@
         ];
       }
     };
+
+    service.exportToPDF = function () {
+      if (service.context === "assessment") {
+        var url = UrlService.url('assessments/' + service.extractId() + '/reports/consensus_report.pdf');
+      }
+
+      return $http.post(url, {}, {responseType: "arraybuffer"})
+        .success(function (data) {
+          forceDownload(data, {
+            mimeType: "application/pdf",
+            fileExt: "pdf"
+          });
+        });
+    };
+
+    service.exportToCSV = function () {
+      if (service.context === "assessment") {
+        var url = UrlService.url('assessments/' + service.extractId() + '/reports/consensus_report.csv');
+        var method = "post";
+      } else if (service.context === "analysis") {
+        var url = UrlService.url('inventories/' + $stateParams.inventory_id + '/analyses/' + service.extractId() + '/analysis_consensus/' + $stateParams.id + '.csv');
+        var method = "get";
+      }
+
+      return $http[method](url, {})
+        .success(function (data) {
+          forceDownload(data, {
+            fileExt: "csv"
+          });
+        });
+    };
+
+    function forceDownload (data, downloadType) {
+      if (downloadType.fileExt == "pdf"){
+        var blob  = new Blob([data], {type: downloadType.mimeType});
+        var url   = URL.createObjectURL(blob);
+      } else {
+        var url   = 'data:application/csv;charset=utf-8,' + encodeURI(data);
+      }
+
+      var link = angular.element('<a/>');
+      link.attr({
+         href: url,
+         target: '_blank',
+         download: 'report.'+downloadType.fileExt
+      })[0].click();
+    }
   }
 })();

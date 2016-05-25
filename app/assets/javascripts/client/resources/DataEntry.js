@@ -18,6 +18,10 @@
       },
       'update': {
         method: 'PUT'
+      },
+      'restore': {
+        method: 'PUT',
+        url: UrlService.url('inventories/:inventory_id/data_entries/:data_entry_id/restore')
       }
     };
 

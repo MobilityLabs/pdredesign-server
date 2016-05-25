@@ -26,8 +26,15 @@
 
 .inventory-items-list
   margin-top: 2em
+
   .header
     min-height: 2.5em
+
+    label
+      float: right
+      line-height: 30px
+      margin-right: 1em
+
   .list
     margin-top: 1em
     border-color: $btn-primary-border
@@ -36,7 +43,29 @@
     min-height: 5em
     padding: 1em
 
-    table[datatable]
-      i.fa
-        cursor: pointer
+    i.fa[ng-click]
+      cursor: pointer
+      color: $light-grey
+      display: inline
+
+    .deleted-entries
+      ul
+        list-style: none
+        padding-left: 0
         color: $light-grey
+
+        li
+          display: flex
+          justify-content: space-between
+          padding: 8px 0
+
+          div
+            display: inline
+
+            span
+              margin-right: 2em
+
+          &:not(:last-child)
+            border-bottom: 1px solid $light-grey
+
+

@@ -90,8 +90,16 @@ PdrServer::Application.routes.draw do
       resource :permissions, controller: 'inventory_permissions', only: [:show, :update]
       resources :participants, controller: 'inventory_participants', only: [:create, :destroy, :index]
         get 'participants/all', to: 'inventory_participants#all'
-      resources :product_entries, only: [:index, :show, :create, :update]
-      resources :data_entries, only: [:index, :show, :create, :update]
+      resources :product_entries, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          put 'restore', to: 'product_entries#restore'
+        end
+      end
+      resources :data_entries, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          put 'restore', to: 'data_entries#restore'
+        end
+      end
       resources :learning_questions, only: [:index, :create, :update, :destroy] do
         collection do
           get 'exists', to: 'learning_questions#exists'

@@ -15,6 +15,8 @@ class DataEntryQuestion < ActiveRecord::Base
 
   belongs_to :data_entry
 
+  acts_as_paranoid
+
   enum data_entered_frequency: {
       yearly: 'Yearly',
       quarterly: 'Quarterly',

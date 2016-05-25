@@ -13,11 +13,16 @@ class DataEntry < ActiveRecord::Base
   include Authority::Abilities
   self.authorizer_name = 'DataEntryAuthorizer'
 
-  has_one :general_data_question, dependent: :delete
-  has_one :data_entry_question, dependent: :delete
-  has_one :data_access_question, dependent: :delete
+  # XXX These were (and should be) dependent: :delete
+  # but the paranoia gem doesn't work with that for the restoring behaviour
+  # https://github.com/rubysherpas/paranoia/issues/320
+  has_one :general_data_question, -> { with_deleted }, dependent: :destroy
+  has_one :data_entry_question, -> { with_deleted }, dependent: :destroy
+  has_one :data_access_question, -> { with_deleted }, dependent: :destroy
 
   belongs_to :inventory
+
+  acts_as_paranoid
 
   validates :name, presence: true
   validates :general_data_question, presence: true

@@ -14,4 +14,6 @@
 
 class UsageQuestion < ActiveRecord::Base
   belongs_to :product_entry
+
+  acts_as_paranoid
 end

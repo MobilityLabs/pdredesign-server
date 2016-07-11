@@ -16,8 +16,8 @@
 
     vm.inventory = inventory;
     vm.shared = $stateParams.shared || false;
-    vm.hideAnalysisAccess = vm.inventory.analysis_count === 0 && !vm.inventory.is_facilitator;
-    vm.creatingAnalysis = vm.inventory.analysis_count === 0 && vm.inventory.is_facilitator;
+    vm.hideAnalysisAccess = vm.inventory.analysis_count === 0 && !vm.inventory.is_facilitator_or_participant;
+    vm.creatingAnalysis = vm.inventory.analysis_count === 0 && vm.inventory.is_facilitator_or_participant;
     vm.shareURL = $state.href(
       'inventories_shared_report',
       {inventory_id: vm.inventory.share_token},

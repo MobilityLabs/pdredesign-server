@@ -142,8 +142,8 @@
     vm.isOwnerOrFacilitator = function () {
       var currentUser = SessionService.getCurrentUser();
 
-      return currentUser && (currentUser.id === vm.inventory.owner_id || vm.inventory.is_facilitator);
-    }
+      return currentUser && (currentUser.id === vm.inventory.owner_id || vm.inventory.is_facilitator_or_participant);
+    };
 
     $scope.$on('close-inventory-data-entry-modal', function() {
       vm.modalInstance && vm.modalInstance.dismiss('cancel');

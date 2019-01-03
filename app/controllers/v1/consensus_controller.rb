@@ -19,7 +19,7 @@ class V1::ConsensusController < V1::ResponsesController
       @response.update(submitted_at: Time.now)
     end
 
-    render nothing: true
+    head :ok
   end
 
   def show
@@ -30,6 +30,7 @@ class V1::ConsensusController < V1::ResponsesController
       @categories = @response.categories
       @team_role = params[:team_role]
       @team_roles = assessment.team_roles_for_participants
+
       authorize_action_for @response
     else
       not_found

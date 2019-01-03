@@ -10,7 +10,7 @@ module RenderStatus
   end
 
   def status(status_code)
-    render nothing: true, status: status_code
+    head status_code
   end
 
 end

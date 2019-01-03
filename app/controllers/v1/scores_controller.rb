@@ -12,7 +12,7 @@ class V1::ScoresController < ApplicationController
     score.update_attributes(score_params)
     score_existed_prior = score.id.present?
     if score.save
-      render nothing: true, status: (score_existed_prior ? :no_content : :created)
+      head (score_existed_prior ? :no_content : :created)
     else
       @errors = score.errors
       render 'v1/shared/errors', status: :unprocessable_entity
@@ -36,17 +36,18 @@ class V1::ScoresController < ApplicationController
 
   private
   def score_params
-    params.permit(:response_id,
-                  :question_id,
-                  :value,
-                  :evidence,
-                  supporting_inventory_response_attributes: [
-                      :id,
-                      {product_entries: []},
-                      {data_entries: []},
-                      :product_entry_evidence,
-                      :data_entry_evidence
-                  ])
+    params.permit(
+      :response_id,
+      :question_id,
+      :value,
+      :evidence,
+      supporting_inventory_response_attributes: [
+        :id,
+        {product_entries: []},
+        {data_entries: []},
+        :product_entry_evidence,
+        :data_entry_evidence
+      ])
   end
 
   def response_id

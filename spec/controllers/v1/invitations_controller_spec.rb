@@ -9,7 +9,7 @@ describe V1::InvitationsController do
   describe 'POST #redeem' do
     context 'when an invitation is not found' do
       before(:each) do
-        post :redeem, token: 'token'
+        post :redeem, params: { token: 'token' }
       end
 
       it {
@@ -28,7 +28,7 @@ describe V1::InvitationsController do
         }
 
         before(:each) do
-          post :redeem, token: user_invitation.token
+          post :redeem, params: { token: user_invitation.token }
         end
 
         it {
@@ -50,7 +50,7 @@ describe V1::InvitationsController do
         }
 
         before(:each) do
-          post :redeem, token: user_invitation.token
+          post :redeem, params: { token: user_invitation.token }
         end
 
         it {
@@ -73,7 +73,7 @@ describe V1::InvitationsController do
 
         context 'when updating the first name' do
           before(:each) do
-            post :redeem, token: user_invitation.token, first_name: '1OptimusPrime'
+            post :redeem, params: { token: user_invitation.token, first_name: '1OptimusPrime' }
             user.reload
           end
 
@@ -88,7 +88,7 @@ describe V1::InvitationsController do
 
         context 'when updating the last name' do
           before(:each) do
-            post :redeem, token: user_invitation.token, last_name: '2Autobots'
+            post :redeem, params: { token: user_invitation.token, last_name: '2Autobots' }
             user.reload
           end
 
@@ -104,7 +104,7 @@ describe V1::InvitationsController do
 
         context 'when updating the team role' do
           before(:each) do
-            post :redeem, token: user_invitation.token, team_role: '3LevitatingGuru'
+            post :redeem, params: { token: user_invitation.token, team_role: '3LevitatingGuru' }
             user.reload
           end
 
@@ -119,7 +119,7 @@ describe V1::InvitationsController do
 
         context 'when updating the email' do
           before(:each) do
-            post :redeem, token: user_invitation.token, email: '4email@example.com'
+            post :redeem, params: { token: user_invitation.token, email: '4email@example.com' }
             user.reload
           end
 
@@ -135,7 +135,7 @@ describe V1::InvitationsController do
         context 'when updating the password' do
           context 'when the password is invalid' do
             before(:each) do
-              post :redeem, token: user_invitation.token, password: '123'
+              post :redeem, params: { token: user_invitation.token, password: '123' }
             end
 
             it {
@@ -145,7 +145,7 @@ describe V1::InvitationsController do
 
           context 'when the password is valid' do
             before(:each) do
-              post :redeem, token: user_invitation.token, password: 'avalidpassword'
+              post :redeem, params: { token: user_invitation.token, password: 'avalidpassword' }
             end
 
             it {
@@ -168,7 +168,7 @@ describe V1::InvitationsController do
       }
 
       before(:each) do
-        get :show, token: user_invitation.token
+        get :show, params: { token: user_invitation.token }
       end
 
       it {
@@ -198,7 +198,7 @@ describe V1::InvitationsController do
       }
 
       before(:each) do
-        get :show, token: invitation.token
+        get :show, params: { token: invitation.token }
       end
 
       it {

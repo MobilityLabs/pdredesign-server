@@ -13,7 +13,7 @@ describe V1::SharedAssessmentsController do
       let(:token) { assessment.share_token }
 
       before(:each) do
-        get :show, token: token, format: :json
+        get :show, params: { token: token }, as: :json
       end
 
       it do
@@ -29,7 +29,7 @@ describe V1::SharedAssessmentsController do
       let(:token) { 'foo-bar-invalid-token' }
 
       it do
-        get :show, token: token, format: :json
+        get :show, params: { token: token }, as: :json
         expect(response).to have_http_status(:not_found)
       end
     end

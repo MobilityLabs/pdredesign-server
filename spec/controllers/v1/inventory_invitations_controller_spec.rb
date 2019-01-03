@@ -9,7 +9,7 @@ describe V1::InventoryInvitationsController do
 
       before(:each) do
         sign_out :user
-        post :create, inventory_id: inventory.id, format: :json
+        post :create, params: { inventory_id: inventory.id }, as: :json
       end
 
       it 'requires logged in user' do
@@ -23,7 +23,7 @@ describe V1::InventoryInvitationsController do
 
       before(:each) do
         sign_in user
-        post :create, inventory_id: inventory.id, format: :json
+        post :create, params: { inventory_id: inventory.id }, as: :json
       end
 
       it 'requires a facilitator to create a invite' do
@@ -41,13 +41,14 @@ describe V1::InventoryInvitationsController do
 
         before(:each) do
           sign_in facilitator_user
-          post :create,
+          post :create, params: {
             inventory_id: inventory.id,
             first_name: 'john',
             last_name: 'doe',
             email: existing_invitation.email,
             team_role: 'Finance',
-            role: 'facilitator', format: :json
+            role: 'facilitator'
+          }, as: :json
         end
 
         it 'returns error status code' do
@@ -64,13 +65,14 @@ describe V1::InventoryInvitationsController do
 
         before(:each) do
           sign_in facilitator_user
-          post :create,
+          post :create, params: {
             inventory_id: inventory.id,
             first_name: 'john',
             last_name: 'doe',
             email: email,
             team_role: 'Finance',
-            role: 'facilitator', format: :json
+            role: 'facilitator'
+          }, as: :json
         end
 
         it 'invitation gets created' do

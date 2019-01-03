@@ -3,7 +3,7 @@ class V1::DistrictMessagesController < ApplicationController
   def create
     @record = DistrictMessage.new(message_params)
     if @record.save
-      render nothing: true
+      head :ok
     else
       @errors = @record.errors
       render 'v1/shared/errors' , errors: @errors, status: 422

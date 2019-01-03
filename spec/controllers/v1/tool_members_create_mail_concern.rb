@@ -31,10 +31,14 @@ shared_examples_for 'a created tool member with a specific tool' do |tool_sym|
   context 'when the entity to be created is valid (uppercase tool type)' do
     before(:each) do
       sign_in user
-      post :create, tool_member: {tool_type: tool.class.to_s.upcase,
-                                  tool_id: tool.id,
-                                  roles: [ToolMember.member_roles[:participant]],
-                                  user_id: candidate.id}
+      post :create, params: {
+        tool_member: {
+          tool_type: tool.class.to_s.upcase,
+          tool_id: tool.id,
+          roles: [ToolMember.member_roles[:participant]],
+          user_id: candidate.id
+        }
+      }
     end
 
     it {
@@ -65,10 +69,14 @@ shared_examples_for 'a created tool member with a specific tool' do |tool_sym|
   context 'when the entity to be created is valid (lowercase tool type)' do
     before(:each) do
       sign_in user
-      post :create, tool_member: {tool_type: tool.class.to_s.downcase,
-                                  tool_id: tool.id,
-                                  roles: [ToolMember.member_roles[:participant]],
-                                  user_id: candidate.id}
+      post :create, params: {
+        tool_member: {
+          tool_type: tool.class.to_s.downcase,
+          tool_id: tool.id,
+          roles: [ToolMember.member_roles[:participant]],
+          user_id: candidate.id
+        }
+      }
     end
 
     it {

@@ -13,9 +13,9 @@ class V1::PrioritiesController < ApplicationController
     priority = find_or_initialize(assessment)
     priority[:order] = params[:order]
     if priority.save
-      render nothing: true
+      head :ok
     else
-      render status: 422, nothing: true
+      head :unprocessable_entity
     end
   end
 

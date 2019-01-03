@@ -6,7 +6,7 @@ class ToolMemberAccessRequestNotificationWorker
     tool = request.tool
 
     ToolMember.includes(:user).where(tool: tool)
-        .where.contains(roles: [ToolMember.member_roles[:facilitator]])
+        .where('? = ANY(roles)', ToolMember.member_roles[:facilitator])
         .uniq
         .each do |facilitator|
       args = [request, facilitator.user.email]

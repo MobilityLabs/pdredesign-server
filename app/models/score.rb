@@ -19,7 +19,7 @@ class Score < ActiveRecord::Base
   has_one :participant,
           through: :response,
           source: :responder,
-          source_type: Participant
+          source_type: 'Participant'
 
   has_one :user, through: :participant
 

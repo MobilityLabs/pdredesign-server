@@ -26,10 +26,12 @@ describe V1::ToolsController do
       category = ToolCategory.create(title: 'category', tool_phase: phase)
       subcategory = ToolSubcategory.create(title: 'category', tool_category: category)
 
-      post :create, title: 'expected title',
+      post :create, params: {
+        title: 'expected title',
         description: 'some description',
         url: 'http://www.google.com',
         tool_subcategory_id: subcategory.id
+      }
 
       tool = Tool.find_by(title: 'expected title')
 
@@ -39,14 +41,43 @@ describe V1::ToolsController do
       expect(tool[:tool_subcategory_id]).to eq(subcategory.id)
     end
 
+    it 'responds with the tool as json upon creation' do
+      phase    = ToolPhase.create(title: 'test', description: 'description') 
+      category = ToolCategory.create(title: 'category', tool_phase: phase)
+      subcategory = ToolSubcategory.create(title: 'category', tool_category: category)
+
+      post :create, params:{
+        title: 'expected title',
+        description: 'some description',
+        url: 'http://www.google.com',
+        tool_subcategory_id: subcategory.id
+      }
+
+      tool = Tool.find_by(title: 'expected title')
+
+      expect(json).to eq({
+        "id" => tool.id,
+        "title" => "expected title",
+        "description" => "some description",
+        "url" => "http://www.google.com",
+        "is_default" => nil,
+        "display_order" => nil,
+        "tool_subcategory_id" => subcategory.id,
+        "user_id" => partner.id,
+        "tool_category_id" => nil
+      })
+    end
+
     it 'can create a tool with a category id' do
       phase    = ToolPhase.create(title: 'test', description: 'description') 
       category = ToolCategory.create(title: 'category', tool_phase: phase)
 
-      post :create, title: 'expected title',
+      post :create, params: {
+        title: 'expected title',
         description: 'some description',
         url: 'http://www.google.com',
         tool_category_id: category.id
+      }
 
       tool = Tool.find_by(title: 'expected title')
       expect(tool).not_to be_nil

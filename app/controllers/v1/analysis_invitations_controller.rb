@@ -20,7 +20,7 @@ class V1::AnalysisInvitationsController < ApplicationController
 
     queue_worker(invite.id) if send_invite
     invite.analysis.save if send_invite
-    render nothing: true
+    head :ok
   end
 
   private

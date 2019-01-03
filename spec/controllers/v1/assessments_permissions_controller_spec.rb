@@ -24,7 +24,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :index, assessment_id: assessment.id
+          get :index, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -35,7 +35,7 @@ describe V1::AssessmentsPermissionsController do
       context 'when an access request is not present' do
         before(:each) do
           sign_in user
-          get :index, assessment_id: assessment.id
+          get :index, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -51,7 +51,7 @@ describe V1::AssessmentsPermissionsController do
     context 'when unauthorized' do
       before(:each) do
         sign_out :user
-        get :index, assessment_id: assessment.id
+        get :index, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -68,7 +68,7 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        get :all_users, assessment_id: assessment.id
+        get :all_users, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -89,7 +89,7 @@ describe V1::AssessmentsPermissionsController do
     context 'when unauthorized' do
       before(:each) do
         sign_out :user
-        get :all_users, assessment_id: assessment.id
+        get :all_users, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -111,7 +111,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :show, assessment_id: assessment.id, id: access_request.id
+          get :show, params: { assessment_id: assessment.id, id: access_request.id }
         end
 
         it {
@@ -134,7 +134,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in facilitator
-          get :show, assessment_id: assessment.id, id: access_request.id, user: user, email: access_request.user.email
+          get :show, params: { assessment_id: assessment.id, id: access_request.id, user: user, email: access_request.user.email }
         end
 
         it {
@@ -154,7 +154,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in facilitator
-          get :show, assessment_id: assessment.id, id: 0
+          get :show, params: { assessment_id: assessment.id, id: 0 }
         end
 
         it {
@@ -170,7 +170,7 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_out :user
-        get :show, assessment_id: assessment.id, id: access_request.id
+        get :show, params: { assessment_id: assessment.id, id: access_request.id }
       end
 
       it {
@@ -188,7 +188,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          put :update, assessment_id: assessment.id, id: 0
+          put :update, params: { assessment_id: assessment.id, id: 0 }
         end
 
         it {
@@ -209,13 +209,14 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in network_partner
-          put :update,
-              assessment_id: assessment_with_network_partner.id,
-              id: network_partner.id,
-              permissions: [{
-                                level: 'facilitator',
-                                email: network_partner.email
-                            }]
+          put :update, params: {
+            assessment_id: assessment_with_network_partner.id,
+            id: network_partner.id,
+            permissions: [{
+              level: 'facilitator',
+              email: network_partner.email
+            }]
+          }
         end
 
         it {
@@ -242,11 +243,13 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          put :update, assessment_id: assessment.id, id: participant.id,
-              permissions: [{
-                                level: 'network_partner',
-                                email: participant.email
-                            }]
+          put :update, params: {
+            assessment_id: assessment.id, id: participant.id,
+            permissions: [{
+              level: 'network_partner',
+              email: participant.email
+            }]
+          }
         end
 
         it {
@@ -273,11 +276,14 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          put :update, assessment_id: assessment.id, id: participant.id,
-              permissions: [{
-                                level: 'facilitator',
-                                email: participant.email
-                            }]
+          put :update, params: {
+            assessment_id: assessment.id,
+            id: participant.id,
+            permissions: [{
+              level: 'facilitator',
+              email: participant.email
+            }]
+          }
         end
 
         it {
@@ -304,11 +310,14 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          put :update, assessment_id: assessment.id, id: facilitator.id,
-              permissions: [{
-                                level: 'network_partner',
-                                email: facilitator.email
-                            }]
+          put :update, params: {
+            assessment_id: assessment.id,
+            id: facilitator.id,
+            permissions: [{
+              level: 'network_partner',
+              email: facilitator.email
+            }]
+          }
         end
 
         it {
@@ -336,11 +345,14 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: facilitator.id,
-            permissions: [{
-                              level: 'participant',
-                              email: facilitator.email
-                          }]
+        put :update, params: {
+          assessment_id: assessment.id,
+          id: facilitator.id,
+          permissions: [{
+            level: 'participant',
+            email: facilitator.email
+          }]
+        }
       end
 
       it {
@@ -381,11 +393,13 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: network_partner.id,
-            permissions: [{
-                              level: 'participant',
-                              email: network_partner.email
-                          }]
+        put :update, params: {
+          assessment_id: assessment.id, id: network_partner.id,
+          permissions: [{
+            level: 'participant',
+            email: network_partner.email
+          }]
+        }
       end
 
       it {
@@ -426,11 +440,14 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: network_partner.id,
-            permissions: [{
-                              level: 'facilitator',
-                              email: network_partner.email
-                          }]
+        put :update, params: {
+          assessment_id: assessment.id,
+          id: network_partner.id,
+          permissions: [{
+            level: 'facilitator',
+            email: network_partner.email
+          }]
+        }
       end
 
       it {
@@ -465,11 +482,14 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: user.id,
-            permissions: [{
-                              level: 'network_partner',
-                              email: user.email
-                          }]
+        put :update, params: {
+          assessment_id: assessment.id,
+          id: user.id,
+          permissions: [{
+            level: 'network_partner',
+            email: user.email
+          }]
+        }
       end
 
       it {
@@ -496,7 +516,7 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: participant.id
+        put :update, params: { assessment_id: assessment.id, id: participant.id }
       end
 
       it {
@@ -512,7 +532,7 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_out :user
-        put :update, assessment_id: assessment.id, id: 1
+        put :update, params: { assessment_id: assessment.id, id: 1 }
       end
 
       it {
@@ -530,7 +550,7 @@ describe V1::AssessmentsPermissionsController do
     context 'when unauthenticated' do
       before(:each) do
         sign_out :user
-        put :deny, assessment_id: assessment.id, id: 0, email: user.email
+        put :deny, params: { assessment_id: assessment.id, id: 0, email: user.email }
       end
 
       it {
@@ -554,7 +574,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in facilitator
-          put :deny, assessment_id: assessment.id, id: access_request.id, email: user.email
+          put :deny, params: { assessment_id: assessment.id, id: access_request.id, email: user.email }
         end
 
         it {
@@ -582,7 +602,7 @@ describe V1::AssessmentsPermissionsController do
 
       before(:each) do
         sign_in participant
-        put :deny, assessment_id: assessment.id, id: access_request.id, email: user.email
+        put :deny, params: { assessment_id: assessment.id, id: access_request.id, email: user.email }
       end
 
       it {
@@ -599,7 +619,7 @@ describe V1::AssessmentsPermissionsController do
     context 'when unauthenticated' do
       before(:each) do
         sign_out :user
-        put :accept, assessment_id: assessment.id, id: 0, email: user.email
+        put :accept, params: { assessment_id: assessment.id, id: 0, email: user.email }
       end
 
       it {
@@ -619,7 +639,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in facilitator
-          put :accept, assessment_id: assessment.id, id: access_request.id, email: user.email
+          put :accept, params: { assessment_id: assessment.id, id: access_request.id, email: user.email }
         end
 
         it {
@@ -642,7 +662,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in participant
-          put :accept, assessment_id: assessment.id, id: access_request.id, email: user.email
+          put :accept, params: { assessment_id: assessment.id, id: access_request.id, email: user.email }
         end
 
         it {
@@ -656,7 +676,7 @@ describe V1::AssessmentsPermissionsController do
     context 'when unauthenticated' do
       before(:each) do
         sign_out :user
-        get :current_level, assessment_id: assessment.id
+        get :current_level, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -672,7 +692,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :current_level, assessment_id: assessment.id
+          get :current_level, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -687,7 +707,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :current_level, assessment_id: assessment.id
+          get :current_level, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -702,7 +722,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :current_level, assessment_id: assessment.id
+          get :current_level, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -719,7 +739,7 @@ describe V1::AssessmentsPermissionsController do
 
         before(:each) do
           sign_in user
-          get :current_level, assessment_id: assessment.id
+          get :current_level, params: { assessment_id: assessment.id }
         end
 
         it {

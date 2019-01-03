@@ -15,7 +15,7 @@
 #
 
 require 'spec_helper'
-require_relative './message_migration_concern_spec'
+require 'support/message_migration_concern_shared_example'
 
 describe Inventory do
   it_behaves_like 'a tool which adds initial messages', described_class.to_s.downcase

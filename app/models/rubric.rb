@@ -16,7 +16,7 @@ class Rubric < ActiveRecord::Base
   has_many :feedbacks
 
   has_and_belongs_to_many :questions
-  has_many :categories, -> { uniq }, through: :questions
+  has_many :categories, -> { distinct }, through: :questions
 
   scope :enabled, -> { where(enabled: true) }
   scope :assessment_driven, -> { where(tool_type: Assessment.to_s) }

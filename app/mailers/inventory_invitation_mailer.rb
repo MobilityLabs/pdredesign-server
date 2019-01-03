@@ -1,6 +1,6 @@
 class InventoryInvitationMailer < ApplicationMailer
   def invite(user_invitation)
-    invite = InventoryInvitation.find(user_invitation)
+    invite = InventoryInvitation.find(user_invitation.id)
     user = invite.user
     inventory = invite.inventory
 

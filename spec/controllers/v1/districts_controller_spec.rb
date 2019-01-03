@@ -14,12 +14,12 @@ describe V1::DistrictsController do
     end
 
     it 'can search a districts name' do
-      get :search, query: 'some'
+      get :search, params: { query: 'some' }
       expect(json["results"].count).to eq(4)
     end
 
     it 'returns a limited set when blank' do
-      get :search, query: ''
+      get :search, params: { query: '' }
       expect(json["results"].count).to eq(10)
     end
   end

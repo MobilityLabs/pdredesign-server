@@ -9,10 +9,12 @@ describe V1::DistrictMessagesController do
 
   context '#create' do
     it 'can create a message record' do
-      post :create, name: 'test',
+      post :create, params: {
+        name: 'test',
         address: 'some', 
         sender_name: 'name',
         sender_email: 'email@test.com'
+      }
 
       assert_response :success
       record = DistrictMessage.find_by(address: 'some')
@@ -22,7 +24,7 @@ describe V1::DistrictMessagesController do
     end
 
     it 'returns errors when message cant be created' do
-      post :create, name: 'test'
+      post :create, params: { name: 'test' }
 
       assert_response 422
       expect(json["errors"]).not_to be_empty

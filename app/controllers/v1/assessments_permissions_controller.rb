@@ -18,17 +18,17 @@ class V1::AssessmentsPermissionsController < ApplicationController
       params[:permissions].each{ |permission| update_permission(permission) }
     end
 
-    render nothing: true
+    head :ok
   end
 
   def accept
     @ap.accept_permission_requested(@requester)
-    render nothing: true
+    head :ok
   end
 
   def deny
     @ap.deny(@requester)
-    render nothing: true
+    head :ok
   end
 
   def current_level

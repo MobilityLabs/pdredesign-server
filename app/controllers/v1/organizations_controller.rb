@@ -29,7 +29,7 @@ class V1::OrganizationsController < ApplicationController
     
     @organization.update(logo: params[:file])
 
-    render nothing: true
+    head :ok
   end
   authority_actions upload: 'update'
 

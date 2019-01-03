@@ -1,0 +1,49 @@
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+
+    <table class="twelve columns">
+      <tr>
+        <td class="left-text-pad">
+          <h2>Hello <%= @full_name %>, </h2>
+          <br>
+          <p class="lead">
+            Good News!
+            <%= @participant_name %> has completed a response on the assessment "<%= @assessment_name %>"
+            for <%= @district_name %>
+          </p>
+
+          <br>
+          <br>
+          <p class="lead"> 
+            <center>
+              <a href="<%= @dashboard_link %>" taget="_blank" class="button">View Assessment Dashboard</a> 
+            </center>
+          </p>
+
+          <br>
+          <br>
+          <p class="lead">
+            Your assessment has been completed by <%= @completed_num %> out of <%= @participant_count %> participants.
+            You can track the progress of all your participants at any time on the assessment dashboard.
+          </p>
+          <br>
+          <br>
+          <p class="lead">
+            If you haven’t already done so, you should schedule the consensus meeting.
+            It’s important to put this on everyone’s calendar while their responses are 
+            still fresh on their mind. You can schedule the consensus meeting on the 
+            <%= link_to 'assessment dashboard', @dashboard_link, target: '_blank' %>.
+          </p>
+          <br>
+          <center>
+          </center>
+        </td>
+        <td class="expander"></td>
+      </tr>
+    </table>
+
+    </td>
+  </tr>
+</table>
+

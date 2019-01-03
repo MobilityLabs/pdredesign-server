@@ -5,7 +5,7 @@ module SharedInventoryFetch
     id = params[:inventory_id] || params[:id]
     @inventory = Inventory.where('inventories.id = ? OR inventories.share_token = ?', id.to_i, id).first
     unless @inventory
-      render nothing:true, status: :not_found
+      head :not_found
       return nil
     end
     unless @inventory.share_token == id

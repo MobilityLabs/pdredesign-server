@@ -30,12 +30,12 @@ describe V1::UserController do
     before { user.update(email: 'some_user@gmail.com') }
 
     it 'sends the reset to a user' do
-      post :request_reset, email: 'some_user@gmail.com'
+      post :request_reset, params: { email: 'some_user@gmail.com' }
       assert_response :success
     end
 
     it 'sends the reset to a user even if the email contains capital letters' do
-      post :request_reset, email: 'SOME_User@GMail.com'
+      post :request_reset, params: { email: 'SOME_User@GMail.com' }
       assert_response :success
     end
 
@@ -47,14 +47,14 @@ describe V1::UserController do
     it 'sets the reset_password_token' do
       allow(controller).to receive(:hash).and_return('xyz')
 
-      post :request_reset, email: 'some_user@gmail.com'
+      post :request_reset, params: { email: 'some_user@gmail.com' }
       expect(User.find(user.id).reset_password_token).to eq('xyz')
     end
 
     it 'sets the reset_password_token' do
       user.update(reset_password_sent_at: nil)
 
-      post :request_reset, email: 'some_user@gmail.com'
+      post :request_reset, params: { email: 'some_user@gmail.com' }
       expect(User.find(user.id).reset_password_sent_at).not_to be_nil
     end
 
@@ -62,11 +62,11 @@ describe V1::UserController do
       expect(PasswordResetNotificationWorker).to receive(:perform_async)
                                                      .with(user.id)
 
-      post :request_reset, email: 'some_user@gmail.com'
+      post :request_reset, params: { email: 'some_user@gmail.com' }
     end
 
     it 'return error when the email does not exist' do
-      post :request_reset, email: 'notexisting@user.com'
+      post :request_reset, params: { email: 'notexisting@user.com' }
       assert_response 422
     end
   end
@@ -76,7 +76,7 @@ describe V1::UserController do
 
     it 'returns unauthorized if the token is not found' do
       user.update(reset_password_token: 'expected_token')
-      post :reset, token: 'other_token', password: 'xyz'
+      post :reset, params: { token: 'other_token', password: 'xyz' }
 
       assert_response :unauthorized
     end
@@ -84,7 +84,7 @@ describe V1::UserController do
     it 'requires the right token to reset password' do
       user.update(reset_password_token: 'expected_token')
 
-      post :reset, token: 'expected_token', password: 'xyz1235'
+      post :reset, params: { token: 'expected_token', password: 'xyz1235' }
       assert_response :success
 
       expect(User.find(user.id).valid_password?('xyz1235')).to eq(true)
@@ -94,7 +94,7 @@ describe V1::UserController do
       user.update(reset_password_token: 'expected_token',
                   reset_password_sent_at: Time.now)
 
-      post :reset, token: 'expected_token', password: 'xyz1235'
+      post :reset, params: { token: 'expected_token', password: 'xyz1235' }
       assert_response :success
 
       expected_user = User.find(user.id)
@@ -106,7 +106,7 @@ describe V1::UserController do
     it 'returns errors when user cant be updated' do
       user.update(reset_password_token: 'expected_token')
 
-      post :reset, token: 'expected_token', password: 'xyz'
+      post :reset, params: { token: 'expected_token', password: 'xyz' }
       assert_response 422
 
       expect(json["errors"]["password"]).not_to eq(nil)
@@ -128,7 +128,7 @@ describe V1::UserController do
               password: 'some_password',
               team_role: 'leader'}
 
-      post :create, opts.merge(options)
+      post :create, params: opts.merge(options)
     end
 
 
@@ -323,18 +323,18 @@ describe V1::UserController do
 
   context '#update' do
     it 'updates a users fields' do
-      put :update, {first_name: 'updated', last_name: 'user'}
+      put :update, params: { first_name: 'updated', last_name: 'user' }
 
       expect(json["first_name"]).to eq('updated')
     end
 
     it 'can take multiple districts' do
-      put :update, {district_ids: "#{district.id}, #{district2.id}"}
+      put :update, params: { district_ids: "#{district.id}, #{district2.id}" }
       expect(json["district_ids"].count).to eq(2)
     end
 
     it 'returns errors on ActiveRecord failure' do
-      put :update, {email: 'asdfasdf'}
+      put :update, params: { email: 'asdfasdf' }
 
       expect(response.status).to eq(422)
       expect(json["errors"]).to_not be_nil
@@ -344,7 +344,7 @@ describe V1::UserController do
       it 'should not reset the district_ids' do
         user.update(districts: [district])
 
-        put :update, {email: 'some@user.com'}
+        put :update, params: { email: 'some@user.com' }
 
         user.reload
         expect(user.district_ids).to eq([district.id])
@@ -354,7 +354,7 @@ describe V1::UserController do
         org = Organization.create!(name: 'test')
         user.update(organizations: [org])
 
-        put :update, {email: 'some@user.com'}
+        put :update, params: { email: 'some@user.com' }
 
         user.reload
         expect(user.organization_ids).to eq([org.id])
@@ -363,7 +363,7 @@ describe V1::UserController do
       it 'resets :district_ids when a key is explicitly set to nil' do
         user.update(districts: [district])
 
-        put :update, {email: 'some@user.com', district_ids: nil}
+        put :update, params: { email: 'some@user.com', district_ids: nil }
 
         user.reload
         expect(user.district_ids).to be_empty
@@ -373,7 +373,7 @@ describe V1::UserController do
         org = Organization.create!(name: 'test')
         user.update(organizations: [org])
 
-        put :update, {email: 'some@user.com', organization_ids: nil}
+        put :update, params: { email: 'some@user.com', organization_ids: nil }
 
         user.reload
         expect(user.organization_ids).to be_empty

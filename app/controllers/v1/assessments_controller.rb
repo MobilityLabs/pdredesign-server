@@ -22,7 +22,7 @@ class V1::AssessmentsController < ApplicationController
       if update_params[:assign]
         invite_all_users(@assessment)
       end
-      render nothing: true
+      head :ok
     else
       @errors = @assessment.errors
       render 'v1/shared/errors', status: :bad_request

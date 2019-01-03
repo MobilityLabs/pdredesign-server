@@ -1,6 +1,6 @@
 class AnalysisInvitationMailer < ApplicationMailer
   def invite(user_invitation)
-    invite = AnalysisInvitation.find(user_invitation)
+    invite = AnalysisInvitation.find(user_invitation.id)
     user = invite.user
     @analysis = invite.analysis
 

@@ -23,12 +23,12 @@ describe V1::SharedPrioritiesController do
         end
 
         it 'fetches categories using assessment priority' do 
-          get :index, shared_token: token, format: :json
+          get :index, params: { shared_token: token }, as: :json
         end
       end
 
       it do
-        get :index, shared_token: token, format: :json
+        get :index, params: { shared_token: token }, as: :json
         expect(response).to have_http_status(:success)
       end
     end
@@ -37,7 +37,7 @@ describe V1::SharedPrioritiesController do
       let(:token) { 'foo-bar-invalid' }
 
       it do
-        get :index, shared_token: token, format: :json
+        get :index, params: { shared_token: token }, as: :json
         expect(response).to have_http_status(:not_found)
       end
     end

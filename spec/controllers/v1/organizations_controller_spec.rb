@@ -27,7 +27,7 @@ describe V1::OrganizationsController do
       allow(controller).to receive(:find_organization).and_return(double)
 
       expect(double).to receive(:update).with(logo: anything)
-      post :upload, upload: file, organization_id: @org.id
+      post :upload, params: { upload: file, organization_id: @org.id }
     end
 
     it 'does not allow non-networkpartner to upload' do
@@ -35,14 +35,14 @@ describe V1::OrganizationsController do
 
       file   = fixture_file_upload('files/logo.png', 'image/png')
 
-      post :upload, file: file, organization_id: @org.id
+      post :upload, params: { file: file, organization_id: @org.id }
       assert_response 403 
     end
   end
 
   describe '#create' do
     it 'creates an organization' do
-      post :create, name: 'Org LLC', category_ids: '1,2,3'
+      post :create, params: { name: 'Org LLC', category_ids: '1,2,3' }
 
       assert_response :success
       expect(Organization.where(name: 'Org LLC').count).to eq(1)
@@ -51,7 +51,7 @@ describe V1::OrganizationsController do
     it 'assigns the correct categories' do
       categories = 3.times.map { Category.create! }
 
-      post :create, name: 'Org LLC', category_ids: categories.map(&:id)
+      post :create, params: { name: 'Org LLC', category_ids: categories.map(&:id) }
 
       org = Organization.find_by(name: 'Org LLC')
       expect(org.categories.count).to eq(3)
@@ -69,7 +69,7 @@ describe V1::OrganizationsController do
     it 'anyone can create an org' do
       sign_out :user
 
-      post :create, name: 'Org LLC'
+      post :create, params: { name: 'Org LLC' }
       assert_response :success
 
       org = Organization.find_by(name: 'Org LLC')
@@ -82,13 +82,13 @@ describe V1::OrganizationsController do
 
     describe '#update' do
       it 'updates an organization' do
-        post :update, id: @org.id, name: 'new_name'
+        post :update, params: { id: @org.id, name: 'new_name' }
 
         expect(Organization.find(@org.id).name).to eq('new_name')
       end
 
       it 'returns errors for an invalid update' do
-        post :update, id: @org.id, name: nil, category_ids: '1'
+        post :update, params: { id: @org.id, name: nil, category_ids: '1' }
 
         assert_response 422
         expect(json["errors"]).not_to be_empty
@@ -99,7 +99,7 @@ describe V1::OrganizationsController do
       it 'doesnt require a login user to do a search' do
         sign_out :user
 
-        get :search, query: 'name'
+        get :search, params: { query: 'name' }
         assert_response :success
       end
 
@@ -108,21 +108,21 @@ describe V1::OrganizationsController do
 
         Organization.create(name: "other") 
 
-        get :search, query: 'name'
+        get :search, params: { query: 'name' }
         expect(assigns(:results).count).to eq(3)
       end
     end
 
     describe '#show' do
       it 'finds the correct organization' do
-        get :show, id: @org.id
+        get :show, params: { id: @org.id }
         expect(assigns(:organization)).to eq(@org)
       end
 
       it 'does not require a user' do
         sign_out user
 
-        get :show, id: @org.id
+        get :show, params: { id: @org.id }
         expect(assigns(:organization)).to eq(@org)
       end
     end

@@ -13,7 +13,12 @@ describe V1::ConsensusController do
     }
 
     let!(:response) {
-      create(:response, rubric: assessment.rubric, responder: assessment, submitted_at: nil)
+      create(
+        :response,
+        rubric: assessment.rubric,
+        responder: assessment,
+        submitted_at: nil
+      )
     }
 
     context 'when the user is not a facilitator for the assessment' do
@@ -23,7 +28,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in non_facilitator
-        put :update, assessment_id: assessment.id, id: response.id, submit: true
+        put :update, params: { assessment_id: assessment.id, id: response.id, submit: true }
       end
 
       it {
@@ -39,7 +44,11 @@ describe V1::ConsensusController do
 
         before(:each) do
           sign_in facilitator
-          put :update, assessment_id: assessment.id, id: response.id, submit: false
+          put :update, params: {
+            assessment_id: assessment.id,
+            id: response.id,
+            submit: false
+          }, as: :json
           response.reload
         end
 
@@ -55,7 +64,7 @@ describe V1::ConsensusController do
 
         before(:each) do
           sign_in facilitator
-          put :update, assessment_id: assessment.id, id: response.id, submit: true
+          put :update, params: { assessment_id: assessment.id, id: response.id, submit: true }
           response.reload
         end
 
@@ -78,7 +87,7 @@ describe V1::ConsensusController do
     context 'when the user is not authenticated' do
       before(:each) do
         sign_out :user
-        get :show, assessment_id: assessment.id, id: response.id
+        get :show, params: { assessment_id: assessment.id, id: response.id }
       end
 
       it {
@@ -93,7 +102,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in user
-        get :show, assessment_id: assessment.id, id: 0
+        get :show, params: { assessment_id: assessment.id, id: 0 }
       end
 
       it {
@@ -110,7 +119,7 @@ describe V1::ConsensusController do
 
         before(:each) do
           sign_in user
-          get :show, assessment_id: assessment.id, id: response.id
+          get :show, params: { assessment_id: assessment.id, id: response.id }
         end
 
         it {
@@ -129,7 +138,11 @@ describe V1::ConsensusController do
 
         before(:each) do
           sign_in user
-          get :show, assessment_id: assessment.id, id: response.id, team_role: 'role'
+          get :show, params: {
+            assessment_id: assessment.id,
+            id: response.id,
+            team_role: 'role'
+          }
         end
 
         it {
@@ -159,7 +172,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in non_facilitator
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -170,7 +183,7 @@ describe V1::ConsensusController do
     context 'when a consensus does not exist for this assessment' do
       before(:each) do
         sign_in facilitator
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -198,7 +211,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in facilitator
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -214,7 +227,7 @@ describe V1::ConsensusController do
 
     context 'when unauthenticated' do
       before(:each) do
-        get :evidence, assessment_id: 1, question_id: 1
+        get :evidence, params: { assessment_id: 1, question_id: 1 }
       end
 
       it 'requires authentication' do
@@ -234,7 +247,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in user
-        get :evidence, assessment_id: assessment.id, question_id: 1
+        get :evidence, params: { assessment_id: assessment.id, question_id: 1 }
       end
 
       it 'returns an empty JSON array' do
@@ -266,7 +279,7 @@ describe V1::ConsensusController do
 
       before(:each) do
         sign_in user
-        get :evidence, assessment_id: assessment.id, question_id: score.question_id
+        get :evidence, params: { assessment_id: assessment.id, question_id: score.question_id }
       end
 
       it 'send back a non-empty JSON array' do

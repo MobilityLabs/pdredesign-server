@@ -16,7 +16,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_out :user
-        get :index, assessment_id: assessment.id
+        get :index, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -35,7 +35,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        get :index, assessment_id: assessment.id
+        get :index, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -58,7 +58,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_out :user
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -79,7 +79,7 @@ describe V1::ParticipantsController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id, user_id: user.id
+          post :create, params: { assessment_id: assessment.id, user_id: user.id }
         end
 
         it {
@@ -108,7 +108,7 @@ describe V1::ParticipantsController do
             expect(double).to receive(:deliver_now)
             expect(AssessmentsMailer).to receive(:assigned).and_return(double)
 
-            post :create, assessment_id: assessment.id, user_id: user.id, send_invite: true
+            post :create, params: { assessment_id: assessment.id, user_id: user.id, send_invite: true }
           end
 
           it {
@@ -119,7 +119,7 @@ describe V1::ParticipantsController do
         context 'when :send_invite is not true' do
           before(:each) do
             sign_in facilitator
-            post :create, assessment_id: assessment.id, user_id: user.id
+            post :create, params: { assessment_id: assessment.id, user_id: user.id }
           end
 
           it {
@@ -151,7 +151,7 @@ describe V1::ParticipantsController do
     context 'when there are no pending invitations for the participant' do
       before(:each) do
         sign_in user
-        delete :destroy, assessment_id: assessment.id, id: participant.id
+        delete :destroy, params: { assessment_id: assessment.id, id: participant.id }
       end
 
       it {
@@ -173,7 +173,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        delete :destroy, assessment_id: assessment.id, id: participant.id
+        delete :destroy, params: { assessment_id: assessment.id, id: participant.id }
       end
 
       it {
@@ -184,7 +184,7 @@ describe V1::ParticipantsController do
     context 'when the participant is not associated with this assessment' do
       before(:each) do
         sign_in user
-        delete :destroy, assessment_id: assessment.id, id: 0
+        delete :destroy, params: { assessment_id: assessment.id, id: 0 }
       end
 
       it {
@@ -199,7 +199,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in non_owner
-        delete :destroy, assessment_id: assessment.id, id: participant.id
+        delete :destroy, params: { assessment_id: assessment.id, id: participant.id }
       end
 
       it {
@@ -221,7 +221,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        get :all, assessment_id: assessment.id
+        get :all, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -240,7 +240,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        get :all, assessment_id: assessment.id
+        get :all, params: { assessment_id: assessment.id }
       end
 
       it 'gives a list of all participants in assessment district' do
@@ -261,7 +261,7 @@ describe V1::ParticipantsController do
 
         before(:each) do
           sign_in user
-          get :all, assessment_id: assessment.id
+          get :all, params: { assessment_id: assessment.id }
         end
 
         it 'does not include them' do
@@ -284,7 +284,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        get :mail, assessment_id: assessment.id, participant_id: assessment.participants.first.id
+        get :mail, params: { assessment_id: assessment.id, participant_id: assessment.participants.first.id }
       end
 
       it {
@@ -303,7 +303,7 @@ describe V1::ParticipantsController do
 
       before(:each) do
         sign_in user
-        get :mail, assessment_id: assessment.id, participant_id: participant.id
+        get :mail, params: { assessment_id: assessment.id, participant_id: participant.id }
       end
 
       it {
@@ -317,7 +317,7 @@ describe V1::ParticipantsController do
 
         before(:each) do
           sign_in user
-          get :mail, assessment_id: assessment.id, participant_id: 0
+          get :mail, params: { assessment_id: assessment.id, participant_id: 0 }
         end
 
         it {
@@ -338,7 +338,7 @@ describe V1::ParticipantsController do
           allow(AssessmentInvitationMailer).to receive(:invite).and_return(double)
           allow(AssessmentsMailer).to receive(:assigned).and_return(double)
 
-          get :mail, assessment_id: assessment.id, participant_id: participant.id
+          get :mail, params: { assessment_id: assessment.id, participant_id: participant.id }
         end
 
         it 'returns the invitation email body of assigned email' do

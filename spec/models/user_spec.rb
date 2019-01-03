@@ -42,7 +42,7 @@ describe User do
   describe '#avatar' do
     let(:user) { FactoryGirl.create(:user) }
     it 'returns a default user avatar' do
-      expect(user.avatar).to match('images/default.png')
+      expect(user.avatar).to match(/assets\/default-[a-z0-9]*\.png/)
     end
   end
 

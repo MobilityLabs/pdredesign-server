@@ -6,11 +6,11 @@ class V1::ProspectiveUsersController < ApplicationController
 
   private
   def render_valid
-    render nothing: true
+    head :ok
   end
 
   def render_errors(record)
-    render :create, status: 422, locals: { errors: record.errors }
+    render :create, status: :unprocessable_entity, locals: { errors: record.errors }
   end
 
   def allowed_params
@@ -18,6 +18,6 @@ class V1::ProspectiveUsersController < ApplicationController
   end
 
   def create_prospective_user(params)
-    ProspectiveUser.create(params)    
+    ProspectiveUser.create(params)
   end
 end

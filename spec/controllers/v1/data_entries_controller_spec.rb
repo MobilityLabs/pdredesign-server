@@ -13,7 +13,7 @@ describe V1::DataEntriesController do
     it 'requires logged in user' do
       sign_out :user
 
-      get :index, inventory_id: inventory.id
+      get :index, params: { inventory_id: inventory.id }
       assert_response :unauthorized
     end
 
@@ -23,7 +23,7 @@ describe V1::DataEntriesController do
       end
 
       it 'in json' do
-        get :index, inventory_id: inventory.id
+        get :index, params: { inventory_id: inventory.id }
         data_entries = assigns(:data_entries)
 
         assert_response :success
@@ -31,7 +31,7 @@ describe V1::DataEntriesController do
       end
 
       it 'in csv' do
-        get :index, inventory_id: inventory.id, format: :csv
+        get :index, params: { inventory_id: inventory.id}, format: :csv
         data_entries = assigns(:data_entries)
 
         assert_response :success
@@ -46,13 +46,13 @@ describe V1::DataEntriesController do
     it 'requires logged in user' do
       sign_out :user
 
-      get :show, inventory_id: inventory.id, id: inventory.data_entries.first.id
+      get :show, params: { inventory_id: inventory.id, id: inventory.data_entries.first.id }
       assert_response :unauthorized
     end
 
     it "gets an inventory's specific data entry" do
       sign_in inventory.owner
-      get :show, inventory_id: inventory.id, id: inventory.data_entries.first.id
+      get :show, params: { inventory_id: inventory.id, id: inventory.data_entries.first.id }
       data_entry = assigns(:data_entry)
 
       expect(response).to have_http_status(:success)
@@ -64,14 +64,14 @@ describe V1::DataEntriesController do
     it 'requires logged in user' do
       sign_out :user
 
-      post :create, inventory_id: inventory.id
+      post :create, params: { inventory_id: inventory.id }
       assert_response :unauthorized
     end
 
     it "doesn't create an incomplete data entry" do
       sign_in inventory.owner
 
-      post :create, inventory_id: inventory.id
+      post :create, params: { inventory_id: inventory.id }
       assert_response 422
       expect(assigns(:data_entry).persisted?).to be(false)
     end
@@ -79,7 +79,7 @@ describe V1::DataEntriesController do
     it "returns json errors when a data entry can't be created" do
       sign_in inventory.owner
 
-      post :create, inventory_id: inventory.id
+      post :create, params: { inventory_id: inventory.id }
       assert_response 422
       expect(json['errors'].values.flatten).to include("can't be blank")
     end
@@ -87,18 +87,19 @@ describe V1::DataEntriesController do
     it 'creates a record' do
       sign_in inventory.owner
 
-      post :create,
-           inventory_id: inventory.id,
-           name: 'foo',
-           general_data_question_attributes: {
-             data_capture: GeneralDataQuestion.data_capture_options.values.first
-           },
-           data_entry_question_attributes: {
-             when_data_is_entered: DataEntryQuestion.data_entered_frequencies.values.first
-           },
-           data_access_question_attributes: {
-             who_access_data: DataAccessQuestion.data_accessed_bies.values.first
-           }
+      post :create, params: {
+        inventory_id: inventory.id,
+        name: 'foo',
+        general_data_question_attributes: {
+          data_capture: GeneralDataQuestion.data_capture_options.values.first
+        },
+        data_entry_question_attributes: {
+          when_data_is_entered: DataEntryQuestion.data_entered_frequencies.values.first
+        },
+        data_access_question_attributes: {
+          who_access_data: DataAccessQuestion.data_accessed_bies.values.first
+        }
+      }
 
       assert_response 201
     end
@@ -110,19 +111,20 @@ describe V1::DataEntriesController do
     it 'requires logged in user' do
       sign_out :user
 
-      put :update, inventory_id: inventory.id, id: data_entry.id
+      put :update, params: { inventory_id: inventory.id, id: data_entry.id }
       assert_response :unauthorized
     end
 
     it "returns json errors when a data entry can't be updated" do
       sign_in inventory.owner
 
-      put :update,
-          inventory_id: inventory.id,
-          id: data_entry.id,
-          general_data_question_attributes: {
-            data_capture: 'derp'
-          }
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: data_entry.id,
+        general_data_question_attributes: {
+          data_capture: 'derp'
+        }
+      }
 
       expect(response).to have_http_status(422)
       expect(json['errors'].values.flatten).to include("'derp' not permissible")
@@ -131,12 +133,13 @@ describe V1::DataEntriesController do
     it 'updates a record' do
       sign_in inventory.owner
 
-      put :update,
-          inventory_id: inventory.id,
-          id: data_entry.id,
-          data_access_question_attributes: {
-            notes: 'other notes'
-          }
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: data_entry.id,
+        data_access_question_attributes: {
+          notes: 'other notes'
+        }
+      }
 
       assert_response 200
       expect(data_entry.reload.data_access_question.notes).to eq('other notes')

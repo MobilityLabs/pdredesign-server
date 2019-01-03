@@ -7,7 +7,7 @@ describe V1::SessionsController do
     before(:each) do
       request.env['HTTP_ACCEPT'] = 'application/json'
       request.env['devise.mapping'] = Devise.mappings[:user]
-      post :create, { email: 'someuser@user.com', password: 'somepassword' }
+      post :create, params: { email: 'someuser@user.com', password: 'somepassword' }
     end
 
     it 'denies them' do
@@ -24,7 +24,7 @@ describe V1::SessionsController do
       before(:each) do
         request.env['HTTP_ACCEPT'] = 'application/json'
         request.env['devise.mapping'] = Devise.mappings[:user]
-        post :create, { email: 'example@user.com', password: 'bad' }
+        post :create, params: { email: 'example@user.com', password: 'bad' }
       end
 
       it 'denies them' do
@@ -36,7 +36,7 @@ describe V1::SessionsController do
       before(:each) do
         request.env['HTTP_ACCEPT'] = 'application/json'
         request.env['devise.mapping'] = Devise.mappings[:user]
-        post :create, { email: 'example@user.com', password: 'sup3r_s3cr3t' }
+        post :create, params: { email: 'example@user.com', password: 'sup3r_s3cr3t' }
       end
 
       it 'permits them' do
@@ -44,7 +44,7 @@ describe V1::SessionsController do
       end
 
       it 'returns the user hash' do
-        post :create, { email: 'example@user.com', password: 'sup3r_s3cr3t' }
+        post :create, params: { email: 'example@user.com', password: 'sup3r_s3cr3t' }
         expect(json['user']['email']).to eq('example@user.com')
         expect(json['user']['password']).to be_nil
         expect(json['user']['first_name']).to eq('Example')

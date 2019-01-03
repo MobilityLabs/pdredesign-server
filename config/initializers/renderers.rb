@@ -17,6 +17,6 @@ ActionController::Renderers.add :pdf do |filename, options|
 end
 
 ActionController::Renderers.add :csv do |filename, options|
-  send_data render_to_string(options), type: Mime::CSV,
+  send_data render_to_string(options), type: Mime[:csv],
     disposition: "attachment; filename=#{filename.to_s}.csv"
 end

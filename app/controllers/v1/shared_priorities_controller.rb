@@ -1,5 +1,5 @@
 class V1::SharedPrioritiesController < ApplicationController
-  before_filter :load_assessment!
+  before_action :load_assessment!
 
   def index
     @diagnostic_min = 2
@@ -20,7 +20,7 @@ class V1::SharedPrioritiesController < ApplicationController
 
   def load_assessment!
     return true if assessment
-    render nothing: true, status: :not_found
+    head :not_found
   end
 
   def request_share_token

@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def avatar
-    self[:avatar] || ActionController::Base.helpers.asset_path('images/default.png')
+    self[:avatar] || ActionController::Base.helpers.asset_path('default')
   end
 
   def role
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def ensure_district(district:)
-    return if district_ids.include? district.id
+    return if districts.include? district
     districts << district
   end
 

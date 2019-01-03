@@ -60,10 +60,10 @@ class Assessment < ActiveRecord::Base
   validates :rubric_id, presence: true
   validates :district_id, presence: true
   validates :due_date, presence: true, date: true
-  validates :message, presence: true, if: 'assigned_at.present?'
+  validates :message, presence: true, if: -> { assigned_at.present? }
 
-  validate :validate_participants, if: 'assigned_at.present?'
-  validate :meeting_date_not_in_the_past, if: 'meeting_date.present?'
+  validate :validate_participants, if: -> { assigned_at.present? }
+  validate :meeting_date_not_in_the_past, if: -> { meeting_date.present? }
 
   before_save :set_assigned_at
   before_save :ensure_share_token

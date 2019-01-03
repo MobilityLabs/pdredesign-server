@@ -5,7 +5,7 @@ describe V1::AnalysisResponsesController do
   describe 'POST #create' do
     context 'when unauthenticated' do
       before(:each) do
-        post :create, inventory_id: 100000, analysis_id: 100000
+        post :create, params: { inventory_id: 100000, analysis_id: 100000 }
       end
 
       it 'rejects their request outright' do
@@ -28,7 +28,7 @@ describe V1::AnalysisResponsesController do
 
       before(:each) do
         sign_in user
-        post :create, inventory_id: inventory.id, analysis_id: analysis.id
+        post :create, params: { inventory_id: inventory.id, analysis_id: analysis.id }
       end
 
       it 'does not allow them to create the entity' do
@@ -59,7 +59,7 @@ describe V1::AnalysisResponsesController do
 
       before(:each) do
         sign_in user
-        post :create, inventory_id: inventory.id, analysis_id: analysis.id
+        post :create, params: { inventory_id: inventory.id, analysis_id: analysis.id }
       end
 
       it 'creates the response entity' do

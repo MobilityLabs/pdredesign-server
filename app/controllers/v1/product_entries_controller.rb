@@ -46,7 +46,7 @@ class V1::ProductEntriesController < ApplicationController
 
     @product_entry.destroy
 
-    render nothing: true, status: 204
+    head :no_content
   end
 
   def restore
@@ -55,7 +55,7 @@ class V1::ProductEntriesController < ApplicationController
 
     @product_entry.restore(recursive: true)
 
-    render nothing: true, status: 204
+    head :no_content
   end
 
   private

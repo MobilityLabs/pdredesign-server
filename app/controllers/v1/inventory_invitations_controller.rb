@@ -19,7 +19,7 @@ class V1::InventoryInvitationsController < ApplicationController
     Inventories::MemberFromInvite.new(invite).execute
 
     queue_worker(invite.id) if send_invite
-    render nothing: true
+    head :ok
   end
 
   private

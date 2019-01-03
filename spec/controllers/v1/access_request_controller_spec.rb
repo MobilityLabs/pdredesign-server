@@ -19,7 +19,7 @@ describe V1::AccessRequestController do
     context 'when not authenticated' do
       before(:each) do
         sign_out :user
-        post :create, assessment_id: assessment.id, roles: %i|0 1|
+        post :create, params: { assessment_id: assessment.id, roles: %i|0 1| }
       end
 
       it {
@@ -31,7 +31,7 @@ describe V1::AccessRequestController do
       context 'when successful' do
         before(:each) do
           sign_in facilitator
-          post :create, assessment_id: assessment.id, roles: %i|0 1|
+          post :create, params: { assessment_id: assessment.id, roles: %i|0 1| }
         end
 
         it {
@@ -62,7 +62,7 @@ describe V1::AccessRequestController do
       context 'when unsuccessful' do
         before(:each) do
           sign_in facilitator
-          post :create, assessment_id: assessment.id
+          post :create, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -78,7 +78,7 @@ describe V1::AccessRequestController do
         before(:each) do
           sign_in facilitator
           expect(AccessRequestNotificationWorker).to receive(:perform_async)
-          post :create, assessment_id: assessment.id, roles: %i|0 1|
+          post :create, params: { assessment_id: assessment.id, roles: %i|0 1| }
         end
 
         it {

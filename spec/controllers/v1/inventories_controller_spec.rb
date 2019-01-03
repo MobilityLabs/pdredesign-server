@@ -8,7 +8,7 @@ describe V1::InventoriesController do
     context 'when not authenticated' do
 
       before(:each) do
-        get :index, format: :json
+        get :index, as: :json
       end
 
       it {
@@ -25,7 +25,7 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          get :index, format: :json
+          get :index, as: :json
         end
 
         it 'pulls back an empty list' do
@@ -50,7 +50,7 @@ describe V1::InventoriesController do
 
           before(:each) do
             sign_in user
-            get :index, format: :json
+            get :index, as: :json
           end
 
           it 'returns an array of size 1' do
@@ -78,7 +78,7 @@ describe V1::InventoriesController do
 
           before(:each) do
             sign_in user
-            get :index, format: :json
+            get :index, as: :json
           end
           it 'pulls back an empty list' do
             expect(json.size).to eq 0
@@ -92,7 +92,7 @@ describe V1::InventoriesController do
     context 'anonymous user' do
       context 'non existing inventory' do
         before(:each) do
-          get :show, id: 1, format: :json
+          get :show, params: { id: 1 }, as: :json
         end
 
         it { expect(response).to have_http_status(:not_found) }
@@ -103,14 +103,14 @@ describe V1::InventoriesController do
 
         context 'by id' do
           before(:each) do
-            get :show, id: inventory.id, format: :json
+            get :show, params: { id: inventory.id }, as: :json
           end
           it { expect(response).to have_http_status(:unauthorized) }
         end
 
         context 'by share_token' do
           before(:each) do
-            get :show, id: inventory.share_token, format: :json
+            get :show, params: { id: inventory.share_token }, as: :json
           end
           it { expect(response).to have_http_status(:ok) }
         end
@@ -123,7 +123,7 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          get :show, id: 1, format: :json
+          get :show, params: { id: 1 }, as: :json
         end
 
         it { expect(response).to have_http_status(:not_found) }
@@ -136,7 +136,7 @@ describe V1::InventoriesController do
 
           before(:each) do
             sign_in user
-            get :show, id: inventory.id, format: :json
+            get :show, params: { id: inventory.id }, as: :json
           end
 
           it 'renders inventory identifier' do
@@ -155,7 +155,7 @@ describe V1::InventoriesController do
 
           before(:each) do
             sign_in user
-            get :show, id: inventory.id, format: :json
+            get :show, params: { id: inventory.id }, as: :json
           end
 
           it 'forbidden' do
@@ -174,7 +174,13 @@ describe V1::InventoriesController do
       }
 
       before(:each) do
-        post :create, inventory: {district: {id: district.id}, name: 'I exist', deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')}, format: :json
+        post :create, params: {
+          inventory: {
+            district: {id: district.id},
+            name: 'I exist',
+            deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')
+          }
+        }, as: :json
       end
 
       it {
@@ -195,7 +201,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: '', deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: '',
+              deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')
+            }
+          }, as: :json
         end
 
         it 'sends back a meaningful error message' do
@@ -218,7 +230,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: Faker::Lorem.characters(256), deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: Faker::Lorem.characters(256),
+              deadline: 1.week.from_now.to_date.strftime('%m/%d/%y')
+            }
+          }, as: :json
         end
 
         it 'sends back a meaningful error message' do
@@ -245,7 +263,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: Faker::Lorem.characters(32), deadline: deadline}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: Faker::Lorem.characters(32),
+              deadline: deadline
+            }
+          }, as: :json
         end
 
         it { expect(json['id']).to_not be_nil }
@@ -284,7 +308,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: Faker::Lorem.characters(32), deadline: deadline}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: Faker::Lorem.characters(32),
+              deadline: deadline
+            }
+          }, as: :json
         end
 
         it 'rejects the request' do
@@ -311,7 +341,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: Faker::Lorem.characters(32), deadline: deadline}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: Faker::Lorem.characters(32),
+              deadline: deadline
+            }
+          }, as: :json
         end
 
         it 'rejects the request' do
@@ -340,7 +376,13 @@ describe V1::InventoriesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory: {district: {id: district.id}, name: Faker::Lorem.characters(32), deadline: deadline}, format: :json
+          post :create, params: {
+            inventory: {
+              district: {id: district.id},
+              name: Faker::Lorem.characters(32),
+              deadline: deadline
+            }
+          }, as: :json
         end
 
         it 'rejects the request' do

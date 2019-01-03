@@ -19,7 +19,7 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -39,7 +39,7 @@ describe V1::ResponsesController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id
+          post :create, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -66,7 +66,7 @@ describe V1::ResponsesController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id
+          post :create, params: { assessment_id: assessment.id }
         end
 
         it {
@@ -96,7 +96,10 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        get :show, assessment_id: assessment.id, id: participant_response.id
+        get :show, params: {
+          assessment_id: assessment.id,
+          id: participant_response.id
+        }
       end
 
       it {
@@ -119,7 +122,10 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        get :show, assessment_id: assessment.id, id: participant_response.id
+        get :show, params: {
+          assessment_id: assessment.id,
+          id: participant_response.id
+        }
       end
 
       it {
@@ -152,7 +158,10 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        get :show_slimmed, assessment_id: assessment.id, response_id: participant_response.id
+        get :show_slimmed, params: {
+          assessment_id: assessment.id,
+          response_id: participant_response.id
+        }
       end
 
       it {
@@ -175,7 +184,10 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        get :show_slimmed, assessment_id: assessment.id, response_id: participant_response.id
+        get :show_slimmed, params: {
+          assessment_id: assessment.id,
+          response_id: participant_response.id
+        }
       end
 
       it {
@@ -209,7 +221,11 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: preexisting_response.id, submit: true
+        put :update, params: {
+          assessment_id: assessment.id,
+          id: preexisting_response.id,
+          submit: true
+        }
       end
 
       it {
@@ -224,7 +240,11 @@ describe V1::ResponsesController do
 
       before(:each) do
         sign_in user
-        put :update, assessment_id: assessment.id, id: preexisting_response.id, submit: true
+        put :update, params: {
+          assessment_id: assessment.id,
+          id: preexisting_response.id,
+          submit: true
+        }
       end
 
       it {

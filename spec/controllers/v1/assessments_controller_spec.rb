@@ -24,7 +24,7 @@ describe V1::AssessmentsController do
       context 'when the assessment is considered valid' do
         before(:each) do
           sign_in facilitator
-          put :update, {id: assessment.id, rubric_id: assessment.rubric}
+          put :update, params: { id: assessment.id, rubric_id: assessment.rubric }
           assessment.reload
         end
 
@@ -44,7 +44,7 @@ describe V1::AssessmentsController do
       context 'when the assessment is considered invalid' do
         before(:each) do
           sign_in facilitator
-          put :update, {id: assessment.id, rubric_id: assessment.rubric, meeting_date: 1.day.ago}
+          put :update, params: { id: assessment.id, rubric_id: assessment.rubric, meeting_date: 1.day.ago }
           assessment.reload
         end
 
@@ -74,13 +74,15 @@ describe V1::AssessmentsController do
       context 'when assign is not passed' do
         before(:each) do
           sign_in facilitator
-          put :update, {id: assessment.id,
-                        rubric_id: 9001,
-                        name: 'some assessment',
-                        due_date: time,
-                        message: 'My message',
-                        another_value: 'something',
-                        report_takeaway: 'The takeaway'}
+          put :update, params: {
+            id: assessment.id,
+            rubric_id: 9001,
+            name: 'some assessment',
+            due_date: time,
+            message: 'My message',
+            another_value: 'something',
+            report_takeaway: 'The takeaway'
+          }
           assessment.reload
         end
 
@@ -112,7 +114,7 @@ describe V1::AssessmentsController do
           expect(AllParticipantsNotificationWorker).to receive(:perform_async)
                                                            .with(assessment.id)
 
-          put :update, {id: assessment.id, assign: true}
+          put :update, params: { id: assessment.id, assign: true }
           assessment.reload
         end
 
@@ -133,7 +135,7 @@ describe V1::AssessmentsController do
 
       before(:each) do
         sign_in non_owner
-        put :update, {id: assessment.id, rubric_id: 10000}
+        put :update, params: { id: assessment.id, rubric_id: 10000 }
       end
 
       it {
@@ -154,7 +156,7 @@ describe V1::AssessmentsController do
     context 'when not authenticated' do
       before(:each) do
         sign_out :user
-        get :show, id: assessment.id
+        get :show, params: { id: assessment.id }
       end
 
       it {
@@ -169,7 +171,7 @@ describe V1::AssessmentsController do
 
       before(:each) do
         sign_in user
-        get :show, id: assessment.id
+        get :show, params: { id: assessment.id }
       end
 
       it {
@@ -181,7 +183,7 @@ describe V1::AssessmentsController do
       context 'when message is not set on the assessment' do
         before(:each) do
           sign_in facilitator
-          get :show, id: assessment.id
+          get :show, params: { id: assessment.id }
         end
 
         it {
@@ -208,7 +210,7 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          get :show, id: assessment_with_message.id
+          get :show, params: { id: assessment_with_message.id }
         end
 
         it {
@@ -243,7 +245,7 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          get :show, id: assessment_with_report_takeaway.id
+          get :show, params: { id: assessment_with_report_takeaway.id }
         end
 
         it {
@@ -426,10 +428,11 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          post :create,
-               name: 'some assessment',
-               rubric_id: rubric.id,
-               due_date: 5.days.from_now
+          post :create, params: {
+            name: 'some assessment',
+            rubric_id: rubric.id,
+            due_date: 5.days.from_now
+          }
         end
 
         it {
@@ -464,10 +467,11 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          post :create,
-               name: 'some assessment',
-               rubric_id: rubric.id,
-               due_date: 5.days.from_now
+          post :create, params: {
+            name: 'some assessment',
+            rubric_id: rubric.id,
+            due_date: 5.days.from_now
+          }
         end
 
         it {
@@ -487,7 +491,7 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          post :create, name: 'some assessment', due_date: 5.days.from_now
+          post :create, params: { name: 'some assessment', due_date: 5.days.from_now }
         end
 
         it {
@@ -506,7 +510,7 @@ describe V1::AssessmentsController do
 
         before(:each) do
           sign_in facilitator
-          post :create, name: 'some assessment', due_date: 5.days.from_now, district_id: new_district.id
+          post :create, params: { name: 'some assessment', due_date: 5.days.from_now, district_id: new_district.id }
         end
 
         it {
@@ -523,7 +527,7 @@ describe V1::AssessmentsController do
 
       before(:each) do
         sign_in facilitator
-        post :create, rubric_id: rubric.id, due_date: 5.days.from_now
+        post :create, params: { rubric_id: rubric.id, due_date: 5.days.from_now }
       end
 
       it {

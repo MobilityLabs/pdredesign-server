@@ -9,6 +9,6 @@
 #
 
 class Faq::Category < ActiveRecord::Base
-  has_many  :questions, class: Faq::Question
+  has_many  :questions, class_name: 'Faq::Question'
   validates :heading, presence: true
 end

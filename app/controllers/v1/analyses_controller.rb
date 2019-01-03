@@ -41,7 +41,7 @@ class V1::AnalysesController < ApplicationController
       if analysis_params[:assign]
         AllAnalysisParticipantsNotificationWorker.perform_async(@analysis.id)
       end
-      render nothing: true, status: :no_content
+      head :no_content
     else
       render_error
     end

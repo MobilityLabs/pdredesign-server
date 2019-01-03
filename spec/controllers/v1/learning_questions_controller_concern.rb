@@ -7,7 +7,10 @@ shared_examples_for 'a learning controller' do |tool_sym|
       }
 
       before(:each) do
-        post :create, "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}, format: :json
+        post :create, params: {
+          "#{tool_sym}_id": tool.id,
+          learning_question: { body: 'This is my question.  Does it end in a question mark?' }
+        }, as: :json
       end
 
       it 'sends a message telling the user to authenticate' do
@@ -28,7 +31,10 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          post :create, "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}, format: :json
+          post :create, params: {
+            "#{tool_sym}_id": tool.id,
+            learning_question: {body: 'This is my question.  Does it end in a question mark?'}
+          }, as: :json
         end
 
         after(:each) do
@@ -56,7 +62,9 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          post :create, "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}, format: :json
+          post :create, params: {
+            "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}
+          }, as: :json
         end
 
         it 'creates an entity' do
@@ -82,7 +90,9 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          post :create, "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}, format: :json
+          post :create, params: {
+            "#{tool_sym}_id": tool.id, learning_question: {body: 'This is my question.  Does it end in a question mark?'}
+          }, as: :json
         end
 
         it 'creates an entity' do
@@ -109,7 +119,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          post :create, "#{tool_sym}_id": tool.id, learning_question: {body: ''}, format: :json
+          post :create, params: { "#{tool_sym}_id": tool.id, learning_question: {body: ''} }, as: :json
         end
 
         it 'does not create an entity' do
@@ -131,7 +141,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
       }
 
       before(:each) do
-        get :index, "#{tool_sym}_id": tool.id, format: :json
+        get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
       end
 
       it 'sends a message telling the user to authenticate' do
@@ -146,7 +156,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
         }
 
         before(:each) do
-          get :index, "#{tool_sym}_id": tool.id, format: :json
+          get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
         end
 
         let(:user) {
@@ -155,7 +165,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          get :index, "#{tool_sym}_id": tool.id, format: :json
+          get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
         end
 
         it 'sends an error message' do
@@ -179,7 +189,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          get :index, "#{tool_sym}_id": tool.id, format: :json
+          get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
         end
 
         it 'has the right count of entities' do
@@ -220,7 +230,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
           before(:each) do
             sign_in participant
-            get :index, "#{tool_sym}_id": tool.id, format: :json
+            get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
           end
 
           it 'has the right count of entities' do
@@ -272,7 +282,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
           before(:each) do
             sign_in participant
-            get :index, "#{tool_sym}_id": tool.id, format: :json
+            get :index, params: { "#{tool_sym}_id": tool.id }, as: :json
           end
 
           it 'has the right count of entities' do
@@ -318,7 +328,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
       }
 
       before(:each) do
-        patch :update, "#{tool_sym}_id": tool.id, id: learning_question.id, format: :json
+        patch :update, params: { "#{tool_sym}_id": tool.id, id: learning_question.id }, as: :json
       end
 
       it 'sends a message telling the user to authenticate' do
@@ -342,7 +352,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          patch :update, "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: ''}, format: :json
+          patch :update, params: { "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: ''} }, as: :json
         end
 
         it 'provides a helpful message in JSON' do
@@ -370,7 +380,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
           before(:each) do
             sign_in user
-            patch :update, "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: ''}, format: :json
+            patch :update, params: { "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: ''} }, as: :json
           end
 
           it 'rejects the edit' do
@@ -401,7 +411,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
           before(:each) do
             sign_in user
-            patch :update, "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: 'This is a fix!'}, format: :json
+            patch :update, params: { "#{tool_sym}_id": tool.id, id: learning_question.id, learning_question: {body: 'This is a fix!'} }, as: :json
           end
 
           it 'accepts the edit' do
@@ -429,7 +439,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
       }
 
       before(:each) do
-        delete :destroy, "#{tool_sym}_id": tool.id, id: learning_question.id, format: :json
+        delete :destroy, params: { "#{tool_sym}_id": tool.id, id: learning_question.id }, as: :json
       end
 
       it 'sends a message telling the user to authenticate' do
@@ -454,7 +464,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          delete :destroy, "#{tool_sym}_id": tool.id, id: learning_question.id, format: :json
+          delete :destroy, params: { "#{tool_sym}_id": tool.id, id: learning_question.id }, as: :json
         end
 
         it 'provides a helpful message in JSON' do
@@ -482,7 +492,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
         before(:each) do
           sign_in user
-          delete :destroy, "#{tool_sym}_id": tool.id, id: learning_question.id, format: :json
+          delete :destroy, params: { "#{tool_sym}_id": tool.id, id: learning_question.id }, as: :json
         end
 
         it 'responds with a no content response code' do
@@ -504,7 +514,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
       before(:each) do
         sign_in user
-        get :exists, "#{tool_sym}_id": tool.id
+        get :exists, params: { "#{tool_sym}_id": tool.id }
       end
 
       it { is_expected.to respond_with 404 }
@@ -533,7 +543,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
       before(:each) do
         sign_in other_user
-        get :exists, "#{tool_sym}_id": tool.id
+        get :exists, params: { "#{tool_sym}_id": tool.id }
       end
 
 
@@ -556,7 +566,7 @@ shared_examples_for 'a learning controller' do |tool_sym|
 
       before(:each) do
         sign_in user
-        get :exists, "#{tool_sym}_id": tool.id
+        get :exists, params: { "#{tool_sym}_id": tool.id }
       end
 
       it { is_expected.to respond_with 200 }

@@ -30,29 +30,9 @@ module PdrServer
     config.assets.enabled = true
     config.assets.paths << Rails.root.join('app', 'assets', 'resources', 'pdf')
 
-    config.active_record.raise_in_transactional_callbacks = true
     config.angular_templates.module_name    = 'templates'
-    config.angular_templates.inside_paths   = [Rails.root.join('app', 'assets', 'javascripts', 'client', 'views'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'inventories'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'analyses'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'avatar'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'access'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'navigation'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'forms'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'common_list'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'common_create'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'common_share'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'assessments'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'permissions'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'proprietary'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'messages'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'home'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'learning_questions'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'buttons'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'consensus'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'about'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'invitations'),
-                                               Rails.root.join('app', 'assets', 'javascripts', 'client', 'tool_members'),
+    config.angular_templates.inside_paths   = [
+      File.join('app', 'assets', 'javascripts', 'client'),
     ]
     config.angular_templates.markups        = %w(erb)
     config.angular_templates.htmlcompressor = false

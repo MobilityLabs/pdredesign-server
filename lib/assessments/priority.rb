@@ -58,7 +58,7 @@ module Assessments
           .categories
           .joins(questions: :scores)
           .where(scores: {response_id: response_ids})
-          .uniq
+          .distinct
           .group("categories.id", :name)
           .average("scores.value")
     end
@@ -68,7 +68,7 @@ module Assessments
           .rubric
           .categories
           .joins(questions: :scores)
-          .uniq
+          .distinct
           .group("categories.id", :name)
           .average(0)
     end

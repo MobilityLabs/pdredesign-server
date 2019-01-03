@@ -18,7 +18,7 @@
 #
 
 require 'spec_helper'
-require_relative './message_migration_concern_spec'
+require 'support/message_migration_concern_shared_example'
 
 describe Assessment do
   it_behaves_like 'a tool which adds initial messages', described_class.to_s.downcase
@@ -84,7 +84,7 @@ describe Assessment do
         }
 
         it {
-          expect(assessment.errors.get(:meeting_date)).to include "must be set no earlier than #{(Time.current + 1.day).strftime('%D')}"
+          expect(assessment.errors[:meeting_date]).to include "must be set no earlier than #{(Time.current + 1.day).strftime('%D')}"
         }
       end
 
@@ -112,7 +112,7 @@ describe Assessment do
         }
 
         it {
-          expect(assessment.errors.get(:meeting_date)).to include "must be set no earlier than #{(Time.current + 2.days).strftime('%D')}"
+          expect(assessment.errors[:meeting_date]).to include "must be set no earlier than #{(Time.current + 2.days).strftime('%D')}"
         }
       end
 
@@ -140,7 +140,7 @@ describe Assessment do
         }
 
         it {
-          expect(assessment.errors.get(:meeting_date)).to include "must be set no earlier than #{(Time.current + 2.days).strftime('%D')}"
+          expect(assessment.errors[:meeting_date]).to include "must be set no earlier than #{(Time.current + 2.days).strftime('%D')}"
         }
       end
 

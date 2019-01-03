@@ -8,7 +8,7 @@ class V1::ParticipantsController < ApplicationController
     participant = Participant.create!(params)
 
     send_participant_assigned_email(assessment, participant) if send_invite
-    render nothing: true
+    head :ok
   end
 
   authority_actions create: 'update'
@@ -17,7 +17,7 @@ class V1::ParticipantsController < ApplicationController
     participant = Participant.find_by(participant_params)
     if participant
       participant.destroy
-      render nothing: true
+      head :ok
     else
       not_found
     end
@@ -45,7 +45,7 @@ class V1::ParticipantsController < ApplicationController
       mailer = assessments_mailer(assessment, participant)
     end
 
-    render text: mailer.text_part.body
+    render plain: mailer.text_part.body
   end
 
   authority_actions mail: 'update'

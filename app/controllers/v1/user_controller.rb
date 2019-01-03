@@ -27,7 +27,7 @@ class V1::UserController < ApplicationController
           invitation_token: user_invitation.token
       ), status: :unprocessable_entity
     elsif @user.save
-      render status: :ok, nothing: true
+      head :ok
     else
       render_errors @user.errors
     end
@@ -58,7 +58,7 @@ class V1::UserController < ApplicationController
       return render_errors(user.errors)
     else
       sign_in(:user, user)
-      render nothing: true
+      head :ok
     end
   end
 
@@ -70,7 +70,7 @@ class V1::UserController < ApplicationController
                 reset_password_sent_at: Time.now)
 
     PasswordResetNotificationWorker.perform_async(user.id)
-    render nothing: true
+    head :ok
   end
 
   private

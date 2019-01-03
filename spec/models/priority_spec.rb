@@ -67,7 +67,7 @@ describe Priority do
     end
 
     it 'errors specifically with the tool_id being taken' do
-      expect(second_priority.errors.get(:tool_id)).to eq ['has already been taken']
+      expect(second_priority.errors[:tool_id]).to eq ['has already been taken']
     end
   end
 end

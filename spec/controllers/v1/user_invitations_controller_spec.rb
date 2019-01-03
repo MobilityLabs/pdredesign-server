@@ -15,7 +15,7 @@ describe V1::UserInvitationsController do
     context 'when the user is not authenticated' do
       before(:each) do
         sign_out :user
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -30,7 +30,7 @@ describe V1::UserInvitationsController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id
+        post :create, params: { assessment_id: assessment.id }
       end
 
       it {
@@ -47,11 +47,12 @@ describe V1::UserInvitationsController do
         context 'when no team role is specified' do
           before(:each) do
             sign_in user
-            post :create,
-                 assessment_id: assessment.id,
-                 first_name: "john",
-                 last_name: "doe",
-                 email: "john_doe@gmail.com"
+            post :create, params: {
+              assessment_id: assessment.id,
+              first_name: "john",
+              last_name: "doe",
+              email: "john_doe@gmail.com"
+            }
           end
 
           it {
@@ -70,12 +71,13 @@ describe V1::UserInvitationsController do
         context 'when the team role is specified' do
           before(:each) do
             sign_in user
-            post :create,
-                 assessment_id: assessment.id,
-                 first_name: "john",
-                 last_name: "doe",
-                 email: "john_doe@gmail.com",
-                 team_role: 'Finance'
+            post :create, params: {
+              assessment_id: assessment.id,
+              first_name: "john",
+              last_name: "doe",
+              email: "john_doe@gmail.com",
+              team_role: 'Finance'
+            }
           end
 
           it {
@@ -103,11 +105,12 @@ describe V1::UserInvitationsController do
 
         before(:each) do
           sign_in user
-          post :create,
-               assessment_id: assessment.id,
-               first_name: "john",
-               last_name: "doe",
-               email: "john_doe@gmail.com"
+          post :create, params: {
+            assessment_id: assessment.id,
+            first_name: "john",
+            last_name: "doe",
+            email: "john_doe@gmail.com"
+          }
         end
 
         it {
@@ -122,11 +125,12 @@ describe V1::UserInvitationsController do
       context 'when the :send_invite flag is not passed' do
         before(:each) do
           sign_in user
-          post :create,
-               assessment_id: assessment.id,
-               first_name: "john",
-               last_name: "doe",
-               email: "john_doe@gmail.com"
+          post :create, params: {
+            assessment_id: assessment.id,
+            first_name: "john",
+            last_name: "doe",
+            email: "john_doe@gmail.com"
+          }
         end
 
         it {
@@ -137,12 +141,13 @@ describe V1::UserInvitationsController do
       context 'when the :send_invite flag is passed' do
         before(:each) do
           sign_in user
-          post :create,
-               assessment_id: assessment.id,
-               first_name: "john",
-               last_name: "doe",
-               email: "john_doe@gmail.com",
-               send_invite: true
+          post :create, params: {
+            assessment_id: assessment.id,
+            first_name: "john",
+            last_name: "doe",
+            email: "john_doe@gmail.com",
+            send_invite: true
+          }
         end
 
         it {
@@ -169,11 +174,12 @@ describe V1::UserInvitationsController do
 
         before(:each) do
           sign_in other_user
-          post :create,
-               assessment_id: other_assessment.id,
-               first_name: "john",
-               last_name: "doe",
-               email: "john_doe@gmail.com"
+          post :create, params: {
+            assessment_id: other_assessment.id,
+            first_name: "john",
+            last_name: "doe",
+            email: "john_doe@gmail.com"
+          }
         end
 
         it {
@@ -188,12 +194,13 @@ describe V1::UserInvitationsController do
       context 'when the facilitator role is provided' do
         before(:each) do
           sign_in user
-          post :create,
-               assessment_id: assessment.id,
-               first_name: "john",
-               last_name: "doe",
-               email: "john_doe@gmail.com",
-               role: "facilitator"
+          post :create, params: {
+            assessment_id: assessment.id,
+            first_name: "john",
+            last_name: "doe",
+            email: "john_doe@gmail.com",
+            role: "facilitator"
+          }
         end
 
         it {

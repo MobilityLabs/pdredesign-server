@@ -10,7 +10,9 @@ describe V1::AnalysisInvitationsController do
 
       before(:each) do
         sign_out :user
-        post :create, inventory_id: inventory.id, analysis_id: analysis, format: :json
+        post :create, params: {
+          inventory_id: inventory.id, analysis_id: analysis
+        }, as: :json
       end
 
       it 'requires logged in user' do
@@ -28,14 +30,15 @@ describe V1::AnalysisInvitationsController do
 
         before(:each) do
           sign_in inventory.owner
-          post :create,
+          post :create, params: {
             inventory_id: inventory.id,
             analysis_id: analysis,
             first_name: 'john',
             last_name: 'doe',
             email: email,
             team_role: 'Finance',
-            role: 'facilitator', format: :json
+            role: 'facilitator'
+          }, as: :json
         end
 
         it 'invitation gets created' do
@@ -48,14 +51,15 @@ describe V1::AnalysisInvitationsController do
 
         before(:each) do
           sign_in inventory.owner
-          post :create,
+          post :create, params: {
             inventory_id: inventory.id,
             analysis_id: analysis,
             first_name: 'john',
             last_name: 'doe',
             email: existing_invitation.email,
             team_role: 'Finance',
-            role: 'facilitator', format: :json
+            role: 'facilitator'
+          }, as: :json
         end
 
         it 'returns error status code' do

@@ -19,7 +19,7 @@ describe V1::RemindersController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id, message: 'Some reminder'
+        post :create, params: { assessment_id: assessment.id, message: 'Some reminder' }
       end
 
       it {
@@ -34,7 +34,7 @@ describe V1::RemindersController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id, message: 'Reminder'
+        post :create, params: { assessment_id: assessment.id, message: 'Reminder' }
       end
 
       it {

@@ -9,11 +9,13 @@ describe V1::ScoresController do
   describe 'POST #create' do
     context 'when unauthenticated' do
       before(:each) do
-        post :create, assessment_id: 9000,
-             response_id: 9001,
-             question_id: 9001,
-             value: 4,
-             evidence: 'foo'
+        post :create, params: {
+          assessment_id: 9000,
+          response_id: 9001,
+          question_id: 9001,
+          value: 4,
+          evidence: 'foo'
+        }
       end
 
       it { expect(response.status).to eq 401 }
@@ -40,11 +42,13 @@ describe V1::ScoresController do
         context 'when the score does not exist' do
           before(:each) do
             sign_in user
-            post :create, assessment_id: tool.id,
-                 response_id: response_obj.id,
-                 question_id: question.id,
-                 value: 1,
-                 evidence: 'new score'
+            post :create, params: {
+              assessment_id: tool.id,
+              response_id: response_obj.id,
+              question_id: question.id,
+              value: 1,
+              evidence: 'new score'
+            }
           end
 
           it 'creates a score' do
@@ -57,11 +61,13 @@ describe V1::ScoresController do
         context 'when the evidence is blank' do
           before(:each) do
             sign_in user
-            post :create, assessment_id: tool.id,
-                 response_id: response_obj.id,
-                 question_id: question.id,
-                 value: 1,
-                 evidence: nil
+            post :create, params: {
+              assessment_id: tool.id,
+              response_id: response_obj.id,
+              question_id: question.id,
+              value: 1,
+              evidence: nil
+            }, as: :json
           end
 
           it 'creates a score' do
@@ -78,11 +84,13 @@ describe V1::ScoresController do
 
           before(:each) do
             sign_in user
-            post :create, assessment_id: tool.id,
-                 response_id: response_obj.id,
-                 question_id: question.id,
-                 value: 3,
-                 evidence: 'overwriting score'
+            post :create, params: {
+              assessment_id: tool.id,
+              response_id: response_obj.id,
+              question_id: question.id,
+              value: 3,
+              evidence: 'overwriting score'
+            }
           end
 
           it 'updates the score' do
@@ -134,7 +142,7 @@ describe V1::ScoresController do
         context 'when the score does not exist' do
           before(:each) do
             sign_in tool.inventory.owner
-            post :create, params
+            post :create, params: params
           end
 
           it 'creates a score' do
@@ -156,13 +164,14 @@ describe V1::ScoresController do
         context 'when the supporting inventory response is blank' do
           before(:each) do
             sign_in tool.inventory.owner
-            post :create,
-                 inventory_id: tool.inventory.id,
-                 analysis_id: tool.id,
-                 analysis_response_id: response_obj.id,
-                 question_id: question.id,
-                 value: 1,
-                 supporting_inventory_response_attributes: {}
+            post :create, params: {
+              inventory_id: tool.inventory.id,
+              analysis_id: tool.id,
+              analysis_response_id: response_obj.id,
+              question_id: question.id,
+              value: 1,
+              supporting_inventory_response_attributes: {}
+            }, as: :json
           end
 
           it 'creates a score with blank supporting inventory response data' do
@@ -209,7 +218,7 @@ describe V1::ScoresController do
 
           before(:each) do
             sign_in tool.inventory.owner
-            post :create, params
+            post :create, params: params
           end
 
           it 'updates the score' do
@@ -235,8 +244,10 @@ describe V1::ScoresController do
   describe 'GET #index' do
     context 'when unauthenticated' do
       before(:each) do
-        post :create, assessment_id: 9000,
-             response_id: 9001
+        post :create, params: {
+          assessment_id: 9000,
+          response_id: 9001
+        }
       end
 
       it { expect(response.status).to eq 401 }
@@ -276,8 +287,10 @@ describe V1::ScoresController do
 
         before(:each) do
           sign_in user
-          get :index, assessment_id: tool.id,
-              response_id: response_obj.id
+          get :index, params: {
+            assessment_id: tool.id,
+            response_id: response_obj.id
+          }
         end
 
         it 'gives a list of scores for each question' do
@@ -323,10 +336,11 @@ describe V1::ScoresController do
 
         before(:each) do
           sign_in user
-          get :index,
-              inventory_id: tool.inventory.id,
-              analysis_id: tool.id,
-              analysis_response_id: response_obj.id
+          get :index, params: {
+            inventory_id: tool.inventory.id,
+            analysis_id: tool.id,
+            analysis_response_id: response_obj.id
+          }
         end
 
         it 'gives a list of scores for each question' do

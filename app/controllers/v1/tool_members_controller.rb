@@ -18,7 +18,7 @@ class V1::ToolMembersController < ApplicationController
         send_access_granted_email(tool_member, MembershipHelper.humanize_role(role))
       }
       tool_member.tool.save
-      render nothing: true, status: (new_record ? :created : :no_content)
+      head (new_record ? :created : :no_content)
     else
       @errors = tool_member.errors
       render 'v1/shared/errors', errors: @errors, status: :bad_request
@@ -26,10 +26,10 @@ class V1::ToolMembersController < ApplicationController
   end
 
   def show
-    @tool_members = ToolMember.includes(:response, :user)
-                        .where(tool_id: params[:tool_id],
-                               tool_type: params[:tool_type])
-                        .where.contains(roles: [ToolMember.member_roles[:participant]])
+    @tool_members = ToolMember.
+      includes(:response, :user).
+      where(tool_id: params[:tool_id], tool_type: params[:tool_type]).
+      where('? = ANY(roles)', ToolMember.member_roles[:participant])
   end
 
   def show_all
@@ -43,7 +43,8 @@ class V1::ToolMembersController < ApplicationController
     tool_member = ToolMember.includes(:user).find_by(id: params[:id])
 
     if tool_member.nil?
-      return render nothing: true, status: :not_found
+      head :not_found
+      return
     end
 
     authorize_action_for tool_member
@@ -58,7 +59,7 @@ class V1::ToolMembersController < ApplicationController
 
     if tool_member.errors.empty?
       tool_member.destroy
-      render nothing: true, status: :no_content
+      head :no_content
     else
       @errors = tool_member.errors
       render 'v1/shared/errors', errors: @errors, status: :bad_request
@@ -78,7 +79,8 @@ class V1::ToolMembersController < ApplicationController
     if @request.errors.empty?
       if @request.save
         send_access_requested_email(@request)
-        return render nothing: true, status: :created
+        head :created
+        return
       end
     end
 
@@ -94,7 +96,8 @@ class V1::ToolMembersController < ApplicationController
 
     access_request_query = AccessRequest.includes(:tool).where(id: params[:id])
     if access_request_query.size == 0
-      return render nothing: true, status: :not_found
+      head :not_found
+      return
     end
 
     access_request = access_request_query.first
@@ -117,11 +120,12 @@ class V1::ToolMembersController < ApplicationController
 
     access_request_query = AccessRequest.includes(:tool).where(id: params[:id])
     if access_request_query.size == 0
-      return render nothing: true, status: :not_found
+      head :not_found
+      return
     end
 
     access_request_query.first.destroy
-    render nothing: true, status: :no_content
+    head :no_content
   end
 
   authority_actions deny: :create
@@ -134,7 +138,8 @@ class V1::ToolMembersController < ApplicationController
     tool = tool_member.tool
 
     unless tool
-      return render nothing: true, status: :not_found
+      head :not_found
+      return
     end
 
     @users = User.includes(:districts).where(districts: {id: tool.district_id})
@@ -149,7 +154,8 @@ class V1::ToolMembersController < ApplicationController
                                      tool_id: params[:tool_id])
 
     unless tool_member
-      return render nothing: true, status: :not_found
+      head :not_found
+      return
     end
 
     authorize_action_for tool_member
@@ -187,9 +193,9 @@ class V1::ToolMembersController < ApplicationController
   end
 
   def validate_access_request
-    tool_member_query = ToolMember.where(tool: @request.tool,
-                                         user: @request.user)
-                            .where.contains(roles: [MembershipHelper.dehumanize_roles(@request.roles)])
+    tool_member_query = ToolMember.
+      where(tool: @request.tool, user: @request.user).
+      where('roles @> ARRAY[?]::integer[]', MembershipHelper.dehumanize_roles(@request.roles))
 
     unless tool_member_query.empty?
       roles = MembershipHelper.humanize_roles(tool_member_query.first.roles)

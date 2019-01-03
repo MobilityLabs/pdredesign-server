@@ -8,9 +8,9 @@ class V1::AnalysisResponsesController < ApplicationController
     @response.rubric = analysis.rubric
     if @response.save
       create_empty_scores(@response)
-      render nothing: true, status: :created
+      head :created
     else
-      render nothing: true, status: :bad_request
+      head :bad_request
     end
   end
 

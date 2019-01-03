@@ -29,7 +29,7 @@ class V1::ResponsesController < ApplicationController
     authorize_action_for @response
 
     submit_response(@response) if response_params[:submit]
-    render nothing: true
+    head :ok
   end
 
   def response_by(options)

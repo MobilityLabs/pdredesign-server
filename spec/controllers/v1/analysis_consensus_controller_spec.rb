@@ -10,7 +10,7 @@ describe V1::AnalysisConsensusController do
   describe 'POST #create' do
     context 'when unauthenticated' do
       before(:each) do
-        post :create, inventory_id: 8999, analysis_id: 9000
+        post :create, params: {  inventory_id: 8999, analysis_id: 9000 }
       end
 
       it 'returns unauthorized' do
@@ -38,7 +38,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          post :create, inventory_id: inventory.id, analysis_id: analysis.id
+          post :create, params: { inventory_id: inventory.id, analysis_id: analysis.id }
         end
 
         it 'creates the entity' do
@@ -74,7 +74,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          post :create, inventory_id: inventory.id, analysis_id: analysis.id
+          post :create, params: { inventory_id: inventory.id, analysis_id: analysis.id }
         end
 
         it 'does not overwrite the entity' do
@@ -87,7 +87,7 @@ describe V1::AnalysisConsensusController do
   describe 'GET #show' do
     context 'when unauthenticated' do
       before(:each) do
-        get :show, inventory_id: 8999, analysis_id: 9000, id: 9001
+        get :show, params: { inventory_id: 8999, analysis_id: 9000, id: 9001 }
       end
 
       it 'returns unauthorized' do
@@ -116,7 +116,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          get :show, inventory_id: inventory.id, analysis_id: analysis.id, id: 9001
+          get :show, params: { inventory_id: inventory.id, analysis_id: analysis.id, id: 9001 }
         end
 
         it 'returns a 404' do
@@ -148,7 +148,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          get :show, inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id
+          get :show, params: { inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id }
         end
 
         it 'renders the right JSON view' do
@@ -161,7 +161,7 @@ describe V1::AnalysisConsensusController do
   describe 'PATCH #update' do
     context 'when unauthenticated' do
       before(:each) do
-        patch :update, inventory_id: 8999, analysis_id: 9000, id: 9001
+        patch :update, params: { inventory_id: 8999, analysis_id: 9000, id: 9001 }
       end
 
       it 'returns unauthorized' do
@@ -197,7 +197,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          patch :update, inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id, submit: nil
+          patch :update, params: { inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id, submit: nil }
           preexisting_response.reload
         end
 
@@ -229,7 +229,7 @@ describe V1::AnalysisConsensusController do
 
         before(:each) do
           sign_in user
-          patch :update, inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id, submit: 'true'
+          patch :update, params: { inventory_id: inventory.id, analysis_id: analysis.id, id: preexisting_response.id, submit: 'true' }
           preexisting_response.reload
         end
 

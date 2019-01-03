@@ -30,12 +30,14 @@ class Analysis < ActiveRecord::Base
   has_many :messages, as: :tool
   has_many :tool_members, as: :tool
   has_many :access_requests, as: :tool
-  has_many :participants, -> { where(tool_type: 'Analysis')
-                                   .where.contains(roles: [ToolMember.member_roles[:participant]])
+  has_many :participants, -> {
+    where(tool_type: 'Analysis').
+      where('? = ANY(roles)', ToolMember.member_roles[:participant])
   }, foreign_key: :tool_id, class_name: 'ToolMember'
 
-  has_many :facilitators, -> { where(tool_type: 'Analysis')
-                                   .where.contains(roles: [ToolMember.member_roles[:facilitator]])
+  has_many :facilitators, -> {
+    where(tool_type: 'Analysis').
+      where('? = ANY(roles)', ToolMember.member_roles[:facilitator])
   }, foreign_key: :tool_id, class_name: 'ToolMember'
 
   attr_accessor :assign
@@ -48,7 +50,7 @@ class Analysis < ActiveRecord::Base
   delegate :district_id, to: :inventory, prefix: false
 
   validates_presence_of :name, :deadline, :inventory, :rubric, :owner
-  validates :message, presence: true, if: "assigned_at.present?"
+  validates :message, presence: true, if: -> { assigned_at.present? }
 
   after_create :set_members_from_inventory
 

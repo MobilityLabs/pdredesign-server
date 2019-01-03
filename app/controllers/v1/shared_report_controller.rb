@@ -2,7 +2,7 @@ class V1::SharedReportController < V1::ReportController
   skip_before_action :authenticate_user!
   skip_before_action :authorize_assessment!
 
-  before_filter :load_assessment!
+  before_action :load_assessment!
   delegate :axis_questions, to: :report
   delegate :average, to: :report
   

@@ -1,4 +1,4 @@
-require  'spec_helper'
+require 'spec_helper'
 
 describe V1::ReportController do
   render_views
@@ -9,7 +9,7 @@ describe V1::ReportController do
     context 'without user' do
       before(:each) do
         sign_out :user
-        get :show, assessment_id: assessment.id, format: :json
+        get :show, params: { assessment_id: assessment.id }, as: :json
       end
 
       it do
@@ -23,7 +23,7 @@ describe V1::ReportController do
 
       before(:each) do
         sign_in participant_user
-        get :show, assessment_id: assessment.id, format: :json
+        get :show, params: { assessment_id: assessment.id }, as: :json
       end
 
       it 'gets a report' do
@@ -47,7 +47,7 @@ describe V1::ReportController do
 
         before(:each) do
           assessment.update(response: response)
-          get :show, assessment_id: assessment.id, format: :json
+          get :show, params: { assessment_id: assessment.id }, as: :json
         end
 
         it 'loads response' do
@@ -61,7 +61,7 @@ describe V1::ReportController do
 
       before(:each) do
         sign_in non_participant_user
-        get :show, assessment_id: assessment.id, format: :json
+        get :show, params: { assessment_id: assessment.id }, as: :json
       end
 
       it 'does not allow non-participants' do
@@ -77,7 +77,10 @@ describe V1::ReportController do
     context 'without user logged in' do
       before(:each) do
         sign_out :user
-        get :consensus_report, assessment_id: 1, consensu_id: consensu.id, format: :json
+        get :consensus_report, params: {
+          assessment_id: 1,
+          consensu_id: consensu.id
+        }, as: :json
       end
 
       it 'does not retrieve consensus report' do
@@ -95,7 +98,10 @@ describe V1::ReportController do
 
       context 'on an existing consensus' do
         before do
-          get :consensus_report, assessment_id: assessment.id, consensu_id: consensu.id, format: :json
+          get :consensus_report, params: {
+            assessment_id: assessment.id,
+            consensu_id: consensu.id
+          }, as: :json
         end
 
         it 'responds successfully' do
@@ -121,7 +127,10 @@ describe V1::ReportController do
 
       context 'on a non-existing consensus' do
         before do
-          get :consensus_report, assessment_id: assessment.id, consensu_id: 9990, format: :json
+          get :consensus_report, params: {
+            assessment_id: assessment.id,
+            consensu_id: 9990
+          }, as: :json
         end
 
         it 'render not found when consensus does not exist' do
@@ -139,7 +148,11 @@ describe V1::ReportController do
 
     context 'without user logged in' do
       before(:each) do
-        get :participant_consensu_report, assessment_id:  assessment.id, consensu_id: consensu.id, participant_id: participant.id, format: :json
+        get :participant_consensu_report, params: {
+          assessment_id: assessment.id,
+          consensu_id: consensu.id,
+          participant_id: participant.id
+        }, as: :json
       end
 
       it 'requires a user login' do
@@ -154,7 +167,11 @@ describe V1::ReportController do
 
       context 'consensus, participant assessment or does not exists' do
         before(:each) do
-          get :participant_consensu_report, assessment_id: 900, consensu_id: 900, participant_id: 800, format: :json
+          get :participant_consensu_report, params: {
+            assessment_id: 900,
+            consensu_id: 900,
+            participant_id: 800
+          }, as: :json
         end
 
         it 'render not found' do
@@ -164,7 +181,11 @@ describe V1::ReportController do
 
       context 'retriving valid assessment, consensus and participant' do
         before(:each) do 
-          get :participant_consensu_report, assessment_id: assessment.id, consensu_id: consensu.id, participant_id: participant.id, format: :json
+          get :participant_consensu_report, params: {
+            assessment_id: assessment.id,
+            consensu_id: consensu.id,
+            participant_id: participant.id
+          }, as: :json
         end
 
         it 'retrieves questions' do

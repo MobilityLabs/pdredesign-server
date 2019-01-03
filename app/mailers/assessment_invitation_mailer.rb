@@ -1,6 +1,6 @@
 class AssessmentInvitationMailer < ApplicationMailer
   def invite(user_invitation)
-    invite = UserInvitation.find(user_invitation)
+    invite = UserInvitation.find(user_invitation.id)
     user = invite.user
 
     @first_name = user.first_name

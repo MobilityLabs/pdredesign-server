@@ -1,4 +1,1 @@
-json.errors do
-  json.array! errors
-end
-
+json.errors errors

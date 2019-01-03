@@ -37,7 +37,7 @@ class V1::LearningQuestionsController < ApplicationController
     end
     learning_question.body = learning_question_params[:body]
     if learning_question.save
-      render nothing: true, status: :no_content
+      head :no_content
     else
       @errors = learning_question.errors
       render 'v1/shared/errors', status: :bad_request
@@ -48,7 +48,7 @@ class V1::LearningQuestionsController < ApplicationController
     learning_question = LearningQuestion.find(params[:id])
     if learning_question.user == current_user
       learning_question.destroy
-      render nothing: true, status: :no_content
+      head :no_content
     else
       @errors = 'You may not delete a learning question that does not belong to you.'
       render 'v1/shared/errors', status: :bad_request
@@ -58,9 +58,9 @@ class V1::LearningQuestionsController < ApplicationController
   def exists
     has_created_question = LearningQuestion.where(user: current_user, tool: @tool).exists?
     if has_created_question
-      render nothing: true, status: :ok
+      head :ok
     else
-      render nothing: true, status: :not_found
+      head :not_found
     end
   end
 

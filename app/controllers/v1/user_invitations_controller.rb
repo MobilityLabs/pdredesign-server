@@ -16,7 +16,7 @@ class V1::UserInvitationsController < ApplicationController
         .execute
 
       queue_worker(invite.id) if send_invite
-      render nothing: true
+      head :ok
     else
       @errors = invite.errors.messages
       render 'v1/shared/errors', status: 422

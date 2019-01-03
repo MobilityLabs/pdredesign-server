@@ -11,7 +11,7 @@ describe V1::AccessController do
     context 'when not authenticated' do
       before(:each) do
         sign_out :user
-        post :grant, token: 'stuff'
+        post :grant, params: { token: 'stuff' }
       end
 
       it {
@@ -30,7 +30,7 @@ describe V1::AccessController do
 
       before(:each) do
         sign_in non_facilitator
-        post :grant, token: access_request.token
+        post :grant, params: { token: access_request.token }
       end
 
       it {
@@ -53,7 +53,7 @@ describe V1::AccessController do
 
       before(:each) do
         sign_in user
-        post :grant, token: 'stuff'
+        post :grant, params: { token: 'stuff' }
       end
 
       it {
@@ -80,7 +80,7 @@ describe V1::AccessController do
 
       before(:each) do
         sign_in facilitator
-        post :grant, token: access_request.token
+        post :grant, params: { token: access_request.token }
       end
 
       it {
@@ -111,7 +111,7 @@ describe V1::AccessController do
 
       before(:each) do
         sign_in facilitator
-        post :grant, token: access_request.token
+        post :grant, params: { token: access_request.token }
       end
 
       it {

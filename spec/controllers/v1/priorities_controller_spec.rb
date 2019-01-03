@@ -16,9 +16,10 @@ describe V1::PrioritiesController do
     context 'when a user is unauthenticated' do
       before(:each) do
         sign_out :user
-        post :create, assessment_id: assessment.id,
-             order: [1, 2, 3]
-
+        post :create, params: {
+          assessment_id: assessment.id,
+          order: [1, 2, 3]
+        }
       end
 
       it {
@@ -33,7 +34,7 @@ describe V1::PrioritiesController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id, order: [1, 2, 3]
+        post :create, params: { assessment_id: assessment.id, order: [1, 2, 3] }
       end
 
       it {
@@ -48,7 +49,7 @@ describe V1::PrioritiesController do
 
       before(:each) do
         sign_in user
-        post :create, assessment_id: assessment.id, order: [1, 2, 3]
+        post :create, params:{ assessment_id: assessment.id, order: [1, 2, 3] }
       end
 
       it {
@@ -64,7 +65,7 @@ describe V1::PrioritiesController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id, order: [1, 2, 3]
+          post :create, params: { assessment_id: assessment.id, order: [1, 2, 3] }
         end
 
         it {
@@ -83,7 +84,7 @@ describe V1::PrioritiesController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id, order: nil
+          post :create, params: { assessment_id: assessment.id, order: nil }
         end
 
         it {
@@ -118,7 +119,7 @@ describe V1::PrioritiesController do
                                 .and_return(fake_categories)
 
       sign_in user
-      get :index, assessment_id: assessment.id
+      get :index, params: { assessment_id: assessment.id }
     end
 
     it {

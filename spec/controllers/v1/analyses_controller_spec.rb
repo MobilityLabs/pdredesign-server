@@ -19,14 +19,14 @@ describe V1::AnalysesController do
     it 'requires logged in user' do
       sign_out :user
 
-      get :index, inventory_id: inventory.id
+      get :index, params: { inventory_id: inventory.id }
       expect(response).to have_http_status(:unauthorized)
     end
 
     it "gets an inventory's analysis" do
       sign_in analysis.owner
 
-      get :index, inventory_id: inventory.id
+      get :index, params: { inventory_id: inventory.id }
 
       expect(response).to have_http_status(:ok)
     end
@@ -40,17 +40,18 @@ describe V1::AnalysesController do
     it 'requires logged in user' do
       sign_out :user
 
-      post :create, inventory_id: inventory.id
+      post :create, params: { inventory_id: inventory.id }
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'creates a record' do
       sign_in analysis.owner
 
-      post :create,
-           inventory_id: inventory.id,
-           name: "name",
-           deadline: '2042-11-14T00:00:00Z'
+      post :create, params: {
+        inventory_id: inventory.id,
+        name: "name",
+        deadline: '2042-11-14T00:00:00Z'
+      }
 
       expect(response).to have_http_status(:created)
       expect(json['id']).not_to be_nil
@@ -67,18 +68,19 @@ describe V1::AnalysesController do
     it 'requires logged in user' do
       sign_out :user
 
-      put :update, inventory_id: inventory.id
+      put :update, params: { inventory_id: inventory.id }
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'updates a record' do
       sign_in analysis.owner
 
-      put :update,
-          inventory_id: inventory.id,
-          id: analysis.id,
-          name: 'name',
-          deadline: '2042-11-14T00:00:00Z'
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: analysis.id,
+        name: 'name',
+        deadline: '2042-11-14T00:00:00Z'
+      }
 
       expect(response).to have_http_status(:no_content)
     end
@@ -86,9 +88,10 @@ describe V1::AnalysesController do
     it 'does not set :assigned_at' do
       sign_in analysis.owner
 
-      put :update,
-          inventory_id: inventory.id,
-          id: analysis.id
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: analysis.id
+      }
 
       expect(response).to have_http_status(:no_content)
 
@@ -99,10 +102,11 @@ describe V1::AnalysesController do
     it 'sets :assigned_at when :assign present' do
       sign_in analysis.owner
 
-      put :update,
-          inventory_id: inventory.id,
-          id: analysis.id,
-          assign: true
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: analysis.id,
+        assign: true
+      }
 
       expect(response).to have_http_status(:no_content)
 
@@ -116,11 +120,12 @@ describe V1::AnalysesController do
       expect(AllAnalysisParticipantsNotificationWorker).to receive(:perform_async)
                                                        .with(analysis.id)
 
-      put :update,
-          inventory_id: inventory.id,
-          id: analysis.id,
-          message: "some custom message here",
-          assign: true
+      put :update, params: {
+        inventory_id: inventory.id,
+        id: analysis.id,
+        message: "some custom message here",
+        assign: true
+      }
 
       expect(response).to have_http_status(:no_content)
     end

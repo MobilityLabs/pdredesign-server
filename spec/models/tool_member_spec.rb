@@ -91,7 +91,7 @@ describe ToolMember do
 
       it 'does not allow persistence of another participant value' do
         tool_member.roles << ToolMember.member_roles[:participant]
-        expect { tool_member.save! }.to raise_error
+        expect { tool_member.save! }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
 

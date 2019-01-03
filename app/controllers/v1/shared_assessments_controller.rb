@@ -12,7 +12,7 @@ class V1::SharedAssessmentsController < ApplicationController
 
   def load_assessment!
     return true if assessment
-    render nothing: true, status: :not_found
+    head :not_found
   end
 
   def request_share_token

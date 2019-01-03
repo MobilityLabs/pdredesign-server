@@ -15,7 +15,7 @@ class V1::AnalysisConsensusController < ApplicationController
       @response.update(submitted_at: Time.now)
     end
 
-    render nothing: true
+    head :ok
   end
   authority_actions update: :read
 
@@ -32,7 +32,7 @@ class V1::AnalysisConsensusController < ApplicationController
         format.csv  { render csv: 'analysis_consensus', template: 'v1/analysis_consensus/show' }
       end
     else
-      render nothing: true, status: :not_found
+      head :not_found
     end
   end
 

@@ -13,7 +13,7 @@ describe PdrClient::ReportsController do
 
       before(:each) do
         allow(controller).to receive(:render_to_string).and_return('{}')
-        post :consensus_report, {assessment_id: assessment.id, format: :pdf}
+        post :consensus_report, params: { assessment_id: assessment.id }, format: :pdf
       end
 
       it {
@@ -44,7 +44,7 @@ describe PdrClient::ReportsController do
 
       before(:each) do
         allow(controller).to receive(:render_to_string).and_return('{}')
-        post :consensus_report, {assessment_id: assessment.id, format: :csv}
+        post :consensus_report, params: { assessment_id: assessment.id }, format: :csv
       end
 
       it {

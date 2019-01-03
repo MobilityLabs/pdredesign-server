@@ -25,7 +25,7 @@ describe V1::MessagesController do
     context 'when not authenticated' do
       before(:each) do
         sign_out :user
-        get :index, assessment_id: assessment.id, format: :json
+        get :index, params: { assessment_id: assessment.id }, as: :json
       end
 
       it {
@@ -65,7 +65,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          get :index, assessment_id: new_assessment.id, format: :json
+          get :index, params: { assessment_id: new_assessment.id }, as: :json
         end
 
         it {
@@ -96,7 +96,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          get :index, assessment_id: assessment.id, format: :json
+          get :index, params: { assessment_id: assessment.id }, as: :json
         end
 
         it {
@@ -111,7 +111,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          get :index, inventory_id: inventory.id, format: :json
+          get :index, params: { inventory_id: inventory.id }, as: :json
         end
 
         it {
@@ -126,7 +126,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          get :index, analysis_id: analysis.id, format: :json
+          get :index, params: { analysis_id: analysis.id }, as: :json
         end
 
         it {
@@ -140,7 +140,7 @@ describe V1::MessagesController do
     context 'when not authenticated' do
       before(:each) do
         sign_out :user
-        post :create, analysis_id: analysis.id, message: 'This is my message!', format: :json
+        post :create, params: { analysis_id: analysis.id, message: 'This is my message!' }, as: :json
       end
 
       it {
@@ -156,7 +156,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          post :create, assessment_id: assessment.id, message: 'This is the assessment message reminder!!', format: :json
+          post :create, params: { assessment_id: assessment.id, message: 'This is the assessment message reminder!!' }, as: :json
         end
 
         it {
@@ -179,7 +179,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          post :create, inventory_id: inventory.id, message: 'This is the inventory message reminder!!', format: :json
+          post :create, params: { inventory_id: inventory.id, message: 'This is the inventory message reminder!!' }, as: :json
         end
 
         it {
@@ -202,7 +202,7 @@ describe V1::MessagesController do
 
         before(:each) do
           sign_in user
-          post :create, analysis_id: analysis.id, message: 'This is the analysis message reminder!!', format: :json
+          post :create, params: { analysis_id: analysis.id, message: 'This is the analysis message reminder!!' }, as: :json
         end
 
         it {

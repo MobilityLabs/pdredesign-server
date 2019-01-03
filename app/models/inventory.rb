@@ -32,18 +32,20 @@ class Inventory < ActiveRecord::Base
   has_many :analyses
   has_many :tool_members, as: :tool
 
-  has_many :participants, -> { where(tool_type: 'Inventory')
-                                   .where.contains(roles: [ToolMember.member_roles[:participant]])
+  has_many :participants, -> {
+    where(tool_type: 'Inventory').
+      where('? = ANY(roles)', ToolMember.member_roles[:participant])
   }, foreign_key: :tool_id, class_name: 'ToolMember'
 
-  has_many :facilitators, -> { where(tool_type: 'Inventory')
-                                   .where.contains(roles: [ToolMember.member_roles[:facilitator]])
+  has_many :facilitators, -> {
+    where(tool_type: 'Inventory').
+      where('? = ANY(roles)', ToolMember.member_roles[:facilitator])
   }, foreign_key: :tool_id, class_name: 'ToolMember'
 
   validates_length_of :name, minimum: 1, maximum: 255
   validates_presence_of :owner
   validates_presence_of :deadline
-  validates_presence_of :message, if: 'assigned_at.present?'
+  validates_presence_of :message, if: -> { assigned_at.present? }
   validates :deadline, date: true
 
   accepts_nested_attributes_for :product_entries

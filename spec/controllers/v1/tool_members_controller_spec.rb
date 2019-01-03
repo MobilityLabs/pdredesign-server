@@ -12,7 +12,14 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        post :create, tool_member: {tool_type: 'Assessment', tool_id: 1, role: 0, user_id: 1}
+        post :create, params: {
+          tool_member: {
+            tool_type: 'Assessment',
+            tool_id: 1,
+            role: 0,
+            user_id: 1
+          }
+        }
       end
 
       it {
@@ -41,10 +48,14 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          post :create, tool_member: {tool_type: 'Assessment',
-                                      tool_id: tool.id,
-                                      role: ToolMember.member_roles[:participant],
-                                      user_id: candidate.id}
+          post :create, params: {
+            tool_member: {
+              tool_type: 'Assessment',
+              tool_id: tool.id,
+              role: ToolMember.member_roles[:participant],
+              user_id: candidate.id
+            }
+          }
         end
 
         it {
@@ -73,7 +84,7 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        get :show, tool_type: 'assessment', tool_id: 1
+        get :show, params: { tool_type: 'assessment', tool_id: 1 }
       end
 
       it {
@@ -97,7 +108,7 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          get :show, tool_type: 'i_do_not_exist', tool_id: tool.id
+          get :show, params: { tool_type: 'i_do_not_exist', tool_id: tool.id }
         end
 
         it {
@@ -117,7 +128,7 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            get :show, tool_type: 'assessment', tool_id: tool.id
+            get :show, params: { tool_type: 'assessment', tool_id: tool.id }
           end
 
           it {
@@ -137,7 +148,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              get :show, tool_type: 'assessment', tool_id: tool.id
+              get :show, params: { tool_type: 'assessment', tool_id: tool.id }
             end
 
             it {
@@ -156,7 +167,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              get :show, tool_type: 'assessment', tool_id: tool.id
+              get :show, params: { tool_type: 'assessment', tool_id: tool.id }
             end
 
             it {
@@ -177,7 +188,7 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        delete :destroy, id: 0
+        delete :destroy, params: { id: 0 }
       end
 
       it {
@@ -205,7 +216,7 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          delete :destroy, id: deleted_tool_member.id
+          delete :destroy, params: { id: deleted_tool_member.id }
         end
 
         it {
@@ -230,7 +241,7 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            delete :destroy, id: deleted_tool_member.id
+            delete :destroy, params: { id: deleted_tool_member.id }
           end
 
           it {
@@ -245,7 +256,7 @@ describe V1::ToolMembersController do
         context 'when the user being deleted does not exist' do
           before(:each) do
             sign_in user
-            delete :destroy, id: -1
+            delete :destroy, params: { id: -1 }
           end
 
           it {
@@ -265,7 +276,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              delete :destroy, id: deleted_tool_member.id
+              delete :destroy, params: { id: deleted_tool_member.id }
             end
 
             it {
@@ -284,7 +295,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              delete :destroy, id: deleted_tool_member.id
+              delete :destroy, params: { id: deleted_tool_member.id }
             end
 
             it {
@@ -303,7 +314,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              delete :destroy, id: deleted_tool_member.id
+              delete :destroy, params: { id: deleted_tool_member.id }
             end
 
             it {
@@ -324,7 +335,11 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        post :request_access, tool_type: 'Foo', tool_id: -1, access_request: {roles: [-2, -1]}
+        post :request_access, params: {
+          tool_type: 'Foo',
+          tool_id: -1,
+          access_request: {roles: [-2, -1]}
+        }
       end
 
       it {
@@ -348,7 +363,11 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [-100, -101]}
+          post :request_access, params: {
+            tool_type: tool.class.to_s,
+            tool_id: tool.id,
+            access_request: {roles: [-100, -101]}
+          }
         end
 
         it {
@@ -367,7 +386,11 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [0]}
+          post :request_access, params: {
+            tool_type: tool.class.to_s,
+            tool_id: tool.id,
+            access_request: {roles: [0]}
+          }
         end
 
         it {
@@ -395,7 +418,11 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [1]}
+            post :request_access, params: {
+              tool_type: tool.class.to_s,
+              tool_id: tool.id,
+              access_request: {roles: [1]}
+            }
           end
 
           it {
@@ -414,7 +441,11 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [0]}
+            post :request_access, params: {
+              tool_type: tool.class.to_s,
+              tool_id: tool.id,
+              access_request: {roles: [0]}
+            }
           end
 
           it {
@@ -441,7 +472,11 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [0]}
+            post :request_access, params: {
+              tool_type: tool.class.to_s,
+              tool_id: tool.id,
+              access_request: {roles: [0]}
+            }
           end
 
           it {
@@ -460,7 +495,11 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [1]}
+            post :request_access, params: {
+              tool_type: tool.class.to_s,
+              tool_id: tool.id,
+              access_request: {roles: [1]}
+            }
           end
 
           it {
@@ -491,7 +530,11 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :request_access, tool_type: tool.class.to_s, tool_id: tool.id, access_request: {roles: [0, 1]}
+            post :request_access, params: {
+              tool_type: tool.class.to_s,
+              tool_id: tool.id,
+              access_request: {roles: [0, 1]}
+            }
           end
 
           it {
@@ -499,7 +542,9 @@ describe V1::ToolMembersController do
           }
 
           it {
-            expect(json['errors']['base'][0]).to eq "Access for #{user.email} for #{tool.name} already exists at these levels: #{roles.join(', ')}"
+            expect(json['errors']['base'][0]).to eq(
+              "Access for #{user.email} for #{tool.name} already exists at these levels: #{roles.join(', ')}"
+            )
           }
         end
       end
@@ -511,7 +556,7 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        post :grant, tool_type: 'Foo', tool_id: -1, id: -1
+        post :grant, params: { tool_type: 'Foo', tool_id: -1, id: -1 }
       end
 
       it {
@@ -535,7 +580,7 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          post :grant, tool_type: tool.class.to_s, tool_id: tool.id, id: -1
+          post :grant, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: -1 }
         end
 
         it {
@@ -551,7 +596,7 @@ describe V1::ToolMembersController do
         context 'when no access request exists' do
           before(:each) do
             sign_in user
-            post :grant, tool_type: tool.class.to_s, tool_id: tool.id, id: 1
+            post :grant, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: 1 }
           end
 
           it {
@@ -571,7 +616,7 @@ describe V1::ToolMembersController do
             
             before(:each) do
               sign_in user
-              post :grant, tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id
+              post :grant, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id }
             end
             
             it {
@@ -614,7 +659,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              post :grant, tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id
+              post :grant, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id }
             end
 
             it {
@@ -657,7 +702,7 @@ describe V1::ToolMembersController do
 
             before(:each) do
               sign_in user
-              post :grant, tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id
+              post :grant, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id }
             end
 
             it {
@@ -698,7 +743,7 @@ describe V1::ToolMembersController do
       before(:each) do
         sign_out :user
 
-        post :deny, tool_type: 'Foo', tool_id: -1, id: -1
+        post :deny, params: { tool_type: 'Foo', tool_id: -1, id: -1 }
       end
 
       it {
@@ -722,7 +767,7 @@ describe V1::ToolMembersController do
 
         before(:each) do
           sign_in user
-          post :deny, tool_type: tool.class.to_s, tool_id: tool.id, id: -1
+          post :deny, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: -1 }
         end
 
         it {
@@ -738,7 +783,7 @@ describe V1::ToolMembersController do
         context 'when no access request exists' do
           before(:each) do
             sign_in user
-            post :deny, tool_type: tool.class.to_s, tool_id: tool.id, id: 1
+            post :deny, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: 1 }
           end
 
           it {
@@ -757,7 +802,7 @@ describe V1::ToolMembersController do
 
           before(:each) do
             sign_in user
-            post :deny, tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id
+            post :deny, params: { tool_type: tool.class.to_s, tool_id: tool.id, id: access_request.id }
           end
 
           it {

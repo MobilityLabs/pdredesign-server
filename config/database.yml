@@ -1,8 +1,8 @@
 development: &base
   adapter: postgresql
   database: pdr_dev
-  # username: ortuna
-  host: localhost
+  username: postgres
+  host: postgres
 
 test:
   <<: *base

@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.5.3'
 
-gem 'rails', '~> 4.2'
+gem 'bundler', '~> 1.3', '>= 1.3.5'
+gem 'rails', '~> 4.2.8'
 gem 'actionpack-action_caching'
 gem 'activerecord-session_store'
 gem 'angular-rails-templates'

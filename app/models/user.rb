@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :participants
   has_many :feedbacks
   has_many :tools
-  has_many :inventories
+  has_many :inventories, foreign_key: 'owner_id'
 
   has_and_belongs_to_many :organizations
   has_and_belongs_to_many :districts

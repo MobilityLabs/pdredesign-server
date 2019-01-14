@@ -23,7 +23,7 @@ class Inventory < ActiveRecord::Base
   default_scope { order(created_at: :desc) }
 
   belongs_to :district
-  belongs_to :owner, class_name: 'User'
+  belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
 
   has_many :product_entries
   has_many :data_entries
